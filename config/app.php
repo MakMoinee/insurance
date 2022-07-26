@@ -232,4 +232,6 @@ return [
 
     ],
 
+    'appVersion' => env('APP_VERSION'),
+
 ];
