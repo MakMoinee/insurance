@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\IUsers;
 use Illuminate\Http\Request;
 
 class LoginController extends Controller
@@ -39,7 +40,9 @@ class LoginController extends Controller
         $pw = $request->password;
 
         if ($un != "" && $pw != "") {
-            dd("successful");
+            // $hotelList = Hotel::where([['Status', '=', 1]])->skip(0)->take(3)->get();
+            $users = IUsers::where([['username','=',$un],['password','=',$pw]])->take(1)->get();
+            dd($users->count());
         }
     }
 
