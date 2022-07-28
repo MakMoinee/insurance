@@ -3,7 +3,9 @@
 namespace App\Http\Controllers;
 
 use App\Models\IUsers;
+use App\Models\Members;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Session;
 
 class LoginController extends Controller
 {
@@ -14,7 +16,8 @@ class LoginController extends Controller
      */
     public function index()
     {
-        //
+        // return redirect('/dashboard')
+        return redirect('/');
     }
 
     /**
@@ -41,8 +44,21 @@ class LoginController extends Controller
 
         if ($un != "" && $pw != "") {
             // $hotelList = Hotel::where([['Status', '=', 1]])->skip(0)->take(3)->get();
-            $users = IUsers::where([['username','=',$un],['password','=',$pw]])->take(1)->get();
-            dd($users->count());
+            $users = IUsers::where([['username', '=', $un], ['password', '=', $pw]])->take(1)->get();
+            $musers = IUsers::where([['username', '=', $un], ['password', '=', $pw]])->take(1)->first();
+            $count = $users->count();
+            if ($count > 0) {
+                
+                Session::push("users", $musers);
+                $members = Members::all();
+                return view('dashboard');
+            } else {
+                Session::flush();
+                return view('home');
+            }
+        } else {
+            Session::flush();
+            return view('home');
         }
     }
 
