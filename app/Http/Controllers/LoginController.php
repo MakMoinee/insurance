@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\IUsers;
 use App\Models\Members;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Session;
 
 class LoginController extends Controller
@@ -16,7 +17,6 @@ class LoginController extends Controller
      */
     public function index()
     {
-        // return redirect('/dashboard')
         return redirect('/');
     }
 
@@ -48,10 +48,13 @@ class LoginController extends Controller
             $musers = IUsers::where([['username', '=', $un], ['password', '=', $pw]])->take(1)->first();
             $count = $users->count();
             if ($count > 0) {
-                
+
                 Session::push("users", $musers);
                 $members = Members::all();
-                return view('dashboard');
+                $membersCount = $members->count();
+                $newMembers = DB::table('vwtotalnewmembers')->first();
+                $total = $newMembers->TotalNewMembers;
+                return view('dashboard', ['totalMembers' => $membersCount, 'totalNewMembers'=> $total]);
             } else {
                 Session::flush();
                 return view('home');
