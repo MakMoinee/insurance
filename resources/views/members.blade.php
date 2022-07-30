@@ -278,7 +278,8 @@
                     </div>
                     <ul class="navbar-nav  justify-content-end">
                         <li class="nav-item d-flex align-items-center">
-                            <a href="/signout" class="nav-link text-body font-weight-bold px-0">
+                            <a class="nav-link text-body font-weight-bold px-0" style="cursor: pointer;"
+                                data-toggle="modal" data-target="#signOutModal">
                                 <i class="fa fa-user me-sm-1"></i>
                                 <span class="d-sm-inline d-none">Sign Out</span>
                             </a>
@@ -690,6 +691,23 @@
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
                     <button type="submit" class="btn btn-primary">Save changes</button>
                 </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade" id="signOutModal" tabindex="-1" role="dialog" aria-labelledby="signOutModalLabel"
+        aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <form action="/signout" method="GET">
+                    <div class="modal-body">
+                        <h5 class="modal-title" id="signOutModalLabel">Do you want to proceed signing out ?</h5>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="submit" class="btn btn-primary">Yes, Proceed</button>
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    </div>
                 </form>
             </div>
         </div>
