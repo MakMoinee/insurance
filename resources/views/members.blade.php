@@ -274,11 +274,7 @@
                 </nav>
                 <div class="collapse navbar-collapse mt-sm-0 mt-2 me-md-0 me-sm-4" id="navbar">
                     <div class="ms-md-auto pe-md-3 d-flex align-items-center">
-                        <div class="input-group">
-                            <span class="input-group-text text-body"><i class="fas fa-search"
-                                    aria-hidden="true"></i></span>
-                            <input type="text" class="form-control" placeholder="Type here...">
-                        </div>
+
                     </div>
                     <ul class="navbar-nav  justify-content-end">
                         <li class="nav-item d-flex align-items-center">
@@ -417,7 +413,10 @@
                         <div class="card-header pb-0">
                             <button class="btn btn-primary" data-toggle="modal" data-target="#exampleModal">Add
                                 Member</button>
-
+                            <div class="input-group">
+                                <input type="text" class="form-control" placeholder="Type here...">
+                            </div>
+                            <br>
 
                         </div>
                         <div class="card-body px-0 pt-0 pb-2">
@@ -626,21 +625,72 @@
                     <div class="row">
                         <form action="">
                             <div class="form-group">
-                                <input type="text" name="firstname" id="fn" placeholder="First Name">
+                                <input required type="text" style="width:150px;" name="firstname" id="fn"
+                                    placeholder="First Name">
+                                <input required type="text" style="width:150px;" name="middlename" id="mn"
+                                    placeholder="Middle Name">
+                                <input required type="text" style="width:150px;" name="lastname" id="ln"
+                                    placeholder="Last Name">
                             </div>
                             <div class="form-group">
-                                <input type="text" name="middlename" id="mn" placeholder="Middle Name">
+                                <input required type="text" style="width: 460px;" name="address" id="address"
+                                    placeholder="Address">
                             </div>
                             <div class="form-group">
-                                <input type="text" name="lastname" id="ln" placeholder="Last Name">
+                                <input required type="text" maxlength="13" name="contact" id="mn"
+                                    placeholder="Contact Number" style="margin-right: 20px;">
+                                <label for="civilstat" class="for">Civil Status:</label>
+                                <select name="civilstat" id="civilstat">
+                                    <option value="Single" selected>Single</option>
+                                    <option value="Married">Married</option>
+                                    <option value="Widow">Widow</option>
+                                    <option value="Separated">Separated</option>
+                                </select>
                             </div>
-                        </form>
+                            <div class="form-group">
+                                <label for="gender" class="for">Gender:</label>
+                                <select required name="gender" id="civilstat">
+                                    <option value="Male">Male</option>
+                                    <option value="Female">Female</option>
+                                </select>
+                                <label for="religion" class="for">Religion:</label>
+                                <input required type="text" style="width: 265px;margin-left: 5px;" name="religion"
+                                    id="religion" placeholder="Religion">
+
+                            </div>
+                            <div class="form-group">
+                                <label for="birthdate" class="for">Date of Birth:</label>
+                                <input required type="date" style="width: 150px;margin-left: 10px;"
+                                    name="birthdate" id="birthdate" placeholder="Date of Birth"
+                                    title="Date of Birth">
+                            </div>
+                            <div class="form-group">
+                                <input required type="text" style="width: 460px;" name="bplace" id="bplace"
+                                    placeholder="Place of Birth">
+                            </div>
+                            <div class="form-group">
+                                <label for="height" class="for">Height:</label>
+                                <input required type="number" style="width: 150px;margin-right: 5px;" name="height"
+                                    id="height" placeholder="Height (cm)">
+                                <label for="weight" class="for">Weight:</label>
+                                <input required type="number" style="width: 150px;" name="weight" id="weight"
+                                    placeholder="Weight (kg)">
+                            </div>
+                            <div class="form-group">
+                                <label for="mop" class="for">Mode of Payment:</label>
+                                <select name="mop" id="mop" style="margin-left: 5px;">
+                                    <option value="Regular" selected>Regular</option>
+                                    <option value="Indigent">Indigent</option>
+                                </select>
+                            </div>
+
                     </div>
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                    <button type="button" class="btn btn-primary">Save changes</button>
+                    <button type="submit" class="btn btn-primary">Save changes</button>
                 </div>
+                </form>
             </div>
         </div>
     </div>
