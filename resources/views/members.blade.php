@@ -17,6 +17,7 @@
 
 <head>
     <meta charset="utf-8" />
+    <meta name="csrf-token" content="{{ csrf_token() }}">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <link rel="apple-touch-icon" sizes="76x76" href="img/apple-icon.png">
     <link rel="icon" type="image/png" href="/storage/image/favicon.ico">
@@ -474,9 +475,154 @@
                                                 <td class="align-middle">
                                                     <a href="javascript:;"
                                                         class="text-secondary font-weight-bold text-xs"
-                                                        data-toggle="tooltip" data-original-title="Edit user">
+                                                        data-toggle="modal"
+                                                        data-target="#editModal{{ $member['memberID'] }}">
                                                         Edit
                                                     </a>
+
+                                                    <div class="modal fade" id="editModal{{ $member['memberID'] }}"
+                                                        tabindex="-1" role="dialog"
+                                                        aria-labelledby="editModalLabel{{ $member['memberID'] }}"
+                                                        aria-hidden="true">
+                                                        <div class="modal-dialog" role="document">
+                                                            <div class="modal-content">
+                                                                <div class="modal-header">
+                                                                    <h5 class="modal-title"
+                                                                        id="editModalLabel{{ $member['memberID'] }}">
+                                                                        Edit
+                                                                        Member</h5>
+                                                                    <button type="button" class="close"
+                                                                        data-dismiss="modal" aria-label="Close">
+                                                                        <span aria-hidden="true">&times;</span>
+                                                                    </button>
+                                                                </div>
+                                                                <div class="modal-body">
+                                                                    <div class="row">
+                                                                        <form action="/members" method="POST"
+                                                                            enctype="multipart/form-data">
+                                                                            @csrf
+                                                                            <div class="form-group">
+                                                                                <input required type="text"
+                                                                                    style="width:150px;"
+                                                                                    name="firstname" id="fn"
+                                                                                    placeholder="First Name"
+                                                                                    value="{{ $member['firstName'] }}">
+                                                                                <input required type="text"
+                                                                                    style="width:150px;"
+                                                                                    name="middlename" id="mn"
+                                                                                    placeholder="Middle Name"
+                                                                                    value="{{ $member['middleName'] }}">
+                                                                                <input required type="text"
+                                                                                    style="width:150px;"
+                                                                                    name="lastname" id="ln"
+                                                                                    placeholder="Last Name"
+                                                                                    value="{{ $member['lastName'] }}">
+                                                                            </div>
+                                                                            <div class="form-group">
+                                                                                <input required type="text"
+                                                                                    style="width: 460px;"
+                                                                                    name="address" id="address"
+                                                                                    placeholder="Address"
+                                                                                    value="{{ $member['address'] }}">
+                                                                            </div>
+                                                                            <div class="form-group">
+                                                                                <input required type="text"
+                                                                                    maxlength="13" name="contact"
+                                                                                    id="mn"
+                                                                                    placeholder="Contact Number"
+                                                                                    style="margin-right: 20px;"
+                                                                                    value="{{ $member['contactNum'] }}">
+                                                                                <label for="civilstat"
+                                                                                    class="for">Civil
+                                                                                    Status:</label>
+                                                                                <select name="civilstat"
+                                                                                    id="civilstat" value="{{ $member['civilStat'] }}">
+                                                                                    <option value="Single">
+                                                                                        Single</option>
+                                                                                    <option value="Married">Married
+                                                                                    </option>
+                                                                                    <option value="Widow">Widow
+                                                                                    </option>
+                                                                                    <option value="Separated">Separated
+                                                                                    </option>
+                                                                                    <option value="Divorced">Divorced
+                                                                                    </option>
+                                                                                </select>
+                                                                            </div>
+                                                                            <div class="form-group">
+                                                                                <label for="gender"
+                                                                                    class="for">Gender:</label>
+                                                                                <select required name="gender"
+                                                                                    id="civilstat"
+                                                                                    value="{{ $member['gender'] }}">
+                                                                                    <option value="Male">Male
+                                                                                    </option>
+                                                                                    <option value="Female">Female
+                                                                                    </option>
+                                                                                </select>
+                                                                                <label for="religion"
+                                                                                    class="for">Religion:</label>
+                                                                                <input required type="text"
+                                                                                    style="width: 265px;margin-left: 5px;"
+                                                                                    name="religion" id="religion"
+                                                                                    placeholder="Religion" value="{{ $member['religion'] }}">
+
+                                                                            </div>
+                                                                            <div class="form-group">
+                                                                                <label for="birthdate"
+                                                                                    class="for">Date of
+                                                                                    Birth:</label>
+                                                                                <input required type="date"
+                                                                                    style="width: 150px;margin-left: 10px;"
+                                                                                    name="birthdate" id="birthdate"
+                                                                                    placeholder="Date of Birth"
+                                                                                    title="Date of Birth" value="{{ $member['birthDate'] }}">
+                                                                            </div>
+                                                                            <div class="form-group">
+                                                                                <input required type="text"
+                                                                                    style="width: 460px;"
+                                                                                    name="bplace" id="bplace"
+                                                                                    placeholder="Place of Birth">
+                                                                            </div>
+                                                                            <div class="form-group">
+                                                                                <label for="height"
+                                                                                    class="for">Height:</label>
+                                                                                <input required type="number"
+                                                                                    style="width: 150px;margin-right: 5px;"
+                                                                                    name="height" id="height"
+                                                                                    placeholder="Height (cm)" value="{{ $member['height'] }}">
+                                                                                <label for="weight"
+                                                                                    class="for">Weight:</label>
+                                                                                <input required type="number"
+                                                                                    style="width: 150px;"
+                                                                                    name="weight" id="weight"
+                                                                                    placeholder="Weight (kg)">
+                                                                            </div>
+                                                                            <div class="form-group">
+                                                                                <label for="mop"
+                                                                                    class="for">Mode of
+                                                                                    Payment:</label>
+                                                                                <select name="mop" id="mop"
+                                                                                    style="margin-left: 5px;">
+                                                                                    <option value="Regular" selected>
+                                                                                        Regular</option>
+                                                                                    <option value="Indigent">Indigent
+                                                                                    </option>
+                                                                                </select>
+                                                                            </div>
+
+                                                                    </div>
+                                                                </div>
+                                                                <div class="modal-footer">
+                                                                    <button type="button" class="btn btn-secondary"
+                                                                        data-dismiss="modal">Close</button>
+                                                                    <button type="submit"
+                                                                        class="btn btn-primary">Save changes</button>
+                                                                </div>
+                                                                </form>
+                                                            </div>
+                                                        </div>
+                                                    </div>
                                                 </td>
                                             </tr>
                                         @endforeach
@@ -624,7 +770,8 @@
                 </div>
                 <div class="modal-body">
                     <div class="row">
-                        <form action="">
+                        <form action="/members" method="POST" enctype="multipart/form-data">
+                            @csrf
                             <div class="form-group">
                                 <input required type="text" style="width:150px;" name="firstname" id="fn"
                                     placeholder="First Name">
@@ -646,6 +793,8 @@
                                     <option value="Married">Married</option>
                                     <option value="Widow">Widow</option>
                                     <option value="Separated">Separated</option>
+                                    <option value="Divorced">Divorced
+                                    </option>
                                 </select>
                             </div>
                             <div class="form-group">
@@ -695,6 +844,7 @@
             </div>
         </div>
     </div>
+
 
     <div class="modal fade" id="signOutModal" tabindex="-1" role="dialog" aria-labelledby="signOutModalLabel"
         aria-hidden="true">

@@ -19,5 +19,8 @@ class Members extends Model
         'address',
         'contactNum',
         'birthDate',
+        'gender',
+        'civilStat',
+        'religion',
     ];
 }

@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Members;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Symfony\Component\HttpFoundation\Response;
 
 class MembersController extends Controller
 {
@@ -46,6 +47,36 @@ class MembersController extends Controller
     public function store(Request $request)
     {
         //
+        if ($request->session()->exists('users')) {
+            $checkMember = Members::where([['firstName', '=', $request['firstname']], ['middleName', '=', $request['middlename']], ['lastName', '=', $request['lastname']]])->get();
+            $checkCount = $checkMember->count();
+            if ($checkCount == 1) {
+                return response()->json(['message' => 'Failed to Add Member. Member already in database'], Response::HTTP_INTERNAL_SERVER_ERROR);
+            } else {
+                $newMembers = new Members();
+                $newMembers->firstName = $request['firstname'];
+                $newMembers->middleName = $request['middlename'];
+                $newMembers->lastName = $request['lastname'];
+                $newMembers->address = str_replace(",", " ", $request['address']);
+                $newMembers->contactNum = $request['contact'];
+                $newMembers->birthDate = $request['birthdate'];
+                $newMembers->gender = $request['gender'];
+                $newMembers->religion = $request['religion'];
+                $newMembers->height = $request['height'];
+                $newMembers->weight = $request['weight'];
+                $newMembers->civilStat = $request['civilstat'];
+                $mop = strtolower($request['mop']) == "regular" ? 1 : 2;
+                $newMembers->mop = $mop;
+                $isSave = $newMembers->save();
+                if ($isSave) {
+                    return response()->json(['message' => 'Successfully Added Member'], Response::HTTP_OK);
+                } else {
+                    return response()->json(['message' => 'Failed to Add Member'], Response::HTTP_INTERNAL_SERVER_ERROR);
+                }
+            }
+        } else {
+            return response()->json(['message' => 'Unauthorized'], Response::HTTP_FORBIDDEN);
+        }
     }
 
     /**

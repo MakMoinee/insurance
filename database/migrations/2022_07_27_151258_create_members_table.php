@@ -20,6 +20,7 @@ class CreateMembersTable extends Migration
             $table->string('lastName');
             $table->string('address');
             $table->string('contactNum', 13);
+            $table->string('civilStat');
             $table->string('gender', 6);
             $table->string('religion');
             $table->string('height');

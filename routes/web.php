@@ -20,6 +20,7 @@ use SebastianBergmann\CodeCoverage\Report\Html\Dashboard;
 */
 
 Route::get('/', [HomeController::class, 'index']);
+Route::get('/gettoken', [HomeController::class, 'getToken']);
 Route::get('/dashboard', [DashboardController::class, 'index']);
 Route::get('/signout', [SignOutController::class, 'index']);
 Route::resource('/members', MembersController::class);

@@ -33,6 +33,8 @@
     <link href="css/nucleo-svg.css" rel="stylesheet" />
     <!-- CSS Files -->
     <link id="pagestyle" href="css/soft-ui-dashboard.css?v=1.0.6" rel="stylesheet" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css"
+        integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
 </head>
 
 <body class="g-sidenav-show  bg-gray-100">
@@ -291,14 +293,13 @@
                 <div class="collapse navbar-collapse mt-sm-0 mt-2 me-md-0 me-sm-4" id="navbar">
                     <div class="ms-md-auto pe-md-3 d-flex align-items-center">
                         <div class="input-group">
-                            <span class="input-group-text text-body"><i class="fas fa-search"
-                                    aria-hidden="true"></i></span>
                             <input type="text" class="form-control" placeholder="Type here...">
                         </div>
                     </div>
                     <ul class="navbar-nav  justify-content-end">
                         <li class="nav-item d-flex align-items-center">
-                            <a href="/signout" class="nav-link text-body font-weight-bold px-0">
+                            <a href="#" class="nav-link text-body font-weight-bold px-0" style="cursor: pointer;"
+                            data-toggle="modal" data-target="#signOutModal">
                                 <i class="fa fa-user me-sm-1"></i>
                                 <span class="d-sm-inline d-none">Sign Out</span>
                             </a>
@@ -468,8 +469,8 @@
                                         <p class="mb-3 pt-2 text-bold">
                                             Quick Access</p>
 
-                                        <button class="btn btn-primary">
-                                            Members</button>
+                                        <a href="/members"><button class="btn btn-primary">
+                                                Members</button></a>
                                     </div>
                                 </div>
                             </div>
@@ -477,8 +478,6 @@
                     </div>
                 </div>
                 <div class="col-lg-5">
-                    <div class="card h-100 p-3">
-                    </div>
                 </div>
             </div>
             <footer class="footer pt-3  fixed-bottom">
@@ -603,6 +602,32 @@
             </div>
         </div>
     </div>
+
+    <div class="modal fade" id="signOutModal" tabindex="-1" role="dialog" aria-labelledby="signOutModalLabel"
+        aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <form action="/signout" method="GET">
+                    <div class="modal-body">
+                        <h5 class="modal-title" id="signOutModalLabel">Do you want to proceed signing out ?</h5>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="submit" class="btn btn-primary">Yes, Proceed</button>
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
+        integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous">
+    </script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.12.9/dist/umd/popper.min.js"
+        integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous">
+    </script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/js/bootstrap.min.js"
+        integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous">
+    </script>
     <!--   Core JS Files   -->
     <script src="../assets/js/core/popper.min.js"></script>
     <script src="../assets/js/core/bootstrap.min.js"></script>
