@@ -22,11 +22,12 @@ class CreateMembersTable extends Migration
             $table->string('contactNum', 13);
             $table->string('civilStat');
             $table->string('gender', 6);
+            $table->string('birthPlace');
             $table->string('religion');
             $table->string('height');
             $table->string('weight');
             $table->integer('mop');
-            $table->timestamp('birthDate')->nullable(true);
+            $table->date('birthDate')->nullable(true);
             $table->timestamps();
         });
     }

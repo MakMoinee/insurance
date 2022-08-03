@@ -22,7 +22,9 @@ class MembersController extends Controller
             $membersCount = $members->count();
             $newMembers = DB::table('vwtotalnewmembers')->first();
             $total = $newMembers->TotalNewMembers;
-            return view('members', ['totalMembers' => $membersCount, 'totalNewMembers' => $total, 'members' => $members]);
+            $civil = ['Single', 'Married', 'Widow', 'Separated', 'Divorced'];
+            $gend = ['Male', 'Female'];
+            return view('members', ['totalMembers' => $membersCount, 'totalNewMembers' => $total, 'members' => $members, 'civil' => $civil, 'gend' => $gend]);
         } else {
             return redirect('/');
         }
@@ -65,6 +67,7 @@ class MembersController extends Controller
                 $newMembers->height = $request['height'];
                 $newMembers->weight = $request['weight'];
                 $newMembers->civilStat = $request['civilstat'];
+                $newMembers->birthPlace = $request['bplace'];
                 $mop = strtolower($request['mop']) == "regular" ? 1 : 2;
                 $newMembers->mop = $mop;
                 $isSave = $newMembers->save();
@@ -99,6 +102,8 @@ class MembersController extends Controller
     public function edit($id)
     {
         //
+
+
     }
 
     /**
@@ -108,9 +113,93 @@ class MembersController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request)
     {
         //
+        if ($request->session()->exists('users')) {
+            $newMembers = new Members();
+            $newMembers->memberID = $request['id'];
+            $newMembers->firstName = $request['firstname'];
+            $newMembers->middleName = $request['middlename'];
+            $newMembers->lastName = $request['lastname'];
+            $newMembers->address = str_replace(",", " ", $request['address']);
+            $newMembers->contactNum = $request['contact'];
+            $newMembers->birthDate = date('Y-m-d', strtotime($request['birthdate']));
+            $newMembers->gender = $request['gender'];
+            $newMembers->religion = $request['religion'];
+            $newMembers->height = $request['height'];
+            $newMembers->weight = $request['weight'];
+            $newMembers->civilStat = $request['civilstat'];
+            $newMembers->birthPlace = $request['bplace'];
+            $mop = strtolower($request['mop']) == "regular" ? 1 : 2;
+            $newMembers->mop = $mop;
+            $arr1 = [
+                'firstName',
+                'middleName',
+                'lastName',
+                'address',
+                'contactNum',
+                'birthDate',
+                'gender',
+                'religion',
+                'height',
+                'weight',
+                'civilStat',
+                'mop',
+                'birthPlace',
+                'memberID'
+            ];
+            $arr2 = [
+                $newMembers->firstName,
+                $newMembers->middleName,
+                $newMembers->lastName,
+                $newMembers->address,
+                $newMembers->contactNum,
+                $newMembers->birthDate,
+                $newMembers->gender,
+                $newMembers->religion,
+                $newMembers->height,
+                $newMembers->weight,
+                $newMembers->civilStat,
+                $newMembers->mop,
+                $newMembers->birthPlace,
+                $newMembers->memberID
+            ];
+            // $isSave = Members::updateate($arr1, $arr2);
+            // $isSave = Members::update([
+            //     [
+            //         'weight' => $newMembers->weight,
+            //         'memberID' => $newMembers->memberID
+            //     ]
+            // ], ['memberID']);
+            $affectedRow =  DB::update(
+                'update members set  firstName="?", middleName="?", lastName="?", address="?", contactNum="?", birthDate="?", gender="?", religion="?", height=?, weight=?, civilStat="?", mop=?, birthPlace="?" WHERE memberID=?',
+                [
+                    $newMembers->firstName,
+                    $newMembers->middleName,
+                    $newMembers->lastName,
+                    $newMembers->address,
+                    $newMembers->contactNum,
+                    $newMembers->birthDate,
+                    $newMembers->gender,
+                    $newMembers->religion,
+                    $newMembers->height,
+                    $newMembers->weight,
+                    $newMembers->civilStat,
+                    $newMembers->mop,
+                    $newMembers->birthPlace,
+                    $newMembers->memberID
+                ]
+            );
+            dd($affectedRow);
+            // if ($affectedRow > 0) {
+            //     return response()->json(['message' => 'Successfully Updated Member'], Response::HTTP_OK);
+            // } else {
+            //     return response()->json(['message' => 'Failed to Update Member'], Response::HTTP_INTERNAL_SERVER_ERROR);
+            // }
+        } else {
+            return response()->json(['message' => 'Unauthorized'], Response::HTTP_FORBIDDEN);
+        }
     }
 
     /**

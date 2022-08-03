@@ -19,8 +19,11 @@ class Members extends Model
         'address',
         'contactNum',
         'birthDate',
+        'birthPlace',
         'gender',
         'civilStat',
+        'height',
+        'weight',
         'religion',
     ];
 }
