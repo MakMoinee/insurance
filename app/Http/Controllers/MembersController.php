@@ -24,7 +24,8 @@ class MembersController extends Controller
             $total = $newMembers->TotalNewMembers;
             $civil = ['Single', 'Married', 'Widow', 'Separated', 'Divorced'];
             $gend = ['Male', 'Female'];
-            return view('members', ['totalMembers' => $membersCount, 'totalNewMembers' => $total, 'members' => $members, 'civil' => $civil, 'gend' => $gend]);
+            $userType = session('users')[0]->uType;
+            return view('members', ['totalMembers' => $membersCount, 'totalNewMembers' => $total, 'members' => $members, 'civil' => $civil, 'gend' => $gend, 'utype' => $userType]);
         } else {
             return redirect('/');
         }
@@ -53,7 +54,8 @@ class MembersController extends Controller
             $checkMember = Members::where([['firstName', '=', $request['firstname']], ['middleName', '=', $request['middlename']], ['lastName', '=', $request['lastname']]])->get();
             $checkCount = $checkMember->count();
             if ($checkCount == 1) {
-                return response()->json(['message' => 'Failed to Add Member. Member already in database'], Response::HTTP_INTERNAL_SERVER_ERROR);
+                session()->put('userExist', true);
+                return redirect("/members");
             } else {
                 $newMembers = new Members();
                 $newMembers->firstName = $request['firstname'];
@@ -68,13 +70,26 @@ class MembersController extends Controller
                 $newMembers->weight = $request['weight'];
                 $newMembers->civilStat = $request['civilstat'];
                 $newMembers->birthPlace = $request['bplace'];
+                $newMembers->dep1 = $request['dep1'];
+                $newMembers->dep2 = $request['dep2'];
+                $newMembers->dep3 = $request['dep3'];
+                $newMembers->dep4 = $request['dep4'];
+                $newMembers->dep5 = $request['dep5'];
+                $newMembers->dep6 = $request['dep6'];
+                $newMembers->dep7 = $request['dep7'];
+                $newMembers->dep8 = $request['dep8'];
+                $newMembers->dep9 = $request['dep9'];
+                $newMembers->dep10 = $request['dep10'];
                 $mop = strtolower($request['mop']) == "regular" ? 1 : 2;
                 $newMembers->mop = $mop;
                 $isSave = $newMembers->save();
+
                 if ($isSave) {
-                    return response()->json(['message' => 'Successfully Added Member'], Response::HTTP_OK);
+                    session()->put('successAdd', true);
+                    return redirect('/members');
                 } else {
-                    return response()->json(['message' => 'Failed to Add Member'], Response::HTTP_INTERNAL_SERVER_ERROR);
+                    session()->put('errorAdd', true);
+                    return redirect('/members');
                 }
             }
         } else {
@@ -133,70 +148,32 @@ class MembersController extends Controller
             $newMembers->birthPlace = $request['bplace'];
             $mop = strtolower($request['mop']) == "regular" ? 1 : 2;
             $newMembers->mop = $mop;
-            $arr1 = [
-                'firstName',
-                'middleName',
-                'lastName',
-                'address',
-                'contactNum',
-                'birthDate',
-                'gender',
-                'religion',
-                'height',
-                'weight',
-                'civilStat',
-                'mop',
-                'birthPlace',
-                'memberID'
-            ];
-            $arr2 = [
-                $newMembers->firstName,
-                $newMembers->middleName,
-                $newMembers->lastName,
-                $newMembers->address,
-                $newMembers->contactNum,
-                $newMembers->birthDate,
-                $newMembers->gender,
-                $newMembers->religion,
-                $newMembers->height,
-                $newMembers->weight,
-                $newMembers->civilStat,
-                $newMembers->mop,
-                $newMembers->birthPlace,
-                $newMembers->memberID
-            ];
-            // $isSave = Members::updateate($arr1, $arr2);
-            // $isSave = Members::update([
-            //     [
-            //         'weight' => $newMembers->weight,
-            //         'memberID' => $newMembers->memberID
-            //     ]
-            // ], ['memberID']);
-            $affectedRow =  DB::update(
-                'update members set  firstName="?", middleName="?", lastName="?", address="?", contactNum="?", birthDate="?", gender="?", religion="?", height=?, weight=?, civilStat="?", mop=?, birthPlace="?" WHERE memberID=?',
-                [
-                    $newMembers->firstName,
-                    $newMembers->middleName,
-                    $newMembers->lastName,
-                    $newMembers->address,
-                    $newMembers->contactNum,
-                    $newMembers->birthDate,
-                    $newMembers->gender,
-                    $newMembers->religion,
-                    $newMembers->height,
-                    $newMembers->weight,
-                    $newMembers->civilStat,
-                    $newMembers->mop,
-                    $newMembers->birthPlace,
-                    $newMembers->memberID
-                ]
-            );
-            dd($affectedRow);
-            // if ($affectedRow > 0) {
-            //     return response()->json(['message' => 'Successfully Updated Member'], Response::HTTP_OK);
-            // } else {
-            //     return response()->json(['message' => 'Failed to Update Member'], Response::HTTP_INTERNAL_SERVER_ERROR);
-            // }
+
+            $affectedRow = DB::table('members')
+                ->where('memberID', $newMembers->memberID)
+                ->update([
+                    'firstName' => $newMembers->firstName,
+                    'middleName' => $newMembers->middleName,
+                    'lastName' => $newMembers->lastName,
+                    'contactNum' => $newMembers->contactNum,
+                    'birthDate' => $newMembers->birthDate,
+                    'gender' => $newMembers->gender,
+                    'religion' => $newMembers->religion,
+                    'height' => $newMembers->height,
+                    'weight' => $newMembers->weight,
+                    'civilStat' => $newMembers->height,
+                    'mop' => $newMembers->mop,
+                    'birthPlace' => $newMembers->birthPlace
+
+                ]);
+
+            if ($affectedRow > 0) {
+                session()->put('successUpdate', true);
+            } else {
+                session()->put('errorUpdate', true);
+            }
+
+            return redirect('/members');
         } else {
             return response()->json(['message' => 'Unauthorized'], Response::HTTP_FORBIDDEN);
         }
@@ -211,5 +188,24 @@ class MembersController extends Controller
     public function destroy($id)
     {
         //
+        if (session()->exists('users')) {
+            // $users = array(session('basic_settings.0.users')));
+            $userType = session('users')[0]->uType;
+            if ($userType == 1) {
+                $affectedRow = DB::table('members')->where('memberID', '=', $id)->delete();
+
+                if ($affectedRow > 0) {
+                    session()->put('successDelete', true);
+                } else {
+                    session()->put('errorDelete', true);
+                }
+                return redirect('/members');
+            } else {
+                session()->put('errorType', true);
+                return redirect('/members');
+            }
+        } else {
+            return response()->json(['message' => 'Unauthorized'], Response::HTTP_FORBIDDEN);
+        }
     }
 }

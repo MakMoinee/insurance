@@ -24,6 +24,7 @@ Route::get('/gettoken', [HomeController::class, 'getToken']);
 Route::get('/dashboard', [DashboardController::class, 'index']);
 Route::get('/signout', [SignOutController::class, 'index']);
 Route::put('/update/members', [MembersController::class, 'update']);
+Route::delete('/delete/members/{id}', [MembersController::class, 'destroy'])->name('delete.member');
 Route::resource('/members', MembersController::class);
 Route::resource(
     '/login',

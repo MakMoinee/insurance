@@ -37,6 +37,8 @@
 
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css"
         integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    {{-- <script src="sweetalert2.min.js"></script> --}}
+    <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 </head>
 
 <body class="g-sidenav-show  bg-gray-100">
@@ -310,7 +312,7 @@
                                     <a class="dropdown-item border-radius-md" href="javascript:;">
                                         <div class="d-flex py-1">
                                             <div class="my-auto">
-                                                <img src="../assets/img/team-2.jpg" class="avatar avatar-sm  me-3 ">
+                                                <img src="/storage/image/team-2.jpg" class="avatar avatar-sm  me-3 ">
                                             </div>
                                             <div class="d-flex flex-column justify-content-center">
                                                 <h6 class="text-sm font-weight-normal mb-1">
@@ -413,8 +415,14 @@
                 <div class="col-12">
                     <div class="card mb-4">
                         <div class="card-header pb-0">
-                            <button class="btn btn-primary" data-toggle="modal" data-target="#exampleModal">Add
-                                Member</button>
+                            @if ($utype == 1)
+                                <button class="btn btn-primary" data-toggle="modal" data-target="#exampleModal">Add
+                                    Member</button>
+                            @else
+                                <button disabled class="btn btn-primary">Add
+                                    Member</button>
+                            @endif
+
                             <div class="input-group">
                                 <input type="text" class="form-control" placeholder="Type here...">
                             </div>
@@ -470,26 +478,19 @@
                                                     </div>
                                                 </td>
                                                 <td class="align-middle text-center text-sm">
-                                                    <button class="badge badge-sm bg-gradient-success">View</button>
-                                                </td>
-                                                <td class="align-middle">
-                                                    <a href="javascript:;"
-                                                        class="text-secondary font-weight-bold text-xs"
+                                                    <button class="badge badge-sm bg-gradient-success"
                                                         data-toggle="modal"
-                                                        data-target="#editModal{{ $member['memberID'] }}">
-                                                        Edit
-                                                    </a>
-
-                                                    <div class="modal fade" id="editModal{{ $member['memberID'] }}"
+                                                        data-target="#viewModal{{ $member['memberID'] }}">View</button>
+                                                    <div class="modal fade" id="viewModal{{ $member['memberID'] }}"
                                                         tabindex="-1" role="dialog"
-                                                        aria-labelledby="editModalLabel{{ $member['memberID'] }}"
+                                                        aria-labelledby="viewModalLabel{{ $member['memberID'] }}"
                                                         aria-hidden="true">
                                                         <div class="modal-dialog" role="document">
                                                             <div class="modal-content">
                                                                 <div class="modal-header">
                                                                     <h5 class="modal-title"
-                                                                        id="editModalLabel{{ $member['memberID'] }}">
-                                                                        Edit
+                                                                        id="viewModal{{ $member['memberID'] }}">
+                                                                        View
                                                                         Member</h5>
                                                                     <button type="button" class="close"
                                                                         data-dismiss="modal" aria-label="Close">
@@ -503,33 +504,34 @@
                                                                             @method('PUT')
                                                                             @csrf
                                                                             <div class="form-group">
-                                                                                <input type="hidden" name="id"
+                                                                                <input disabled type="hidden"
+                                                                                    name="id"
                                                                                     value="{{ $member['memberID'] }}">
-                                                                                <input required type="text"
+                                                                                <input disabled required type="text"
                                                                                     style="width:150px;"
                                                                                     name="firstname" id="fn"
                                                                                     placeholder="First Name"
                                                                                     value="{{ $member['firstName'] }}">
-                                                                                <input required type="text"
+                                                                                <input disabled required type="text"
                                                                                     style="width:150px;"
                                                                                     name="middlename" id="mn"
                                                                                     placeholder="Middle Name"
                                                                                     value="{{ $member['middleName'] }}">
-                                                                                <input required type="text"
+                                                                                <input disabled required type="text"
                                                                                     style="width:150px;"
                                                                                     name="lastname" id="ln"
                                                                                     placeholder="Last Name"
                                                                                     value="{{ $member['lastName'] }}">
                                                                             </div>
                                                                             <div class="form-group">
-                                                                                <input required type="text"
+                                                                                <input disabled required type="text"
                                                                                     style="width: 460px;"
                                                                                     name="address" id="address"
                                                                                     placeholder="Address"
                                                                                     value="{{ $member['address'] }}">
                                                                             </div>
                                                                             <div class="form-group">
-                                                                                <input required type="text"
+                                                                                <input disabled required type="text"
                                                                                     maxlength="13" name="contact"
                                                                                     id="mn"
                                                                                     placeholder="Contact Number"
@@ -538,7 +540,7 @@
                                                                                 <label for="civilstat"
                                                                                     class="for">Civil
                                                                                     Status:</label>
-                                                                                <select name="civilstat"
+                                                                                <select disabled name="civilstat"
                                                                                     id="civilstat"
                                                                                     value="{{ $member['civilStat'] }}">
                                                                                     @foreach ($civil as $c)
@@ -563,8 +565,8 @@
                                                                             <div class="form-group">
                                                                                 <label for="gender"
                                                                                     class="for">Gender:</label>
-                                                                                <select required name="gender"
-                                                                                    id="civilstat"
+                                                                                <select disabled required
+                                                                                    name="gender" id="civilstat"
                                                                                     value="{{ $member['gender'] }}">
                                                                                     @foreach ($gend as $g)
                                                                                         @if (mb_strtolower($member['gender']) == mb_strtolower($g))
@@ -583,7 +585,7 @@
                                                                                 </select>
                                                                                 <label for="religion"
                                                                                     class="for">Religion:</label>
-                                                                                <input required type="text"
+                                                                                <input disabled required type="text"
                                                                                     style="width: 265px;margin-left: 5px;"
                                                                                     name="religion" id="religion"
                                                                                     placeholder="Religion"
@@ -594,7 +596,7 @@
                                                                                 <label for="birthdate"
                                                                                     class="for">Date of
                                                                                     Birth:</label>
-                                                                                <input required type="date"
+                                                                                <input disabled required type="date"
                                                                                     style="width: 150px;margin-left: 10px;"
                                                                                     name="birthdate" id="birthdate"
                                                                                     placeholder="Date of Birth"
@@ -603,7 +605,7 @@
                                                                             </div>
 
                                                                             <div class="form-group">
-                                                                                <input required type="text"
+                                                                                <input disabled required type="text"
                                                                                     style="width: 460px;"
                                                                                     name="bplace" id="bplace"
                                                                                     placeholder="Place of Birth"
@@ -612,14 +614,14 @@
                                                                             <div class="form-group">
                                                                                 <label for="height"
                                                                                     class="for">Height:</label>
-                                                                                <input required type="number"
+                                                                                <input disabled required type="number"
                                                                                     style="width: 150px;margin-right: 5px;"
                                                                                     name="height" id="height"
                                                                                     placeholder="Height (cm)"
                                                                                     value="{{ $member['height'] }}">
                                                                                 <label for="weight"
                                                                                     class="for">Weight:</label>
-                                                                                <input required type="number"
+                                                                                <input disabled required type="number"
                                                                                     style="width: 150px;"
                                                                                     name="weight" id="weight"
                                                                                     placeholder="Weight (kg)"
@@ -629,7 +631,8 @@
                                                                                 <label for="mop"
                                                                                     class="for">Mode of
                                                                                     Payment:</label>
-                                                                                <select name="mop" id="mop"
+                                                                                <select disabled name="mop"
+                                                                                    id="mop"
                                                                                     style="margin-left: 5px;">
                                                                                     @if ($member['mop'] == 1)
                                                                                         <option value="Regular"
@@ -650,19 +653,342 @@
                                                                                 </select>
                                                                             </div>
                                                                         </div>
+                                                                        <div class="form-group">
+                                                                            <label for="benef"
+                                                                                class="for">Benefeciaries:</label>
+                                                                            <br>
+                                                                            <input disabled required type="text"
+                                                                                name="dep1" id="dep1" value="{{ $member['dep1'] }}">
+                                                                            <input disabled type="text"
+                                                                                name="dep2" id="dep2" value="{{ $member['dep2'] }}">
+                                                                        </div>
+                                                                        <div class="form-group">
+                                                                            <input disabled type="text"
+                                                                                name="dep3" id="dep3" value="{{ $member['dep3'] }}">
+                                                                            <input disabled type="text"
+                                                                                name="dep4" id="dep4" value="{{ $member['dep4'] }}">
+                                                                        </div>
+                                                                        <div class="form-group">
+                                                                            <input disabled type="text"
+                                                                                name="dep5" id="dep5" value="{{ $member['dep5'] }}">
+                                                                            <input disabled type="text"
+                                                                                name="dep6" id="dep6" value="{{ $member['dep6'] }}">
+                                                                        </div>
+                                                                        <div class="form-group">
+                                                                            <input disabled type="text"
+                                                                                name="dep7" id="dep7" value="{{ $member['dep7'] }}">
+                                                                            <input disabled type="text"
+                                                                                name="dep8" id="dep8" value="{{ $member['dep8'] }}">
+                                                                        </div>
+                                                                        <div class="form-group">
+                                                                            <input disabled type="text"
+                                                                                name="dep9" id="dep9" value="{{ $member['dep9'] }}">
+                                                                            <input disabled type="text"
+                                                                                name="dep10" id="dep10" value="{{ $member['dep10'] }}">
+                                                                        </div>
                                                                     </div>
                                                                     <div class="modal-footer">
                                                                         <button type="button"
                                                                             class="btn btn-secondary"
                                                                             data-dismiss="modal">Close</button>
-                                                                        <button type="submit"
-                                                                            class="btn btn-primary">Update
-                                                                            Member</button>
                                                                     </div>
                                                                 </form>
                                                             </div>
                                                         </div>
                                                     </div>
+
+                                                </td>
+                                                <td class="align-middle">
+                                                    @if ($utype == 1)
+                                                        <a href="javascript:;"
+                                                            class="text-secondary font-weight-bold text-xs"
+                                                            data-toggle="modal"
+                                                            data-target="#editModal{{ $member['memberID'] }}">
+                                                            <button
+                                                                class="badge badge-xs bg-gradient-warning text-xs">Edit</button>
+                                                        </a>
+                                                        <div class="modal fade"
+                                                            id="editModal{{ $member['memberID'] }}" tabindex="-1"
+                                                            role="dialog"
+                                                            aria-labelledby="editModalLabel{{ $member['memberID'] }}"
+                                                            aria-hidden="true">
+                                                            <div class="modal-dialog" role="document">
+                                                                <div class="modal-content">
+                                                                    <div class="modal-header">
+                                                                        <h5 class="modal-title"
+                                                                            id="editModalLabel{{ $member['memberID'] }}">
+                                                                            Edit
+                                                                            Member</h5>
+                                                                        <button type="button" class="close"
+                                                                            data-dismiss="modal" aria-label="Close">
+                                                                            <span aria-hidden="true">&times;</span>
+                                                                        </button>
+                                                                    </div>
+                                                                    <form action="/update/members" method="POST"
+                                                                        enctype="multipart/form-data">
+                                                                        <div class="modal-body">
+                                                                            <div class="row">
+                                                                                @method('PUT')
+                                                                                @csrf
+                                                                                <div class="form-group">
+                                                                                    <input type="hidden"
+                                                                                        name="id"
+                                                                                        value="{{ $member['memberID'] }}">
+                                                                                    <input required type="text"
+                                                                                        style="width:150px;"
+                                                                                        name="firstname"
+                                                                                        id="fn"
+                                                                                        placeholder="First Name"
+                                                                                        value="{{ $member['firstName'] }}">
+                                                                                    <input required type="text"
+                                                                                        style="width:150px;"
+                                                                                        name="middlename"
+                                                                                        id="mn"
+                                                                                        placeholder="Middle Name"
+                                                                                        value="{{ $member['middleName'] }}">
+                                                                                    <input required type="text"
+                                                                                        style="width:150px;"
+                                                                                        name="lastname" id="ln"
+                                                                                        placeholder="Last Name"
+                                                                                        value="{{ $member['lastName'] }}">
+                                                                                </div>
+                                                                                <div class="form-group">
+                                                                                    <input required type="text"
+                                                                                        style="width: 460px;"
+                                                                                        name="address" id="address"
+                                                                                        placeholder="Address"
+                                                                                        value="{{ $member['address'] }}">
+                                                                                </div>
+                                                                                <div class="form-group">
+                                                                                    <input required type="text"
+                                                                                        maxlength="13" name="contact"
+                                                                                        id="mn"
+                                                                                        placeholder="Contact Number"
+                                                                                        style="margin-right: 20px;"
+                                                                                        value="{{ $member['contactNum'] }}">
+                                                                                    <label for="civilstat"
+                                                                                        class="for">Civil
+                                                                                        Status:</label>
+                                                                                    <select name="civilstat"
+                                                                                        id="civilstat"
+                                                                                        value="{{ $member['civilStat'] }}">
+                                                                                        @foreach ($civil as $c)
+                                                                                            @if (mb_strtolower($member['civilStat']) == mb_strtolower($c))
+                                                                                                <option
+                                                                                                    value="{{ $c }}"
+                                                                                                    selected>
+                                                                                                    {{ $c }}
+                                                                                                </option>
+                                                                                            @else
+                                                                                                <option
+                                                                                                    value="{{ $c }}">
+                                                                                                    {{ $c }}
+                                                                                                </option>
+                                                                                            @endif
+                                                                                        @endforeach
+
+
+
+                                                                                    </select>
+                                                                                </div>
+                                                                                <div class="form-group">
+                                                                                    <label for="gender"
+                                                                                        class="for">Gender:</label>
+                                                                                    <select required name="gender"
+                                                                                        id="civilstat"
+                                                                                        value="{{ $member['gender'] }}">
+                                                                                        @foreach ($gend as $g)
+                                                                                            @if (mb_strtolower($member['gender']) == mb_strtolower($g))
+                                                                                                <option
+                                                                                                    value="{{ $g }}"
+                                                                                                    selected>
+                                                                                                    {{ $g }}
+                                                                                                </option>
+                                                                                            @else
+                                                                                                <option
+                                                                                                    value="{{ $g }}">
+                                                                                                    {{ $g }}
+                                                                                                </option>
+                                                                                            @endif
+                                                                                        @endforeach
+                                                                                    </select>
+                                                                                    <label for="religion"
+                                                                                        class="for">Religion:</label>
+                                                                                    <input required type="text"
+                                                                                        style="width: 265px;margin-left: 5px;"
+                                                                                        name="religion" id="religion"
+                                                                                        placeholder="Religion"
+                                                                                        value="{{ $member['religion'] }}">
+
+                                                                                </div>
+                                                                                <div class="form-group">
+                                                                                    <label for="birthdate"
+                                                                                        class="for">Date of
+                                                                                        Birth:</label>
+                                                                                    <input required type="date"
+                                                                                        style="width: 150px;margin-left: 10px;"
+                                                                                        name="birthdate"
+                                                                                        id="birthdate"
+                                                                                        placeholder="Date of Birth"
+                                                                                        title="Date of Birth"
+                                                                                        value="{{ date('Y-m-d', strtotime($member['birthDate'])) }}">
+                                                                                </div>
+
+                                                                                <div class="form-group">
+                                                                                    <input required type="text"
+                                                                                        style="width: 460px;"
+                                                                                        name="bplace" id="bplace"
+                                                                                        placeholder="Place of Birth"
+                                                                                        value="{{ $member['birthPlace'] }}">
+                                                                                </div>
+                                                                                <div class="form-group">
+                                                                                    <label for="height"
+                                                                                        class="for">Height:</label>
+                                                                                    <input required type="number"
+                                                                                        style="width: 150px;margin-right: 5px;"
+                                                                                        name="height" id="height"
+                                                                                        placeholder="Height (cm)"
+                                                                                        value="{{ $member['height'] }}">
+                                                                                    <label for="weight"
+                                                                                        class="for">Weight:</label>
+                                                                                    <input required type="number"
+                                                                                        style="width: 150px;"
+                                                                                        name="weight" id="weight"
+                                                                                        placeholder="Weight (kg)"
+                                                                                        value="{{ $member['weight'] }}">
+                                                                                </div>
+                                                                                <div class="form-group">
+                                                                                    <label for="mop"
+                                                                                        class="for">Mode of
+                                                                                        Payment:</label>
+                                                                                    <select name="mop"
+                                                                                        id="mop"
+                                                                                        style="margin-left: 5px;">
+                                                                                        @if ($member['mop'] == 1)
+                                                                                            <option value="Regular"
+                                                                                                selected>
+                                                                                                Regular</option>
+                                                                                            <option value="Indigent">
+                                                                                                Indigent
+                                                                                            </option>
+                                                                                        @else
+                                                                                            <option value="Regular">
+                                                                                                Regular</option>
+                                                                                            <option value="Indigent"
+                                                                                                selected>
+                                                                                                Indigent
+                                                                                            </option>
+                                                                                        @endif
+
+                                                                                    </select>
+                                                                                </div>
+                                                                                <div class="form-group">
+                                                                                    <label for="benef"
+                                                                                        class="for">Benefeciaries:</label>
+                                                                                    <br>
+                                                                                    <input required type="text"
+                                                                                        name="dep1" id="dep1" value="{{ $member['dep1'] }}">
+                                                                                    <input type="text"
+                                                                                        name="dep2" id="dep2" value="{{ $member['dep2'] }}">
+                                                                                </div>
+                                                                                <div class="form-group">
+                                                                                    <input type="text"
+                                                                                        name="dep3" id="dep3" value="{{ $member['dep3'] }}">
+                                                                                    <input type="text"
+                                                                                        name="dep4" id="dep4" value="{{ $member['dep4'] }}">
+                                                                                </div>
+                                                                                <div class="form-group">
+                                                                                    <input type="text"
+                                                                                        name="dep5" id="dep5" value="{{ $member['dep5'] }}">
+                                                                                    <input type="text"
+                                                                                        name="dep6" id="dep6" value="{{ $member['dep6'] }}">
+                                                                                </div>
+                                                                                <div class="form-group">
+                                                                                    <input type="text"
+                                                                                        name="dep7" id="dep7" value="{{ $member['dep7'] }}">
+                                                                                    <input type="text"
+                                                                                        name="dep8" id="dep8" value="{{ $member['dep8'] }}">
+                                                                                </div>
+                                                                                <div class="form-group">
+                                                                                    <input type="text"
+                                                                                        name="dep9" id="dep9" value="{{ $member['dep9'] }}">
+                                                                                    <input type="text"
+                                                                                        name="dep10" id="dep10" value="{{ $member['dep10'] }}">
+                                                                                </div>
+                                                                            </div>
+                                                                        </div>
+                                                                        <div class="modal-footer">
+                                                                            <button type="button"
+                                                                                class="btn btn-secondary"
+                                                                                data-dismiss="modal">Close</button>
+                                                                            <button type="submit"
+                                                                                class="btn btn-primary">Update
+                                                                                Member</button>
+                                                                        </div>
+                                                                    </form>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    @else
+                                                        <a href="javascript:;"
+                                                            class="text-secondary font-weight-bold text-xs" disabled>
+                                                            <button disabled
+                                                                class="badge badge-xs bg-gradient-disabled text-xs">Edit</button>
+                                                        </a>
+                                                    @endif
+
+                                                </td>
+                                                <td>
+                                                    @if ($utype == 1)
+                                                        <a href="javascript:;"
+                                                            class="text-secondary font-weight-bold text-xs"
+                                                            data-toggle="modal"
+                                                            data-target="#deleteModal{{ $member['memberID'] }}">
+                                                            <button
+                                                                class="badge badge-xs bg-gradient-danger text-xs">Delete</button>
+                                                        </a>
+                                                        <div class="modal fade"
+                                                            id="deleteModal{{ $member['memberID'] }}" tabindex="-1"
+                                                            role="dialog"
+                                                            aria-labelledby="deleteModalLabel{{ $member['memberID'] }}"
+                                                            aria-hidden="true">
+                                                            <div class="modal-dialog" role="document">
+                                                                <div class="modal-content">
+                                                                    <form
+                                                                        action="{{ route('delete.member', ['id' => $member['memberID']]) }}"
+                                                                        method="POST" enctype="multipart/form-data">
+                                                                        @method('delete')
+                                                                        @csrf
+                                                                        <div class="form-group">
+                                                                            <input type="hidden" name="mID"
+                                                                                value="{{ $member['memberID'] }}">
+                                                                        </div>
+                                                                        <div class="modal-body">
+                                                                            <h5 class="modal-title"
+                                                                                id="deleteModalLabel">
+                                                                                Do you want to
+                                                                                proceed Deleting Member ?</h5>
+                                                                        </div>
+                                                                        <div class="modal-footer">
+                                                                            <button type="submit"
+                                                                                class="btn btn-primary">Yes,
+                                                                                Proceed</button>
+                                                                            <button type="button"
+                                                                                class="btn btn-secondary"
+                                                                                data-dismiss="modal">Close</button>
+                                                                        </div>
+                                                                    </form>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    @else
+                                                        <a href="javascript:;"
+                                                            class="text-secondary font-weight-bold text-xs">
+                                                            <button disabled
+                                                                class="badge badge-xs bg-gradient-disabled text-xs">Delete</button>
+                                                        </a>
+                                                    @endif
+
                                                 </td>
                                             </tr>
                                         @endforeach
@@ -873,6 +1199,28 @@
                                     <option value="Indigent">Indigent</option>
                                 </select>
                             </div>
+                            <div class="form-group">
+                                <label for="benef" class="for">Benefeciaries:</label>
+                                <br>
+                                <input required type="text" name="dep1" id="dep1">
+                                <input type="text" name="dep2" id="dep2">
+                            </div>
+                            <div class="form-group">
+                                <input type="text" name="dep3" id="dep3">
+                                <input type="text" name="dep4" id="dep4">
+                            </div>
+                            <div class="form-group">
+                                <input type="text" name="dep5" id="dep5">
+                                <input type="text" name="dep6" id="dep6">
+                            </div>
+                            <div class="form-group">
+                                <input type="text" name="dep7" id="dep7">
+                                <input type="text" name="dep8" id="dep8">
+                            </div>
+                            <div class="form-group">
+                                <input type="text" name="dep9" id="dep9">
+                                <input type="text" name="dep10" id="dep10">
+                            </div>
 
                     </div>
                 </div>
@@ -902,6 +1250,109 @@
             </div>
         </div>
     </div>
+    @if (session()->pull('successAdd'))
+        <script>
+            Swal.fire({
+                position: 'center',
+                icon: 'success',
+                title: 'Successfully Added Record',
+                showConfirmButton: false,
+                timer: 500
+            });
+        </script>;
+        {{ session()->forget('successAdd') }}
+    @endif
+
+    @if (session()->pull('successDelete'))
+        <script>
+            Swal.fire({
+                position: 'center',
+                icon: 'success',
+                title: 'Successfully Deleted Member',
+                showConfirmButton: false,
+                timer: 800
+            });
+        </script>;
+        {{ session()->forget('successDelete') }}
+    @endif
+
+    @if (session()->pull('errorDelete'))
+        <script>
+            Swal.fire({
+                position: 'center',
+                icon: 'warning',
+                title: 'Failed To Delete Member',
+                showConfirmButton: false,
+                timer: 800
+            });
+        </script>;
+        {{ session()->forget('errorDelete') }}
+    @endif
+
+    @if (session()->pull('userExist'))
+        <script>
+            Swal.fire({
+                position: 'center',
+                icon: 'warning',
+                title: 'Member Already Exist',
+                showConfirmButton: false,
+                timer: 800
+            });
+        </script>;
+        {{ session()->forget('userExist') }}
+    @endif
+
+    @if (session()->pull('errorAdd'))
+        <script>
+            Swal.fire({
+                position: 'center',
+                icon: 'warning',
+                title: 'Failed to Add Member',
+                showConfirmButton: false,
+                timer: 800
+            });
+        </script>;
+        {{ session()->forget('errorAdd') }}
+    @endif
+
+    @if (session()->pull('errorType'))
+        <script>
+            Swal.fire({
+                position: 'center',
+                icon: 'warning',
+                title: 'Unauthorized',
+                showConfirmButton: false,
+                timer: 800
+            });
+        </script>;
+        {{ session()->forget('errorType') }}
+    @endif
+
+    @if (session()->pull('successUpdate'))
+        <script>
+            Swal.fire({
+                position: 'center',
+                icon: 'success',
+                title: 'Successfully Updated Member',
+                showConfirmButton: false,
+                timer: 800
+            });
+        </script>;
+        {{ session()->forget('successUpdate') }}
+    @endif
+
+    @if (session()->pull('errorUpdate'))
+        <script>
+            Swal.fire({
+                position: 'center',
+                icon: 'warning',
+                title: 'Failed To Update Member',
+                showConfirmButton: false,
+                timer: 800
+            });
+        </script>;
+        {{ session()->forget('errorUpdate') }}
+    @endif
     <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
         integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous">
     </script>
@@ -1100,6 +1551,7 @@
     <script async defer src="https://buttons.github.io/buttons.js"></script>
     <!-- Control Center for Soft Dashboard: parallax effects, scripts for the example pages etc -->
     <script src="js/soft-ui-dashboard.min.js?v=1.0.6"></script>
+
 
 </body>
 

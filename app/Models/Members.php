@@ -25,5 +25,15 @@ class Members extends Model
         'height',
         'weight',
         'religion',
+        'dep1',
+        'dep2',
+        'dep3',
+        'dep4',
+        'dep5',
+        'dep6',
+        'dep7',
+        'dep8',
+        'dep9',
+        'dep10',
     ];
 }

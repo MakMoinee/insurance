@@ -28,6 +28,16 @@ class CreateMembersTable extends Migration
             $table->string('weight');
             $table->integer('mop');
             $table->date('birthDate')->nullable(true);
+            $table->string('dep1');
+            $table->string('dep2')->nullable(true);
+            $table->string('dep3')->nullable(true);
+            $table->string('dep4')->nullable(true);
+            $table->string('dep5')->nullable(true);
+            $table->string('dep6')->nullable(true);
+            $table->string('dep7')->nullable(true);
+            $table->string('dep8')->nullable(true);
+            $table->string('dep9')->nullable(true);
+            $table->string('dep10')->nullable(true);
             $table->timestamps();
         });
     }

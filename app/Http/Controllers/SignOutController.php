@@ -12,7 +12,8 @@ class SignOutController extends Controller
     {
         if (session()->exists('users')) {
             Session::flush();
+            session()->forget('users');
         }
-        return view('home');
+        return redirect('/');
     }
 }
