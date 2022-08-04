@@ -658,33 +658,43 @@
                                                                                 class="for">Benefeciaries:</label>
                                                                             <br>
                                                                             <input disabled required type="text"
-                                                                                name="dep1" id="dep1" value="{{ $member['dep1'] }}">
+                                                                                name="dep1" id="dep1"
+                                                                                value="{{ $member['dep1'] }}">
                                                                             <input disabled type="text"
-                                                                                name="dep2" id="dep2" value="{{ $member['dep2'] }}">
+                                                                                name="dep2" id="dep2"
+                                                                                value="{{ $member['dep2'] }}">
                                                                         </div>
                                                                         <div class="form-group">
                                                                             <input disabled type="text"
-                                                                                name="dep3" id="dep3" value="{{ $member['dep3'] }}">
+                                                                                name="dep3" id="dep3"
+                                                                                value="{{ $member['dep3'] }}">
                                                                             <input disabled type="text"
-                                                                                name="dep4" id="dep4" value="{{ $member['dep4'] }}">
+                                                                                name="dep4" id="dep4"
+                                                                                value="{{ $member['dep4'] }}">
                                                                         </div>
                                                                         <div class="form-group">
                                                                             <input disabled type="text"
-                                                                                name="dep5" id="dep5" value="{{ $member['dep5'] }}">
+                                                                                name="dep5" id="dep5"
+                                                                                value="{{ $member['dep5'] }}">
                                                                             <input disabled type="text"
-                                                                                name="dep6" id="dep6" value="{{ $member['dep6'] }}">
+                                                                                name="dep6" id="dep6"
+                                                                                value="{{ $member['dep6'] }}">
                                                                         </div>
                                                                         <div class="form-group">
                                                                             <input disabled type="text"
-                                                                                name="dep7" id="dep7" value="{{ $member['dep7'] }}">
+                                                                                name="dep7" id="dep7"
+                                                                                value="{{ $member['dep7'] }}">
                                                                             <input disabled type="text"
-                                                                                name="dep8" id="dep8" value="{{ $member['dep8'] }}">
+                                                                                name="dep8" id="dep8"
+                                                                                value="{{ $member['dep8'] }}">
                                                                         </div>
                                                                         <div class="form-group">
                                                                             <input disabled type="text"
-                                                                                name="dep9" id="dep9" value="{{ $member['dep9'] }}">
+                                                                                name="dep9" id="dep9"
+                                                                                value="{{ $member['dep9'] }}">
                                                                             <input disabled type="text"
-                                                                                name="dep10" id="dep10" value="{{ $member['dep10'] }}">
+                                                                                name="dep10" id="dep10"
+                                                                                value="{{ $member['dep10'] }}">
                                                                         </div>
                                                                     </div>
                                                                     <div class="modal-footer">
@@ -887,33 +897,43 @@
                                                                                         class="for">Benefeciaries:</label>
                                                                                     <br>
                                                                                     <input required type="text"
-                                                                                        name="dep1" id="dep1" value="{{ $member['dep1'] }}">
+                                                                                        name="dep1" id="dep1"
+                                                                                        value="{{ $member['dep1'] }}">
                                                                                     <input type="text"
-                                                                                        name="dep2" id="dep2" value="{{ $member['dep2'] }}">
+                                                                                        name="dep2" id="dep2"
+                                                                                        value="{{ $member['dep2'] }}">
                                                                                 </div>
                                                                                 <div class="form-group">
                                                                                     <input type="text"
-                                                                                        name="dep3" id="dep3" value="{{ $member['dep3'] }}">
+                                                                                        name="dep3" id="dep3"
+                                                                                        value="{{ $member['dep3'] }}">
                                                                                     <input type="text"
-                                                                                        name="dep4" id="dep4" value="{{ $member['dep4'] }}">
+                                                                                        name="dep4" id="dep4"
+                                                                                        value="{{ $member['dep4'] }}">
                                                                                 </div>
                                                                                 <div class="form-group">
                                                                                     <input type="text"
-                                                                                        name="dep5" id="dep5" value="{{ $member['dep5'] }}">
+                                                                                        name="dep5" id="dep5"
+                                                                                        value="{{ $member['dep5'] }}">
                                                                                     <input type="text"
-                                                                                        name="dep6" id="dep6" value="{{ $member['dep6'] }}">
+                                                                                        name="dep6" id="dep6"
+                                                                                        value="{{ $member['dep6'] }}">
                                                                                 </div>
                                                                                 <div class="form-group">
                                                                                     <input type="text"
-                                                                                        name="dep7" id="dep7" value="{{ $member['dep7'] }}">
+                                                                                        name="dep7" id="dep7"
+                                                                                        value="{{ $member['dep7'] }}">
                                                                                     <input type="text"
-                                                                                        name="dep8" id="dep8" value="{{ $member['dep8'] }}">
+                                                                                        name="dep8" id="dep8"
+                                                                                        value="{{ $member['dep8'] }}">
                                                                                 </div>
                                                                                 <div class="form-group">
                                                                                     <input type="text"
-                                                                                        name="dep9" id="dep9" value="{{ $member['dep9'] }}">
+                                                                                        name="dep9" id="dep9"
+                                                                                        value="{{ $member['dep9'] }}">
                                                                                     <input type="text"
-                                                                                        name="dep10" id="dep10" value="{{ $member['dep10'] }}">
+                                                                                        name="dep10" id="dep10"
+                                                                                        value="{{ $member['dep10'] }}">
                                                                                 </div>
                                                                             </div>
                                                                         </div>
@@ -1198,6 +1218,13 @@
                                     <option value="Regular" selected>Regular</option>
                                     <option value="Indigent">Indigent</option>
                                 </select>
+                                <label for="plan" class="for">Plans</label>
+                                <select name="plan" id="plan" style="margin-left: 5px;">
+                                    @foreach ($plans as $plan)
+                                        <option value="{{ $plan['description'] }}">{{ $plan['description'] }}
+                                        </option>
+                                    @endforeach
+                                </select>
                             </div>
                             <div class="form-group">
                                 <label for="benef" class="for">Benefeciaries:</label>
@@ -1234,8 +1261,8 @@
     </div>
 
 
-    <div class="modal fade" id="signOutModal" tabindex="-1" role="dialog" aria-labelledby="signOutModalLabel"
-        aria-hidden="true">
+    <div class="modal fade" id="signOutModal" tabindex="-1" role="dialog"
+        aria-labelledby="signOutModalLabel" aria-hidden="true">
         <div class="modal-dialog" role="document">
             <div class="modal-content">
                 <form action="/signout" method="GET">

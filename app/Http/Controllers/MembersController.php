@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Members;
+use App\Models\Plans;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Symfony\Component\HttpFoundation\Response;
@@ -25,7 +26,8 @@ class MembersController extends Controller
             $civil = ['Single', 'Married', 'Widow', 'Separated', 'Divorced'];
             $gend = ['Male', 'Female'];
             $userType = session('users')[0]->uType;
-            return view('members', ['totalMembers' => $membersCount, 'totalNewMembers' => $total, 'members' => $members, 'civil' => $civil, 'gend' => $gend, 'utype' => $userType]);
+            $plans = Plans::all();
+            return view('members', ['totalMembers' => $membersCount, 'totalNewMembers' => $total, 'members' => $members, 'civil' => $civil, 'gend' => $gend, 'utype' => $userType, 'plans' => $plans]);
         } else {
             return redirect('/');
         }
