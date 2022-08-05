@@ -35,5 +35,7 @@ class Members extends Model
         'dep8',
         'dep9',
         'dep10',
+        'plan',
+        'amount'
     ];
 }

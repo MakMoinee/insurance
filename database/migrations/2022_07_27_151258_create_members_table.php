@@ -28,6 +28,7 @@ class CreateMembersTable extends Migration
             $table->string('weight');
             $table->integer('mop');
             $table->date('birthDate')->nullable(true);
+            $table->integer('plan');
             $table->string('dep1');
             $table->string('dep2')->nullable(true);
             $table->string('dep3')->nullable(true);
@@ -38,6 +39,7 @@ class CreateMembersTable extends Migration
             $table->string('dep8')->nullable(true);
             $table->string('dep9')->nullable(true);
             $table->string('dep10')->nullable(true);
+            $table->float('amount');
             $table->timestamps();
         });
     }

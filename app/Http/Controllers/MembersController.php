@@ -26,7 +26,8 @@ class MembersController extends Controller
             $civil = ['Single', 'Married', 'Widow', 'Separated', 'Divorced'];
             $gend = ['Male', 'Female'];
             $userType = session('users')[0]->uType;
-            $plans = Plans::all();
+            $queryResult = DB::table('vwactiveplan')->get();
+            $plans = json_decode($queryResult, true);
             return view('members', ['totalMembers' => $membersCount, 'totalNewMembers' => $total, 'members' => $members, 'civil' => $civil, 'gend' => $gend, 'utype' => $userType, 'plans' => $plans]);
         } else {
             return redirect('/');
@@ -72,6 +73,7 @@ class MembersController extends Controller
                 $newMembers->weight = $request['weight'];
                 $newMembers->civilStat = $request['civilstat'];
                 $newMembers->birthPlace = $request['bplace'];
+                $newMembers->plan = $request['plan'];
                 $newMembers->dep1 = $request['dep1'];
                 $newMembers->dep2 = $request['dep2'];
                 $newMembers->dep3 = $request['dep3'];
@@ -148,6 +150,17 @@ class MembersController extends Controller
             $newMembers->weight = $request['weight'];
             $newMembers->civilStat = $request['civilstat'];
             $newMembers->birthPlace = $request['bplace'];
+            $newMembers->plan = $request['plan'];
+            $newMembers->dep1 = $request['dep1'];
+            $newMembers->dep2 = $request['dep2'];
+            $newMembers->dep3 = $request['dep3'];
+            $newMembers->dep4 = $request['dep4'];
+            $newMembers->dep5 = $request['dep5'];
+            $newMembers->dep6 = $request['dep6'];
+            $newMembers->dep7 = $request['dep7'];
+            $newMembers->dep8 = $request['dep8'];
+            $newMembers->dep9 = $request['dep9'];
+            $newMembers->dep10 = $request['dep10'];
             $mop = strtolower($request['mop']) == "regular" ? 1 : 2;
             $newMembers->mop = $mop;
 
@@ -165,8 +178,18 @@ class MembersController extends Controller
                     'weight' => $newMembers->weight,
                     'civilStat' => $newMembers->height,
                     'mop' => $newMembers->mop,
-                    'birthPlace' => $newMembers->birthPlace
-
+                    'birthPlace' => $newMembers->birthPlace,
+                    'plan' => $newMembers->plan,
+                    'dep1' => $newMembers->dep1,
+                    'dep2' => $newMembers->dep2,
+                    'dep3' => $newMembers->dep3,
+                    'dep4' => $newMembers->dep4,
+                    'dep5' => $newMembers->dep5,
+                    'dep6' => $newMembers->dep6,
+                    'dep7' => $newMembers->dep7,
+                    'dep8' => $newMembers->dep8,
+                    'dep9' => $newMembers->dep9,
+                    'dep10' => $newMembers->dep10
                 ]);
 
             if ($affectedRow > 0) {

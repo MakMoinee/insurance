@@ -12,6 +12,7 @@
 
 * The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
 -->
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -416,7 +417,8 @@
                     <div class="card mb-4">
                         <div class="card-header pb-0">
                             @if ($utype == 1)
-                                <button class="btn btn-primary" data-toggle="modal" data-target="#exampleModal">Add
+                                <button onclick="doOnAddingMember()" class="btn btn-primary" data-toggle="modal"
+                                    data-target="#exampleModal">Add
                                     Member</button>
                             @else
                                 <button disabled class="btn btn-primary">Add
@@ -650,6 +652,28 @@
                                                                                         </option>
                                                                                     @endif
 
+                                                                                </select>
+                                                                            </div>
+                                                                            <div class="form-group">
+                                                                                <label for="plan"
+                                                                                    class="for">Plans:</label>
+                                                                                <select disabled required
+                                                                                    name="plan" id="plan"
+                                                                                    style="margin-left: 5px;">
+                                                                                    @foreach (json_decode(DB::table('vwactiveplan')->get(), true) as $plan)
+                                                                                        @if ($member['plan'] == $plan['planID'])
+                                                                                            <option
+                                                                                                value="{{ $plan['planID'] }}"
+                                                                                                selected>
+                                                                                                {{ $plan['description'] }}
+                                                                                            </option>
+                                                                                        @else
+                                                                                            <option
+                                                                                                value="{{ $plan['planID'] }}">
+                                                                                                {{ $plan['description'] }}
+                                                                                            </option>
+                                                                                        @endif
+                                                                                    @endforeach
                                                                                 </select>
                                                                             </div>
                                                                         </div>
@@ -890,6 +914,28 @@
                                                                                             </option>
                                                                                         @endif
 
+                                                                                    </select>
+                                                                                </div>
+                                                                                <div class="form-group">
+                                                                                    <label for="plan"
+                                                                                        class="for">Plans:</label>
+                                                                                    <select required name="plan"
+                                                                                        id="plan"
+                                                                                        style="margin-left: 5px;">
+                                                                                        @foreach (json_decode(DB::table('vwactiveplan')->get(), true) as $plan)
+                                                                                            @if ($member['plan'] == $plan['planID'])
+                                                                                                <option
+                                                                                                    value="{{ $plan['planID'] }}"
+                                                                                                    selected>
+                                                                                                    {{ $plan['description'] }}
+                                                                                                </option>
+                                                                                            @else
+                                                                                                <option
+                                                                                                    value="{{ $plan['planID'] }}">
+                                                                                                    {{ $plan['description'] }}
+                                                                                                </option>
+                                                                                            @endif
+                                                                                        @endforeach
                                                                                     </select>
                                                                                 </div>
                                                                                 <div class="form-group">
@@ -1218,13 +1264,21 @@
                                     <option value="Regular" selected>Regular</option>
                                     <option value="Indigent">Indigent</option>
                                 </select>
-                                <label for="plan" class="for">Plans</label>
-                                <select name="plan" id="plan" style="margin-left: 5px;">
+                            </div>
+                            <div class="form-group">
+                                <label for="plan" class="for">Plans:</label>
+                                <select onchange="planChange(this.options[this.selectedIndex])" required
+                                    name="plan" id="newMemberPlan" style="margin-left: 5px;">
                                     @foreach ($plans as $plan)
-                                        <option value="{{ $plan['description'] }}">{{ $plan['description'] }}
+                                        <option value="{{ $plan['planID'] }}" am="{{ $plan['amount'] }}">
+                                            {{ $plan['description'] }}
                                         </option>
                                     @endforeach
                                 </select>
+                            </div>
+                            <div class="form-group">
+                                <label for="amount">Plan Amount: </label>
+                                <input required readonly type="text" name="amount" id="newMemberAmount">
                             </div>
                             <div class="form-group">
                                 <label for="benef" class="for">Benefeciaries:</label>
@@ -1572,6 +1626,23 @@
                 damping: '0.5'
             }
             Scrollbar.init(document.querySelector('#sidenav-scrollbar'), options);
+        }
+
+        function doOnAddingMember() {
+            let amount = document.getElementById('newMemberAmount');
+            amount.removeAttribute('value');
+            let newMemberPlan = document.getElementById('newMemberPlan');
+            newMemberPlan.selectedIndex = 0;
+            @php
+             $plans = json_decode(DB::table('vwactiveplan')->get(), true);
+            @endphp
+        }
+
+        function planChange(e) {
+            console.log(e);
+            let amount = document.getElementById('newMemberAmount');
+            console.log(amount);
+            amount.setAttribute('value', e.getAttribute('am'));
         }
     </script>
     <!-- Github buttons -->
