@@ -26,7 +26,13 @@ class CollectionController extends Controller
             $userType = session('users')[0]->uType;
             $queryResult = DB::table('vwactiveplan')->get();
             $plans = json_decode($queryResult, true);
-            return view('collection', ['totalMembers' => $membersCount, 'totalNewMembers' => $total, 'members' => $members, 'civil' => $civil, 'gend' => $gend, 'utype' => $userType, 'plans' => $plans]);
+            $queryResult = DB::table('vwfullnames')->get();
+            $fullnames = json_decode($queryResult, true);
+            $data = [];
+            foreach ($fullnames as $fn) {
+                array_push($data, $fn['FullName']);
+            }
+            return view('collection', ['totalMembers' => $membersCount, 'totalNewMembers' => $total, 'members' => $members,  'utype' => $userType, 'fullnames' => $data]);
         } else {
             return redirect('/');
         }

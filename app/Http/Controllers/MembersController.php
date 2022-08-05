@@ -73,6 +73,7 @@ class MembersController extends Controller
                 $newMembers->weight = $request['weight'];
                 $newMembers->civilStat = $request['civilstat'];
                 $newMembers->birthPlace = $request['bplace'];
+                $newMembers->amount = $request['amount'];
                 $newMembers->plan = $request['plan'];
                 $newMembers->dep1 = $request['dep1'];
                 $newMembers->dep2 = $request['dep2'];

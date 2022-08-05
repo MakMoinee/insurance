@@ -40,6 +40,43 @@
         integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
     {{-- <script src="sweetalert2.min.js"></script> --}}
     <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <style>
+        .autocomplete {
+            position: relative;
+            display: inline-block;
+        }
+
+        .autocomplete-items {
+            position: absolute;
+            border: 1px solid #d4d4d4;
+            border-bottom: none;
+            border-top: none;
+            z-index: 99;
+            /*position the autocomplete items to be the same width as the container:*/
+            top: 100%;
+            left: 0;
+            right: 0;
+        }
+
+        .autocomplete-items div {
+            padding: 10px;
+            cursor: pointer;
+            background-color: #fff;
+            border-bottom: 1px solid #d4d4d4;
+        }
+
+        /*when hovering an item:*/
+        .autocomplete-items div:hover {
+            background-color: #e9e9e9;
+        }
+
+        /*when navigating through the items using the arrow keys:*/
+        .autocomplete-active {
+            background-color: DodgerBlue !important;
+            color: #ffffff;
+        }
+    </style>
 </head>
 
 <body class="g-sidenav-show  bg-gray-100">
@@ -85,7 +122,7 @@
                     </a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link active" href="/members">
+                    <a class="nav-link" href="/members">
                         <div
                             class="icon icon-shape icon-sm shadow border-radius-md bg-white text-center me-2 d-flex align-items-center justify-content-center">
                             <img src="/storage/image/team2.png" alt="" width="15px" height="15px">
@@ -94,7 +131,7 @@
                     </a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link  " href="/collection">
+                    <a class="nav-link  active" href="/collection">
                         <div
                             class="icon icon-shape icon-sm shadow border-radius-md bg-white text-center me-2 d-flex align-items-center justify-content-center">
                             <svg width="12px" height="12px" viewBox="0 0 43 36" version="1.1"
@@ -118,6 +155,86 @@
                             </svg>
                         </div>
                         <span class="nav-link-text ms-1">Collection</span>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link " href="/plans">
+                        <div
+                            class="icon icon-shape icon-sm shadow border-radius-md bg-white text-center me-2 d-flex align-items-center justify-content-center">
+                            <svg version="1.1" id="designs" xmlns="http://www.w3.org/2000/svg"
+                                xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+                                width="32px" height="32px" viewBox="0 0 32 32"
+                                style="enable-background:new 0 0 32 32;" xml:space="preserve">
+                                <style type="text/css">
+                                    .sketchy_een {
+                                        fill: #111918;
+                                    }
+                                </style>
+                                <path class="sketchy_een"
+                                    d="M29.998,27.465c-0.057-0.778-0.039-1.565-0.036-2.345c0.002-0.796,0.002-1.594-0.004-2.39
+	c-0.012-1.679-0.024-3.358-0.077-5.035c-0.026-0.826-0.053-1.647-0.057-2.473c-0.004-0.861-0.01-1.723-0.028-2.584
+	c-0.016-0.836-0.024-1.673-0.016-2.509c0.006-0.915,0.038-1.827,0.045-2.742c0.002-0.146,0.002-0.292,0.004-0.438
+	c0.002-0.458-0.383-0.84-0.84-0.84c-0.06,0-0.114,0.023-0.171,0.035c-0.013-0.016-0.019-0.036-0.034-0.051
+	c-0.005-0.005-0.012-0.006-0.017-0.011c0.006-0.038,0.023-0.073,0.024-0.112c0.008-0.476,0.032-0.952,0.04-1.426
+	c0.01-0.504-0.427-0.924-0.923-0.924c-0.508,0-0.919,0.421-0.923,0.924c-0.005,0.434,0.002,0.87,0.002,1.307
+	c-0.303-0.004-0.605-0.011-0.908-0.016c-0.146-0.002-0.291-0.003-0.437-0.003c-0.364,0-0.727,0.009-1.09,0.016
+	c0.005-0.04,0.024-0.076,0.022-0.117c-0.02-0.401-0.018-0.802-0.036-1.203c-0.022-0.496-0.397-0.909-0.909-0.909
+	c-0.472,0-0.936,0.413-0.907,0.909c0.024,0.401,0.053,0.802,0.093,1.203c0.005,0.049,0.021,0.089,0.029,0.135
+	c-0.717,0.008-1.435,0.012-2.152,0.014c0.003-0.139,0.003-0.278,0.003-0.418c0-0.33-0.004-0.658-0.01-0.988
+	c-0.008-0.518-0.427-0.948-0.95-0.948c-0.508,0-0.962,0.431-0.948,0.948c0.008,0.31,0.014,0.618,0.028,0.928
+	c0.006,0.154,0.012,0.306,0.02,0.46c0,0.01,0,0.02,0.001,0.029C18.113,5.892,17.387,5.898,16.66,5.9
+	c-0.02-0.42-0.043-0.837-0.073-1.255c-0.02-0.249-0.089-0.468-0.271-0.65c-0.172-0.172-0.407-0.271-0.652-0.271
+	c-0.468,0-0.964,0.421-0.921,0.92c0.038,0.421,0.081,0.84,0.126,1.258c0,0.001,0.001,0.003,0.001,0.004
+	c-0.202,0.002-0.404,0-0.607,0.003c-0.478,0.006-0.956,0.013-1.434,0.021c0.01-0.498,0.017-0.999,0.019-1.497
+	c0.002-0.496-0.415-0.909-0.909-0.909c-0.494,0-0.911,0.413-0.909,0.909c0.002,0.498-0.015,1.006,0.026,1.503
+	c-0.493-0.003-0.986-0.004-1.48-0.011c-0.293-0.005-0.586-0.007-0.88-0.012c0-0.01,0.006-0.018,0.006-0.028
+	C8.711,5.37,8.731,4.857,8.737,4.341c0.004-0.492-0.415-0.903-0.903-0.903c-0.488,0-0.907,0.411-0.903,0.903
+	C6.937,4.857,6.955,5.37,6.957,5.886c0,0.002,0.001,0.003,0.001,0.004C6.163,5.877,5.369,5.866,4.574,5.858
+	C4.571,5.378,4.569,4.898,4.55,4.417C4.528,3.923,4.153,3.509,3.641,3.509c-0.474,0-0.938,0.415-0.909,0.909
+	C2.761,4.908,2.799,5.399,2.831,5.89C2.813,5.896,2.793,5.895,2.776,5.902C2.597,5.926,2.425,5.995,2.297,6.124
+	c-0.14,0.14-0.265,0.379-0.241,0.585c0.101,0.885,0.174,1.77,0.19,2.659c0.016,0.806-0.004,1.612-0.004,2.418
+	c0.002,1.573-0.002,3.145,0.006,4.717c0.016,3.198-0.02,6.396-0.02,9.595c0,0.37-0.009,0.74-0.018,1.109
+	C2.084,27.35,2,27.531,2,27.734c0,0.439,0.367,0.816,0.81,0.81c0.855-0.01,1.711-0.03,2.566-0.016
+	c0.838,0.012,1.675,0.026,2.511,0.03c1.648,0.012,3.295-0.004,4.941-0.008c0.486,0,0.972,0,1.456,0
+	c1.193,0.002,2.386,0.004,3.579-0.022c1.671-0.034,3.342-0.045,5.012-0.101c1.008-0.034,2.013-0.057,3.02-0.051
+	c0.371,0.004,0.743,0.004,1.114,0.004c0.642,0,1.286,0,1.93,0.014c0.133,0.003,0.253-0.038,0.365-0.098
+	C29.686,28.21,30.027,27.875,29.998,27.465z M24.228,26.813c-1.663,0.037-3.329,0.105-4.992,0.117
+	c-0.822,0.004-1.642,0.03-2.461,0.036c-0.853,0.008-1.705,0.006-2.558,0.008c-1.683,0.002-3.366-0.016-5.049-0.016
+	c-1.011,0-2.021,0.014-3.032,0.004c-0.755-0.008-1.51-0.017-2.265-0.025c-0.002-0.545-0.001-1.09-0.007-1.636
+	c-0.008-0.764-0.008-1.529-0.008-2.293c0-1.624-0.012-3.246-0.016-4.869c-0.002-1.582,0.022-3.165,0.014-4.747
+	c-0.004-0.796-0.002-1.59-0.002-2.386c0-0.838,0.014-1.677-0.012-2.517C3.827,8.127,3.79,7.769,3.76,7.411
+	c1.46-0.012,2.921-0.036,4.382-0.039c0.77-0.002,1.539,0.024,2.309,0.028c0.8,0.004,1.6,0.002,2.4-0.02
+	c1.582-0.042,3.167-0.047,4.749-0.042c1.596,0.006,3.188-0.002,4.784-0.022c1-0.012,1.997,0.006,2.997,0.014
+	c0.496,0.004,0.992,0.008,1.487,0.024c0.426,0.011,0.856,0.016,1.281,0.057c0.007,3.328-0.066,6.659,0.038,9.987
+	c0.051,1.671,0.036,3.346,0.059,5.018c0.02,1.451,0.019,2.906,0.011,4.358c-0.131,0-0.261-0.001-0.392-0.001
+	C26.654,26.773,25.44,26.784,24.228,26.813z M13.337,16.974c-0.375-0.012-0.749-0.065-1.122-0.069
+	c-0.389-0.006-0.776-0.004-1.164-0.006c-0.401-0.002-0.804,0.008-1.205,0.018c-0.385,0.01-0.77,0.02-1.156,0.018
+	c-0.462-0.002-0.849-0.385-0.849-0.847c0-0.451,0.378-0.85,0.833-0.85c0.006,0,0.011,0,0.017,0c0.849,0.018,1.697,0.065,2.546,0.047
+	c0.81-0.016,1.622,0.014,2.432,0.022c0.755,0.006,1.507,0.03,2.262,0.038c0.666,0.008,1.331-0.002,1.997,0.012
+	c1.219,0.028,2.438,0.052,3.657,0.04c0.425-0.004,0.78,0.358,0.78,0.78c0,0.425-0.356,0.778-0.78,0.78
+	c-1.337,0-2.673,0.04-4.01,0.052C16.162,17.022,14.748,17.018,13.337,16.974z M18.438,19.951c-0.531,0.002-1.067-0.01-1.596-0.041
+	c-0.666-0.037-1.329-0.036-1.995-0.049c-0.425-0.01-0.78-0.348-0.78-0.78c0-0.413,0.356-0.798,0.78-0.78
+	c0.597,0.024,1.191,0.059,1.788,0.065c0.486,0.006,0.972,0.01,1.458,0.018c0.607,0.01,1.213-0.002,1.819-0.004
+	c0.136,0,0.275,0,0.413,0c0.184,0,0.365,0.002,0.551-0.002c0.233-0.004,0.466-0.018,0.697-0.02c0.122,0,0.249,0.002,0.373,0.004
+	c0.259,0.003,0.52,0.007,0.779-0.017c0.046-0.009,0.092-0.02,0.136-0.036c0.061-0.023,0.128-0.033,0.196-0.033
+	c0.143,0,0.292,0.045,0.405,0.11c0.174,0.103,0.304,0.271,0.358,0.466c0.117,0.419-0.138,0.834-0.543,0.958
+	c-0.28,0.087-0.61,0.061-0.899,0.069c-0.207,0.004-0.413,0.006-0.618,0.01c-0.111,0.004-0.221,0.002-0.332,0.002
+	c-0.111-0.002-0.221-0.002-0.33,0c-0.294,0.01-0.589,0.02-0.883,0.036C19.621,19.955,19.033,19.949,18.438,19.951z M26.933,22.165
+	c0,0.413-0.348,0.771-0.764,0.765c-0.227-0.002-0.456-0.008-0.685,0.004c-1.041,0.049-2.084-0.042-3.125-0.061
+	c-0.64-0.01-1.278-0.02-1.916-0.038c-0.676-0.016-1.351-0.042-2.027-0.069c-0.393-0.018-0.723-0.318-0.723-0.725
+	c0-0.366,0.31-0.726,0.687-0.726c0.012,0,0.024,0,0.036,0.001c0.379,0.024,0.755,0.073,1.134,0.083
+	c0.142,0.006,0.282,0.006,0.425,0.004c0.176,0,0.354,0,0.531,0.008c0.322,0.014,0.644,0.016,0.966,0.022
+	c0.597,0.008,1.193,0.034,1.792,0.034c0.267,0,0.535,0.012,0.802,0.012c0.089,0,0.18,0.002,0.271,0.002
+	c0.194,0.002,0.385,0.004,0.579-0.01c0.205-0.016,0.411-0.03,0.618-0.034c0.142-0.002,0.288,0.001,0.431-0.007c0,0,0.001,0,0.001,0
+	C26.447,21.315,26.933,21.653,26.933,22.165z M8.316,13.83c-0.697-0.026-1.399,0.028-2.098,0.034
+	c-0.468,0.006-0.857-0.393-0.857-0.857c0-0.461,0.383-0.857,0.847-0.857c0.003,0,0.007,0,0.01,0c0.66,0.006,1.32,0.032,1.979,0.051
+	c1.371,0.04,2.744,0.122,4.115,0.111c0.563-0.004,1.126,0.006,1.687,0.016c0.306,0.006,0.622-0.001,0.927-0.027
+	c0.247-0.029,0.481,0.02,0.669,0.207c0.142,0.144,0.223,0.34,0.223,0.543c0,0.433-0.348,0.745-0.765,0.765
+	c-0.294,0.016-0.585,0.012-0.879,0.01c-0.62-0.002-1.241,0.006-1.859,0.014c-0.685,0.01-1.371,0.02-2.054,0.012
+	c-0.371-0.002-0.743-0.004-1.114-0.012c-0.122-0.002-0.243-0.002-0.365-0.002C8.626,13.836,8.47,13.836,8.316,13.83z" />
+                            </svg>
+                        </div>
+                        <span class="nav-link-text ms-1">Plans</span>
                     </a>
                 </li>
                 <li class="nav-item">
@@ -331,7 +448,7 @@
                                     <a class="dropdown-item border-radius-md" href="javascript:;">
                                         <div class="d-flex py-1">
                                             <div class="my-auto">
-                                                <img src="../assets/img/small-logos/logo-spotify.svg"
+                                                <img src="/img/small-logos/logo-spotify.svg"
                                                     class="avatar avatar-sm bg-gradient-dark  me-3 ">
                                             </div>
                                             <div class="d-flex flex-column justify-content-center">
@@ -398,7 +515,7 @@
                             <div class="row">
                                 <div class="col-8">
                                     <div class="numbers">
-                                        <p class="text-sm mb-0 text-capitalize font-weight-bold">Total Members</p>
+                                        <p class="text-sm mb-0 text-capitalize font-weight-bold">Total Collection</p>
                                         <h5 class="font-weight-bolder mb-0">
                                             {{ $totalMembers }}
                                         </h5>
@@ -417,7 +534,7 @@
                     <div class="card mb-4">
                         <div class="card-header pb-0">
                             @if ($utype == 1)
-                                <button onclick="doOnAddingMember()" class="btn btn-primary" data-toggle="modal"
+                                <button onclick="doOnAddCollection()" class="btn btn-primary" data-toggle="modal"
                                     data-target="#exampleModal">Add
                                     Collection</button>
                             @else
@@ -441,10 +558,10 @@
                                                 Full Name</th>
                                             <th
                                                 class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">
-                                                Address</th>
+                                                Plan Package</th>
                                             <th
                                                 class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">
-                                                Contact Number</th>
+                                                Amount</th>
                                             <th
                                                 class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
                                                 Full Info</th>
@@ -467,1188 +584,456 @@
                                                     </div>
                                                 </td>
                                                 <td>
-                                                    <p class="text-xs font-weight-bold mb-0">{{ $member['address'] }}
-                                                    </p>
-                                                </td>
-                                                <td>
-                                                    <div class="d-flex px-2 py-1">
-                                                        <div class="d-flex flex-column justify-content-center">
-                                                            <h6 class="mb-0 text-sm">
-                                                                {{ $member['contactNum'] }}
-                                                            </h6>
-                                                        </div>
-                                                    </div>
-                                                </td>
-                                                <td class="align-middle text-center text-sm">
-                                                    <button class="badge badge-sm bg-gradient-success"
-                                                        data-toggle="modal"
-                                                        data-target="#viewModal{{ $member['memberID'] }}">View</button>
-                                                    <div class="modal fade" id="viewModal{{ $member['memberID'] }}"
-                                                        tabindex="-1" role="dialog"
-                                                        aria-labelledby="viewModalLabel{{ $member['memberID'] }}"
-                                                        aria-hidden="true">
-                                                        <div class="modal-dialog" role="document">
-                                                            <div class="modal-content">
-                                                                <div class="modal-header">
-                                                                    <h5 class="modal-title"
-                                                                        id="viewModal{{ $member['memberID'] }}">
-                                                                        View
-                                                                        Member</h5>
-                                                                    <button type="button" class="close"
-                                                                        data-dismiss="modal" aria-label="Close">
-                                                                        <span aria-hidden="true">&times;</span>
-                                                                    </button>
-                                                                </div>
-                                                                <form action="/update/members" method="POST"
-                                                                    enctype="multipart/form-data">
-                                                                    <div class="modal-body">
-                                                                        <div class="row">
-                                                                            @method('PUT')
-                                                                            @csrf
-                                                                            <div class="form-group">
-                                                                                <input disabled type="hidden"
-                                                                                    name="id"
-                                                                                    value="{{ $member['memberID'] }}">
-                                                                                <input disabled required type="text"
-                                                                                    style="width:150px;"
-                                                                                    name="firstname" id="fn"
-                                                                                    placeholder="First Name"
-                                                                                    value="{{ $member['firstName'] }}">
-                                                                                <input disabled required type="text"
-                                                                                    style="width:150px;"
-                                                                                    name="middlename" id="mn"
-                                                                                    placeholder="Middle Name"
-                                                                                    value="{{ $member['middleName'] }}">
-                                                                                <input disabled required type="text"
-                                                                                    style="width:150px;"
-                                                                                    name="lastname" id="ln"
-                                                                                    placeholder="Last Name"
-                                                                                    value="{{ $member['lastName'] }}">
-                                                                            </div>
-                                                                            <div class="form-group">
-                                                                                <input disabled required type="text"
-                                                                                    style="width: 460px;"
-                                                                                    name="address" id="address"
-                                                                                    placeholder="Address"
-                                                                                    value="{{ $member['address'] }}">
-                                                                            </div>
-                                                                            <div class="form-group">
-                                                                                <input disabled required type="text"
-                                                                                    maxlength="13" name="contact"
-                                                                                    id="mn"
-                                                                                    placeholder="Contact Number"
-                                                                                    style="margin-right: 20px;"
-                                                                                    value="{{ $member['contactNum'] }}">
-                                                                                <label for="civilstat"
-                                                                                    class="for">Civil
-                                                                                    Status:</label>
-                                                                                <select disabled name="civilstat"
-                                                                                    id="civilstat"
-                                                                                    value="{{ $member['civilStat'] }}">
-                                                                                    @foreach ($civil as $c)
-                                                                                        @if (mb_strtolower($member['civilStat']) == mb_strtolower($c))
-                                                                                            <option
-                                                                                                value="{{ $c }}"
-                                                                                                selected>
-                                                                                                {{ $c }}
-                                                                                            </option>
-                                                                                        @else
-                                                                                            <option
-                                                                                                value="{{ $c }}">
-                                                                                                {{ $c }}
-                                                                                            </option>
-                                                                                        @endif
-                                                                                    @endforeach
-
-
-
-                                                                                </select>
-                                                                            </div>
-                                                                            <div class="form-group">
-                                                                                <label for="gender"
-                                                                                    class="for">Gender:</label>
-                                                                                <select disabled required
-                                                                                    name="gender" id="civilstat"
-                                                                                    value="{{ $member['gender'] }}">
-                                                                                    @foreach ($gend as $g)
-                                                                                        @if (mb_strtolower($member['gender']) == mb_strtolower($g))
-                                                                                            <option
-                                                                                                value="{{ $g }}"
-                                                                                                selected>
-                                                                                                {{ $g }}
-                                                                                            </option>
-                                                                                        @else
-                                                                                            <option
-                                                                                                value="{{ $g }}">
-                                                                                                {{ $g }}
-                                                                                            </option>
-                                                                                        @endif
-                                                                                    @endforeach
-                                                                                </select>
-                                                                                <label for="religion"
-                                                                                    class="for">Religion:</label>
-                                                                                <input disabled required type="text"
-                                                                                    style="width: 265px;margin-left: 5px;"
-                                                                                    name="religion" id="religion"
-                                                                                    placeholder="Religion"
-                                                                                    value="{{ $member['religion'] }}">
-
-                                                                            </div>
-                                                                            <div class="form-group">
-                                                                                <label for="birthdate"
-                                                                                    class="for">Date of
-                                                                                    Birth:</label>
-                                                                                <input disabled required type="date"
-                                                                                    style="width: 150px;margin-left: 10px;"
-                                                                                    name="birthdate" id="birthdate"
-                                                                                    placeholder="Date of Birth"
-                                                                                    title="Date of Birth"
-                                                                                    value="{{ date('Y-m-d', strtotime($member['birthDate'])) }}">
-                                                                            </div>
-
-                                                                            <div class="form-group">
-                                                                                <input disabled required type="text"
-                                                                                    style="width: 460px;"
-                                                                                    name="bplace" id="bplace"
-                                                                                    placeholder="Place of Birth"
-                                                                                    value="{{ $member['birthPlace'] }}">
-                                                                            </div>
-                                                                            <div class="form-group">
-                                                                                <label for="height"
-                                                                                    class="for">Height:</label>
-                                                                                <input disabled required type="number"
-                                                                                    style="width: 150px;margin-right: 5px;"
-                                                                                    name="height" id="height"
-                                                                                    placeholder="Height (cm)"
-                                                                                    value="{{ $member['height'] }}">
-                                                                                <label for="weight"
-                                                                                    class="for">Weight:</label>
-                                                                                <input disabled required type="number"
-                                                                                    style="width: 150px;"
-                                                                                    name="weight" id="weight"
-                                                                                    placeholder="Weight (kg)"
-                                                                                    value="{{ $member['weight'] }}">
-                                                                            </div>
-                                                                            <div class="form-group">
-                                                                                <label for="mop"
-                                                                                    class="for">Mode of
-                                                                                    Payment:</label>
-                                                                                <select disabled name="mop"
-                                                                                    id="mop"
-                                                                                    style="margin-left: 5px;">
-                                                                                    @if ($member['mop'] == 1)
-                                                                                        <option value="Regular"
-                                                                                            selected>
-                                                                                            Regular</option>
-                                                                                        <option value="Indigent">
-                                                                                            Indigent
-                                                                                        </option>
-                                                                                    @else
-                                                                                        <option value="Regular">
-                                                                                            Regular</option>
-                                                                                        <option value="Indigent"
-                                                                                            selected>
-                                                                                            Indigent
-                                                                                        </option>
-                                                                                    @endif
-
-                                                                                </select>
-                                                                            </div>
-                                                                            <div class="form-group">
-                                                                                <label for="plan"
-                                                                                    class="for">Plans:</label>
-                                                                                <select disabled required
-                                                                                    name="plan" id="plan"
-                                                                                    style="margin-left: 5px;">
-                                                                                    @foreach (json_decode(DB::table('vwactiveplan')->get(), true) as $plan)
-                                                                                        @if ($member['plan'] == $plan['planID'])
-                                                                                            <option
-                                                                                                value="{{ $plan['planID'] }}"
-                                                                                                selected>
-                                                                                                {{ $plan['description'] }}
-                                                                                            </option>
-                                                                                        @else
-                                                                                            <option
-                                                                                                value="{{ $plan['planID'] }}">
-                                                                                                {{ $plan['description'] }}
-                                                                                            </option>
-                                                                                        @endif
-                                                                                    @endforeach
-                                                                                </select>
-                                                                            </div>
-                                                                        </div>
-                                                                        <div class="form-group">
-                                                                            <label for="benef"
-                                                                                class="for">Benefeciaries:</label>
-                                                                            <br>
-                                                                            <input disabled required type="text"
-                                                                                name="dep1" id="dep1"
-                                                                                value="{{ $member['dep1'] }}">
-                                                                            <input disabled type="text"
-                                                                                name="dep2" id="dep2"
-                                                                                value="{{ $member['dep2'] }}">
-                                                                        </div>
-                                                                        <div class="form-group">
-                                                                            <input disabled type="text"
-                                                                                name="dep3" id="dep3"
-                                                                                value="{{ $member['dep3'] }}">
-                                                                            <input disabled type="text"
-                                                                                name="dep4" id="dep4"
-                                                                                value="{{ $member['dep4'] }}">
-                                                                        </div>
-                                                                        <div class="form-group">
-                                                                            <input disabled type="text"
-                                                                                name="dep5" id="dep5"
-                                                                                value="{{ $member['dep5'] }}">
-                                                                            <input disabled type="text"
-                                                                                name="dep6" id="dep6"
-                                                                                value="{{ $member['dep6'] }}">
-                                                                        </div>
-                                                                        <div class="form-group">
-                                                                            <input disabled type="text"
-                                                                                name="dep7" id="dep7"
-                                                                                value="{{ $member['dep7'] }}">
-                                                                            <input disabled type="text"
-                                                                                name="dep8" id="dep8"
-                                                                                value="{{ $member['dep8'] }}">
-                                                                        </div>
-                                                                        <div class="form-group">
-                                                                            <input disabled type="text"
-                                                                                name="dep9" id="dep9"
-                                                                                value="{{ $member['dep9'] }}">
-                                                                            <input disabled type="text"
-                                                                                name="dep10" id="dep10"
-                                                                                value="{{ $member['dep10'] }}">
-                                                                        </div>
-                                                                    </div>
-                                                                    <div class="modal-footer">
-                                                                        <button type="button"
-                                                                            class="btn btn-secondary"
-                                                                            data-dismiss="modal">Close</button>
-                                                                    </div>
-                                                                </form>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-
-                                                </td>
-                                                <td class="align-middle">
-                                                    @if ($utype == 1)
-                                                        <a href="javascript:;"
-                                                            class="text-secondary font-weight-bold text-xs"
-                                                            data-toggle="modal"
-                                                            data-target="#editModal{{ $member['memberID'] }}">
-                                                            <button
-                                                                class="badge badge-xs bg-gradient-warning text-xs">Edit</button>
-                                                        </a>
-                                                        <div class="modal fade"
-                                                            id="editModal{{ $member['memberID'] }}" tabindex="-1"
-                                                            role="dialog"
-                                                            aria-labelledby="editModalLabel{{ $member['memberID'] }}"
-                                                            aria-hidden="true">
-                                                            <div class="modal-dialog" role="document">
-                                                                <div class="modal-content">
-                                                                    <div class="modal-header">
-                                                                        <h5 class="modal-title"
-                                                                            id="editModalLabel{{ $member['memberID'] }}">
-                                                                            Edit
-                                                                            Member</h5>
-                                                                        <button type="button" class="close"
-                                                                            data-dismiss="modal" aria-label="Close">
-                                                                            <span aria-hidden="true">&times;</span>
-                                                                        </button>
-                                                                    </div>
-                                                                    <form action="/update/members" method="POST"
-                                                                        enctype="multipart/form-data">
-                                                                        <div class="modal-body">
-                                                                            <div class="row">
-                                                                                @method('PUT')
-                                                                                @csrf
-                                                                                <div class="form-group">
-                                                                                    <input type="hidden"
-                                                                                        name="id"
-                                                                                        value="{{ $member['memberID'] }}">
-                                                                                    <input required type="text"
-                                                                                        style="width:150px;"
-                                                                                        name="firstname"
-                                                                                        id="fn"
-                                                                                        placeholder="First Name"
-                                                                                        value="{{ $member['firstName'] }}">
-                                                                                    <input required type="text"
-                                                                                        style="width:150px;"
-                                                                                        name="middlename"
-                                                                                        id="mn"
-                                                                                        placeholder="Middle Name"
-                                                                                        value="{{ $member['middleName'] }}">
-                                                                                    <input required type="text"
-                                                                                        style="width:150px;"
-                                                                                        name="lastname" id="ln"
-                                                                                        placeholder="Last Name"
-                                                                                        value="{{ $member['lastName'] }}">
-                                                                                </div>
-                                                                                <div class="form-group">
-                                                                                    <input required type="text"
-                                                                                        style="width: 460px;"
-                                                                                        name="address" id="address"
-                                                                                        placeholder="Address"
-                                                                                        value="{{ $member['address'] }}">
-                                                                                </div>
-                                                                                <div class="form-group">
-                                                                                    <input required type="text"
-                                                                                        maxlength="13" name="contact"
-                                                                                        id="mn"
-                                                                                        placeholder="Contact Number"
-                                                                                        style="margin-right: 20px;"
-                                                                                        value="{{ $member['contactNum'] }}">
-                                                                                    <label for="civilstat"
-                                                                                        class="for">Civil
-                                                                                        Status:</label>
-                                                                                    <select name="civilstat"
-                                                                                        id="civilstat"
-                                                                                        value="{{ $member['civilStat'] }}">
-                                                                                        @foreach ($civil as $c)
-                                                                                            @if (mb_strtolower($member['civilStat']) == mb_strtolower($c))
-                                                                                                <option
-                                                                                                    value="{{ $c }}"
-                                                                                                    selected>
-                                                                                                    {{ $c }}
-                                                                                                </option>
-                                                                                            @else
-                                                                                                <option
-                                                                                                    value="{{ $c }}">
-                                                                                                    {{ $c }}
-                                                                                                </option>
-                                                                                            @endif
-                                                                                        @endforeach
-
-
-
-                                                                                    </select>
-                                                                                </div>
-                                                                                <div class="form-group">
-                                                                                    <label for="gender"
-                                                                                        class="for">Gender:</label>
-                                                                                    <select required name="gender"
-                                                                                        id="civilstat"
-                                                                                        value="{{ $member['gender'] }}">
-                                                                                        @foreach ($gend as $g)
-                                                                                            @if (mb_strtolower($member['gender']) == mb_strtolower($g))
-                                                                                                <option
-                                                                                                    value="{{ $g }}"
-                                                                                                    selected>
-                                                                                                    {{ $g }}
-                                                                                                </option>
-                                                                                            @else
-                                                                                                <option
-                                                                                                    value="{{ $g }}">
-                                                                                                    {{ $g }}
-                                                                                                </option>
-                                                                                            @endif
-                                                                                        @endforeach
-                                                                                    </select>
-                                                                                    <label for="religion"
-                                                                                        class="for">Religion:</label>
-                                                                                    <input required type="text"
-                                                                                        style="width: 265px;margin-left: 5px;"
-                                                                                        name="religion" id="religion"
-                                                                                        placeholder="Religion"
-                                                                                        value="{{ $member['religion'] }}">
-
-                                                                                </div>
-                                                                                <div class="form-group">
-                                                                                    <label for="birthdate"
-                                                                                        class="for">Date of
-                                                                                        Birth:</label>
-                                                                                    <input required type="date"
-                                                                                        style="width: 150px;margin-left: 10px;"
-                                                                                        name="birthdate"
-                                                                                        id="birthdate"
-                                                                                        placeholder="Date of Birth"
-                                                                                        title="Date of Birth"
-                                                                                        value="{{ date('Y-m-d', strtotime($member['birthDate'])) }}">
-                                                                                </div>
-
-                                                                                <div class="form-group">
-                                                                                    <input required type="text"
-                                                                                        style="width: 460px;"
-                                                                                        name="bplace" id="bplace"
-                                                                                        placeholder="Place of Birth"
-                                                                                        value="{{ $member['birthPlace'] }}">
-                                                                                </div>
-                                                                                <div class="form-group">
-                                                                                    <label for="height"
-                                                                                        class="for">Height:</label>
-                                                                                    <input required type="number"
-                                                                                        style="width: 150px;margin-right: 5px;"
-                                                                                        name="height" id="height"
-                                                                                        placeholder="Height (cm)"
-                                                                                        value="{{ $member['height'] }}">
-                                                                                    <label for="weight"
-                                                                                        class="for">Weight:</label>
-                                                                                    <input required type="number"
-                                                                                        style="width: 150px;"
-                                                                                        name="weight" id="weight"
-                                                                                        placeholder="Weight (kg)"
-                                                                                        value="{{ $member['weight'] }}">
-                                                                                </div>
-                                                                                <div class="form-group">
-                                                                                    <label for="mop"
-                                                                                        class="for">Mode of
-                                                                                        Payment:</label>
-                                                                                    <select name="mop"
-                                                                                        id="mop"
-                                                                                        style="margin-left: 5px;">
-                                                                                        @if ($member['mop'] == 1)
-                                                                                            <option value="Regular"
-                                                                                                selected>
-                                                                                                Regular</option>
-                                                                                            <option value="Indigent">
-                                                                                                Indigent
-                                                                                            </option>
-                                                                                        @else
-                                                                                            <option value="Regular">
-                                                                                                Regular</option>
-                                                                                            <option value="Indigent"
-                                                                                                selected>
-                                                                                                Indigent
-                                                                                            </option>
-                                                                                        @endif
-
-                                                                                    </select>
-                                                                                </div>
-                                                                                <div class="form-group">
-                                                                                    <label for="plan"
-                                                                                        class="for">Plans:</label>
-                                                                                    <select required name="plan"
-                                                                                        id="plan"
-                                                                                        style="margin-left: 5px;">
-                                                                                        @foreach (json_decode(DB::table('vwactiveplan')->get(), true) as $plan)
-                                                                                            @if ($member['plan'] == $plan['planID'])
-                                                                                                <option
-                                                                                                    value="{{ $plan['planID'] }}"
-                                                                                                    selected>
-                                                                                                    {{ $plan['description'] }}
-                                                                                                </option>
-                                                                                            @else
-                                                                                                <option
-                                                                                                    value="{{ $plan['planID'] }}">
-                                                                                                    {{ $plan['description'] }}
-                                                                                                </option>
-                                                                                            @endif
-                                                                                        @endforeach
-                                                                                    </select>
-                                                                                </div>
-                                                                                <div class="form-group">
-                                                                                    <label for="benef"
-                                                                                        class="for">Benefeciaries:</label>
-                                                                                    <br>
-                                                                                    <input required type="text"
-                                                                                        name="dep1" id="dep1"
-                                                                                        value="{{ $member['dep1'] }}">
-                                                                                    <input type="text"
-                                                                                        name="dep2" id="dep2"
-                                                                                        value="{{ $member['dep2'] }}">
-                                                                                </div>
-                                                                                <div class="form-group">
-                                                                                    <input type="text"
-                                                                                        name="dep3" id="dep3"
-                                                                                        value="{{ $member['dep3'] }}">
-                                                                                    <input type="text"
-                                                                                        name="dep4" id="dep4"
-                                                                                        value="{{ $member['dep4'] }}">
-                                                                                </div>
-                                                                                <div class="form-group">
-                                                                                    <input type="text"
-                                                                                        name="dep5" id="dep5"
-                                                                                        value="{{ $member['dep5'] }}">
-                                                                                    <input type="text"
-                                                                                        name="dep6" id="dep6"
-                                                                                        value="{{ $member['dep6'] }}">
-                                                                                </div>
-                                                                                <div class="form-group">
-                                                                                    <input type="text"
-                                                                                        name="dep7" id="dep7"
-                                                                                        value="{{ $member['dep7'] }}">
-                                                                                    <input type="text"
-                                                                                        name="dep8" id="dep8"
-                                                                                        value="{{ $member['dep8'] }}">
-                                                                                </div>
-                                                                                <div class="form-group">
-                                                                                    <input type="text"
-                                                                                        name="dep9" id="dep9"
-                                                                                        value="{{ $member['dep9'] }}">
-                                                                                    <input type="text"
-                                                                                        name="dep10" id="dep10"
-                                                                                        value="{{ $member['dep10'] }}">
-                                                                                </div>
-                                                                            </div>
-                                                                        </div>
-                                                                        <div class="modal-footer">
-                                                                            <button type="button"
-                                                                                class="btn btn-secondary"
-                                                                                data-dismiss="modal">Close</button>
-                                                                            <button type="submit"
-                                                                                class="btn btn-primary">Update
-                                                                                Member</button>
-                                                                        </div>
-                                                                    </form>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                    @else
-                                                        <a href="javascript:;"
-                                                            class="text-secondary font-weight-bold text-xs" disabled>
-                                                            <button disabled
-                                                                class="badge badge-xs bg-gradient-disabled text-xs">Edit</button>
-                                                        </a>
+                                                    @foreach (json_decode(DB::table('vwactiveplan')->get(), true) as $plan)
+                                                        @if ($member['plan'] == $plan['planID'])
+                                                            <p class="text-xs font-weight-bold mb-0">
+                                                                {{ $plan['description'] }}
+                                                            </p>
+                                                        @break
                                                     @endif
+                                                @endforeach
 
-                                                </td>
-                                                <td>
-                                                    @if ($utype == 1)
-                                                        <a href="javascript:;"
-                                                            class="text-secondary font-weight-bold text-xs"
-                                                            data-toggle="modal"
-                                                            data-target="#deleteModal{{ $member['memberID'] }}">
-                                                            <button
-                                                                class="badge badge-xs bg-gradient-danger text-xs">Delete</button>
-                                                        </a>
-                                                        <div class="modal fade"
-                                                            id="deleteModal{{ $member['memberID'] }}" tabindex="-1"
-                                                            role="dialog"
-                                                            aria-labelledby="deleteModalLabel{{ $member['memberID'] }}"
-                                                            aria-hidden="true">
-                                                            <div class="modal-dialog" role="document">
-                                                                <div class="modal-content">
-                                                                    <form
-                                                                        action="{{ route('delete.member', ['id' => $member['memberID']]) }}"
-                                                                        method="POST" enctype="multipart/form-data">
-                                                                        @method('delete')
-                                                                        @csrf
-                                                                        <div class="form-group">
-                                                                            <input type="hidden" name="mID"
-                                                                                value="{{ $member['memberID'] }}">
-                                                                        </div>
-                                                                        <div class="modal-body">
-                                                                            <h5 class="modal-title"
-                                                                                id="deleteModalLabel">
-                                                                                Do you want to
-                                                                                proceed Deleting Member ?</h5>
-                                                                        </div>
-                                                                        <div class="modal-footer">
-                                                                            <button type="submit"
-                                                                                class="btn btn-primary">Yes,
-                                                                                Proceed</button>
-                                                                            <button type="button"
-                                                                                class="btn btn-secondary"
-                                                                                data-dismiss="modal">Close</button>
-                                                                        </div>
-                                                                    </form>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                    @else
-                                                        <a href="javascript:;"
-                                                            class="text-secondary font-weight-bold text-xs">
-                                                            <button disabled
-                                                                class="badge badge-xs bg-gradient-disabled text-xs">Delete</button>
-                                                        </a>
-                                                    @endif
-
-                                                </td>
-                                            </tr>
-                                        @endforeach
+                                            </td>
+                                            <td>
+                                                @foreach (json_decode(DB::table('vwactiveplan')->get(), true) as $plan)
+                                                    @if ($member['plan'] == $plan['planID'])
+                                                        <p class="text-xs font-weight-bold mb-0">
+                                                            {{ $plan['amount'] }}
+                                                        </p>
+                                                    @break
+                                                @endif
+                                            @endforeach
+                                        </td>
+                                        <td class="align-middle text-center text-sm">
+                                            <button class="badge badge-sm bg-gradient-success">View</button>
 
 
-                                    </tbody>
-                                </table>
-                            </div>
-                        </div>
+                                        </td>
+                                    </tr>
+                                @endforeach
+
+
+                            </tbody>
+                        </table>
                     </div>
                 </div>
             </div>
-            <footer class="footer pt-3  fixed-bottom">
-                <div class="container-fluid">
-                    <div class="row align-items-center justify-content-lg-between">
-                        <div class="col-lg-6 mb-lg-0 mb-4">
-                            <div class="copyright text-center text-sm text-muted text-lg-start">
-                                ©
-                                <script>
-                                    document.write(new Date().getFullYear())
-                                </script>,
-                                made with <i class="fa fa-heart"></i> by
-                                <a href="https://www.creative-tim.com" class="font-weight-bold"
-                                    target="_blank">Creative Tim</a>
-                                for a better web.
-                            </div>
-                        </div>
-                        <div class="col-lg-6">
-                            <ul class="nav nav-footer justify-content-center justify-content-lg-end">
-                                <li class="nav-item">
-                                    <a href="https://www.creative-tim.com" class="nav-link text-muted"
-                                        target="_blank">Creative Tim</a>
-                                </li>
-                                <li class="nav-item">
-                                    <a href="https://www.creative-tim.com/presentation" class="nav-link text-muted"
-                                        target="_blank">About Us</a>
-                                </li>
-                                <li class="nav-item">
-                                    <a href="https://www.creative-tim.com/blog" class="nav-link text-muted"
-                                        target="_blank">Blog</a>
-                                </li>
-                                <li class="nav-item">
-                                    <a href="https://www.creative-tim.com/license" class="nav-link pe-0 text-muted"
-                                        target="_blank">License</a>
-                                </li>
-                            </ul>
-                        </div>
+        </div>
+    </div>
+    <footer class="footer pt-3  fixed-bottom">
+        <div class="container-fluid">
+            <div class="row align-items-center justify-content-lg-between">
+                <div class="col-lg-6 mb-lg-0 mb-4">
+                    <div class="copyright text-center text-sm text-muted text-lg-start">
+                        ©
+                        <script>
+                            document.write(new Date().getFullYear())
+                        </script>,
+                        made with <i class="fa fa-heart"></i> by
+                        <a href="https://www.creative-tim.com" class="font-weight-bold"
+                            target="_blank">Creative Tim</a>
+                        for a better web.
                     </div>
                 </div>
-            </footer>
+                <div class="col-lg-6">
+                    <ul class="nav nav-footer justify-content-center justify-content-lg-end">
+                        <li class="nav-item">
+                            <a href="https://www.creative-tim.com" class="nav-link text-muted"
+                                target="_blank">Creative Tim</a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="https://www.creative-tim.com/presentation" class="nav-link text-muted"
+                                target="_blank">About Us</a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="https://www.creative-tim.com/blog" class="nav-link text-muted"
+                                target="_blank">Blog</a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="https://www.creative-tim.com/license" class="nav-link pe-0 text-muted"
+                                target="_blank">License</a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
         </div>
-    </main>
-    <div class="fixed-plugin">
-        <a class="fixed-plugin-button text-dark position-fixed px-3 py-2">
-            <i class="fa fa-cog py-2"> </i>
+    </footer>
+</div>
+</main>
+<div class="fixed-plugin">
+<a class="fixed-plugin-button text-dark position-fixed px-3 py-2">
+    <i class="fa fa-cog py-2"> </i>
+</a>
+<div class="card shadow-lg ">
+    <div class="card-header pb-0 pt-3 ">
+        <div class="float-start">
+            <h5 class="mt-3 mb-0">Soft UI Configurator</h5>
+            <p>See our dashboard options.</p>
+        </div>
+        <div class="float-end mt-4">
+            <button class="btn btn-link text-dark p-0 fixed-plugin-close-button">
+                <i class="fa fa-close"></i>
+            </button>
+        </div>
+        <!-- End Toggle Button -->
+    </div>
+    <hr class="horizontal dark my-1">
+    <div class="card-body pt-sm-3 pt-0">
+        <!-- Sidebar Backgrounds -->
+        <div>
+            <h6 class="mb-0">Sidebar Colors</h6>
+        </div>
+        <a href="javascript:void(0)" class="switch-trigger background-color">
+            <div class="badge-colors my-2 text-start">
+                <span class="badge filter bg-gradient-primary active" data-color="primary"
+                    onclick="sidebarColor(this)"></span>
+                <span class="badge filter bg-gradient-dark" data-color="dark"
+                    onclick="sidebarColor(this)"></span>
+                <span class="badge filter bg-gradient-info" data-color="info"
+                    onclick="sidebarColor(this)"></span>
+                <span class="badge filter bg-gradient-success" data-color="success"
+                    onclick="sidebarColor(this)"></span>
+                <span class="badge filter bg-gradient-warning" data-color="warning"
+                    onclick="sidebarColor(this)"></span>
+                <span class="badge filter bg-gradient-danger" data-color="danger"
+                    onclick="sidebarColor(this)"></span>
+            </div>
         </a>
-        <div class="card shadow-lg ">
-            <div class="card-header pb-0 pt-3 ">
-                <div class="float-start">
-                    <h5 class="mt-3 mb-0">Soft UI Configurator</h5>
-                    <p>See our dashboard options.</p>
-                </div>
-                <div class="float-end mt-4">
-                    <button class="btn btn-link text-dark p-0 fixed-plugin-close-button">
-                        <i class="fa fa-close"></i>
-                    </button>
-                </div>
-                <!-- End Toggle Button -->
-            </div>
-            <hr class="horizontal dark my-1">
-            <div class="card-body pt-sm-3 pt-0">
-                <!-- Sidebar Backgrounds -->
-                <div>
-                    <h6 class="mb-0">Sidebar Colors</h6>
-                </div>
-                <a href="javascript:void(0)" class="switch-trigger background-color">
-                    <div class="badge-colors my-2 text-start">
-                        <span class="badge filter bg-gradient-primary active" data-color="primary"
-                            onclick="sidebarColor(this)"></span>
-                        <span class="badge filter bg-gradient-dark" data-color="dark"
-                            onclick="sidebarColor(this)"></span>
-                        <span class="badge filter bg-gradient-info" data-color="info"
-                            onclick="sidebarColor(this)"></span>
-                        <span class="badge filter bg-gradient-success" data-color="success"
-                            onclick="sidebarColor(this)"></span>
-                        <span class="badge filter bg-gradient-warning" data-color="warning"
-                            onclick="sidebarColor(this)"></span>
-                        <span class="badge filter bg-gradient-danger" data-color="danger"
-                            onclick="sidebarColor(this)"></span>
-                    </div>
-                </a>
-                <!-- Sidenav Type -->
-                <div class="mt-3">
-                    <h6 class="mb-0">Sidenav Type</h6>
-                    <p class="text-sm">Choose between 2 different sidenav types.</p>
-                </div>
-                <div class="d-flex">
-                    <button class="btn bg-gradient-primary w-100 px-3 mb-2 active" data-class="bg-transparent"
-                        onclick="sidebarType(this)">Transparent</button>
-                    <button class="btn bg-gradient-primary w-100 px-3 mb-2 ms-2" data-class="bg-white"
-                        onclick="sidebarType(this)">White</button>
-                </div>
-                <p class="text-sm d-xl-none d-block mt-2">You can change the sidenav type just on desktop view.</p>
-                <!-- Navbar Fixed -->
-                <div class="mt-3">
-                    <h6 class="mb-0">Navbar Fixed</h6>
-                </div>
-                <div class="form-check form-switch ps-0">
-                    <input class="form-check-input mt-1 ms-auto" type="checkbox" id="navbarFixed"
-                        onclick="navbarFixed(this)">
-                </div>
-                <hr class="horizontal dark my-sm-4">
-                <a class="btn bg-gradient-dark w-100"
-                    href="https://www.creative-tim.com/product/soft-ui-dashboard">Free Download</a>
-                <a class="btn btn-outline-dark w-100"
-                    href="https://www.creative-tim.com/learning-lab/bootstrap/license/soft-ui-dashboard">View
-                    documentation</a>
-                <div class="w-100 text-center">
-                    <a class="github-button" href="https://github.com/creativetimofficial/soft-ui-dashboard"
-                        data-icon="octicon-star" data-size="large" data-show-count="true"
-                        aria-label="Star creativetimofficial/soft-ui-dashboard on GitHub">Star</a>
-                    <h6 class="mt-3">Thank you for sharing!</h6>
-                    <a href="https://twitter.com/intent/tweet?text=Check%20Soft%20UI%20Dashboard%20made%20by%20%40CreativeTim%20%23webdesign%20%23dashboard%20%23bootstrap5&amp;url=https%3A%2F%2Fwww.creative-tim.com%2Fproduct%2Fsoft-ui-dashboard"
-                        class="btn btn-dark mb-0 me-2" target="_blank">
-                        <i class="fab fa-twitter me-1" aria-hidden="true"></i> Tweet
-                    </a>
-                    <a href="https://www.facebook.com/sharer/sharer.php?u=https://www.creative-tim.com/product/soft-ui-dashboard"
-                        class="btn btn-dark mb-0 me-2" target="_blank">
-                        <i class="fab fa-facebook-square me-1" aria-hidden="true"></i> Share
-                    </a>
-                </div>
-            </div>
+        <!-- Sidenav Type -->
+        <div class="mt-3">
+            <h6 class="mb-0">Sidenav Type</h6>
+            <p class="text-sm">Choose between 2 different sidenav types.</p>
+        </div>
+        <div class="d-flex">
+            <button class="btn bg-gradient-primary w-100 px-3 mb-2 active" data-class="bg-transparent"
+                onclick="sidebarType(this)">Transparent</button>
+            <button class="btn bg-gradient-primary w-100 px-3 mb-2 ms-2" data-class="bg-white"
+                onclick="sidebarType(this)">White</button>
+        </div>
+        <p class="text-sm d-xl-none d-block mt-2">You can change the sidenav type just on desktop view.</p>
+        <!-- Navbar Fixed -->
+        <div class="mt-3">
+            <h6 class="mb-0">Navbar Fixed</h6>
+        </div>
+        <div class="form-check form-switch ps-0">
+            <input class="form-check-input mt-1 ms-auto" type="checkbox" id="navbarFixed"
+                onclick="navbarFixed(this)">
+        </div>
+        <hr class="horizontal dark my-sm-4">
+        <a class="btn bg-gradient-dark w-100"
+            href="https://www.creative-tim.com/product/soft-ui-dashboard">Free Download</a>
+        <a class="btn btn-outline-dark w-100"
+            href="https://www.creative-tim.com/learning-lab/bootstrap/license/soft-ui-dashboard">View
+            documentation</a>
+        <div class="w-100 text-center">
+            <a class="github-button" href="https://github.com/creativetimofficial/soft-ui-dashboard"
+                data-icon="octicon-star" data-size="large" data-show-count="true"
+                aria-label="Star creativetimofficial/soft-ui-dashboard on GitHub">Star</a>
+            <h6 class="mt-3">Thank you for sharing!</h6>
+            <a href="https://twitter.com/intent/tweet?text=Check%20Soft%20UI%20Dashboard%20made%20by%20%40CreativeTim%20%23webdesign%20%23dashboard%20%23bootstrap5&amp;url=https%3A%2F%2Fwww.creative-tim.com%2Fproduct%2Fsoft-ui-dashboard"
+                class="btn btn-dark mb-0 me-2" target="_blank">
+                <i class="fab fa-twitter me-1" aria-hidden="true"></i> Tweet
+            </a>
+            <a href="https://www.facebook.com/sharer/sharer.php?u=https://www.creative-tim.com/product/soft-ui-dashboard"
+                class="btn btn-dark mb-0 me-2" target="_blank">
+                <i class="fab fa-facebook-square me-1" aria-hidden="true"></i> Share
+            </a>
         </div>
     </div>
-    <!-- Modal -->
-    <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
-        aria-hidden="true">
-        <div class="modal-dialog" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel">Add Member</h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                </div>
-                <div class="modal-body">
-                    <div class="row">
-                        <form action="/members" method="POST" enctype="multipart/form-data">
-                            @csrf
-                            <div class="form-group">
-                                <input required type="text" style="width:150px;" name="firstname" id="fn"
-                                    placeholder="First Name">
-                                <input required type="text" style="width:150px;" name="middlename" id="mn"
-                                    placeholder="Middle Name">
-                                <input required type="text" style="width:150px;" name="lastname" id="ln"
-                                    placeholder="Last Name">
-                            </div>
-                            <div class="form-group">
-                                <input required type="text" style="width: 460px;" name="address" id="address"
-                                    placeholder="Address">
-                            </div>
-                            <div class="form-group">
-                                <input required type="text" maxlength="13" name="contact" id="mn"
-                                    placeholder="Contact Number" style="margin-right: 20px;">
-                                <label for="civilstat" class="for">Civil Status:</label>
-                                <select name="civilstat" id="civilstat">
-                                    <option value="Single" selected>Single</option>
-                                    <option value="Married">Married</option>
-                                    <option value="Widow">Widow</option>
-                                    <option value="Separated">Separated</option>
-                                    <option value="Divorced">Divorced
-                                    </option>
-                                </select>
-                            </div>
-                            <div class="form-group">
-                                <label for="gender" class="for">Gender:</label>
-                                <select required name="gender" id="civilstat">
-                                    <option value="Male">Male</option>
-                                    <option value="Female">Female</option>
-                                </select>
-                                <label for="religion" class="for">Religion:</label>
-                                <input required type="text" style="width: 265px;margin-left: 5px;" name="religion"
-                                    id="religion" placeholder="Religion">
+</div>
+</div>
+<!-- Modal -->
+<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+aria-hidden="true">
+<div class="modal-dialog" role="document">
+    <div class="modal-content">
+        <div class="modal-header">
+            <h5 class="modal-title" id="exampleModalLabel">Add Collection</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+            </button>
+        </div>
+        <div class="modal-body">
+            <div class="row">
+                <form autocomplete="off" action="/collection" method="POST" enctype="multipart/form-data">
+                    @csrf
 
-                            </div>
-                            <div class="form-group">
-                                <label for="birthdate" class="for">Date of Birth:</label>
-                                <input required type="date" style="width: 150px;margin-left: 10px;"
-                                    name="birthdate" id="birthdate" placeholder="Date of Birth"
-                                    title="Date of Birth">
-                            </div>
-                            <div class="form-group">
-                                <input required type="text" style="width: 460px;" name="bplace" id="bplace"
-                                    placeholder="Place of Birth">
-                            </div>
-                            <div class="form-group">
-                                <label for="height" class="for">Height:</label>
-                                <input required type="number" style="width: 150px;margin-right: 5px;" name="height"
-                                    id="height" placeholder="Height (cm)">
-                                <label for="weight" class="for">Weight:</label>
-                                <input required type="number" style="width: 150px;" name="weight" id="weight"
-                                    placeholder="Weight (kg)">
-                            </div>
-                            <div class="form-group">
-                                <label for="mop" class="for">Mode of Payment:</label>
-                                <select name="mop" id="mop" style="margin-left: 5px;">
-                                    <option value="Regular" selected>Regular</option>
-                                    <option value="Indigent">Indigent</option>
-                                </select>
-                            </div>
-                            <div class="form-group">
-                                <label for="plan" class="for">Plans:</label>
-                                <select onchange="planChange(this.options[this.selectedIndex])" required
-                                    name="plan" id="newMemberPlan" style="margin-left: 5px;">
-                                    @foreach ($plans as $plan)
-                                        <option value="{{ $plan['planID'] }}" am="{{ $plan['amount'] }}">
-                                            {{ $plan['description'] }}
-                                        </option>
-                                    @endforeach
-                                </select>
-                            </div>
-                            <div class="form-group">
-                                <label for="amount">Plan Amount: </label>
-                                <input required readonly type="text" name="amount" id="newMemberAmount">
-                            </div>
-                            <div class="form-group">
-                                <label for="benef" class="for">Benefeciaries:</label>
-                                <br>
-                                <input required type="text" name="dep1" id="dep1">
-                                <input type="text" name="dep2" id="dep2">
-                            </div>
-                            <div class="form-group">
-                                <input type="text" name="dep3" id="dep3">
-                                <input type="text" name="dep4" id="dep4">
-                            </div>
-                            <div class="form-group">
-                                <input type="text" name="dep5" id="dep5">
-                                <input type="text" name="dep6" id="dep6">
-                            </div>
-                            <div class="form-group">
-                                <input type="text" name="dep7" id="dep7">
-                                <input type="text" name="dep8" id="dep8">
-                            </div>
-                            <div class="form-group">
-                                <input type="text" name="dep9" id="dep9">
-                                <input type="text" name="dep10" id="dep10">
-                            </div>
-
+                    <div class="form-group">
+                        <label for="fullname">Full Name:</label>
+                        <div class="autocomplete" style="width:300px;">
+                            <input id="myInput" type="text" name="fullname" placeholder="Full Name">
+                        </div>
                     </div>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                    <button type="submit" class="btn btn-primary">Save changes</button>
-                </div>
-                </form>
+
+
+
             </div>
         </div>
-    </div>
-
-
-    <div class="modal fade" id="signOutModal" tabindex="-1" role="dialog"
-        aria-labelledby="signOutModalLabel" aria-hidden="true">
-        <div class="modal-dialog" role="document">
-            <div class="modal-content">
-                <form action="/signout" method="GET">
-                    <div class="modal-body">
-                        <h5 class="modal-title" id="signOutModalLabel">Do you want to proceed signing out ?</h5>
-                    </div>
-                    <div class="modal-footer">
-                        <button type="submit" class="btn btn-primary">Yes, Proceed</button>
-                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                    </div>
-                </form>
-            </div>
+        <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+            <button type="submit" class="btn btn-primary">Save changes</button>
         </div>
+        </form>
     </div>
-    @if (session()->pull('successAdd'))
-        <script>
-            Swal.fire({
-                position: 'center',
-                icon: 'success',
-                title: 'Successfully Added Record',
-                showConfirmButton: false,
-                timer: 500
-            });
-        </script>;
-        {{ session()->forget('successAdd') }}
-    @endif
-
-    @if (session()->pull('successDelete'))
-        <script>
-            Swal.fire({
-                position: 'center',
-                icon: 'success',
-                title: 'Successfully Deleted Member',
-                showConfirmButton: false,
-                timer: 800
-            });
-        </script>;
-        {{ session()->forget('successDelete') }}
-    @endif
-
-    @if (session()->pull('errorDelete'))
-        <script>
-            Swal.fire({
-                position: 'center',
-                icon: 'warning',
-                title: 'Failed To Delete Member',
-                showConfirmButton: false,
-                timer: 800
-            });
-        </script>;
-        {{ session()->forget('errorDelete') }}
-    @endif
-
-    @if (session()->pull('userExist'))
-        <script>
-            Swal.fire({
-                position: 'center',
-                icon: 'warning',
-                title: 'Member Already Exist',
-                showConfirmButton: false,
-                timer: 800
-            });
-        </script>;
-        {{ session()->forget('userExist') }}
-    @endif
-
-    @if (session()->pull('errorAdd'))
-        <script>
-            Swal.fire({
-                position: 'center',
-                icon: 'warning',
-                title: 'Failed to Add Member',
-                showConfirmButton: false,
-                timer: 800
-            });
-        </script>;
-        {{ session()->forget('errorAdd') }}
-    @endif
-
-    @if (session()->pull('errorType'))
-        <script>
-            Swal.fire({
-                position: 'center',
-                icon: 'warning',
-                title: 'Unauthorized',
-                showConfirmButton: false,
-                timer: 800
-            });
-        </script>;
-        {{ session()->forget('errorType') }}
-    @endif
-
-    @if (session()->pull('successUpdate'))
-        <script>
-            Swal.fire({
-                position: 'center',
-                icon: 'success',
-                title: 'Successfully Updated Member',
-                showConfirmButton: false,
-                timer: 800
-            });
-        </script>;
-        {{ session()->forget('successUpdate') }}
-    @endif
-
-    @if (session()->pull('errorUpdate'))
-        <script>
-            Swal.fire({
-                position: 'center',
-                icon: 'warning',
-                title: 'Failed To Update Member',
-                showConfirmButton: false,
-                timer: 800
-            });
-        </script>;
-        {{ session()->forget('errorUpdate') }}
-    @endif
-    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
-        integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous">
-    </script>
-    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.12.9/dist/umd/popper.min.js"
-        integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous">
-    </script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/js/bootstrap.min.js"
-        integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous">
-    </script>
-    <!--   Core JS Files   -->
-    <script src="../assets/js/core/popper.min.js"></script>
-    <script src="../assets/js/core/bootstrap.min.js"></script>
-    <script src="../assets/js/plugins/perfect-scrollbar.min.js"></script>
-    <script src="../assets/js/plugins/smooth-scrollbar.min.js"></script>
-    <script src="../assets/js/plugins/chartjs.min.js"></script>
-    <script>
-        var ctx = document.getElementById("chart-bars").getContext("2d");
-
-        new Chart(ctx, {
-            type: "bar",
-            data: {
-                labels: ["Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"],
-                datasets: [{
-                    label: "Sales",
-                    tension: 0.4,
-                    borderWidth: 0,
-                    borderRadius: 4,
-                    borderSkipped: false,
-                    backgroundColor: "#fff",
-                    data: [450, 200, 100, 220, 500, 100, 400, 230, 500],
-                    maxBarThickness: 6
-                }, ],
-            },
-            options: {
-                responsive: true,
-                maintainAspectRatio: false,
-                plugins: {
-                    legend: {
-                        display: false,
-                    }
-                },
-                interaction: {
-                    intersect: false,
-                    mode: 'index',
-                },
-                scales: {
-                    y: {
-                        grid: {
-                            drawBorder: false,
-                            display: false,
-                            drawOnChartArea: false,
-                            drawTicks: false,
-                        },
-                        ticks: {
-                            suggestedMin: 0,
-                            suggestedMax: 500,
-                            beginAtZero: true,
-                            padding: 15,
-                            font: {
-                                size: 14,
-                                family: "Open Sans",
-                                style: 'normal',
-                                lineHeight: 2
-                            },
-                            color: "#fff"
-                        },
-                    },
-                    x: {
-                        grid: {
-                            drawBorder: false,
-                            display: false,
-                            drawOnChartArea: false,
-                            drawTicks: false
-                        },
-                        ticks: {
-                            display: false
-                        },
-                    },
-                },
-            },
-        });
+</div>
+</div>
 
 
-        var ctx2 = document.getElementById("chart-line").getContext("2d");
+<div class="modal fade" id="signOutModal" tabindex="-1" role="dialog" aria-labelledby="signOutModalLabel"
+aria-hidden="true">
+<div class="modal-dialog" role="document">
+    <div class="modal-content">
+        <form action="/signout" method="GET">
+            <div class="modal-body">
+                <h5 class="modal-title" id="signOutModalLabel">Do you want to proceed signing out ?</h5>
+            </div>
+            <div class="modal-footer">
+                <button type="submit" class="btn btn-primary">Yes, Proceed</button>
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+            </div>
+        </form>
+    </div>
+</div>
+</div>
+@if (session()->pull('successAdd'))
+<script>
+    Swal.fire({
+        position: 'center',
+        icon: 'success',
+        title: 'Successfully Added Record',
+        showConfirmButton: false,
+        timer: 500
+    });
+</script>;
+{{ session()->forget('successAdd') }}
+@endif
 
-        var gradientStroke1 = ctx2.createLinearGradient(0, 230, 0, 50);
+@if (session()->pull('successDelete'))
+<script>
+    Swal.fire({
+        position: 'center',
+        icon: 'success',
+        title: 'Successfully Deleted Member',
+        showConfirmButton: false,
+        timer: 800
+    });
+</script>;
+{{ session()->forget('successDelete') }}
+@endif
 
-        gradientStroke1.addColorStop(1, 'rgba(203,12,159,0.2)');
-        gradientStroke1.addColorStop(0.2, 'rgba(72,72,176,0.0)');
-        gradientStroke1.addColorStop(0, 'rgba(203,12,159,0)'); //purple colors
+@if (session()->pull('errorDelete'))
+<script>
+    Swal.fire({
+        position: 'center',
+        icon: 'warning',
+        title: 'Failed To Delete Member',
+        showConfirmButton: false,
+        timer: 800
+    });
+</script>;
+{{ session()->forget('errorDelete') }}
+@endif
 
-        var gradientStroke2 = ctx2.createLinearGradient(0, 230, 0, 50);
+@if (session()->pull('userExist'))
+<script>
+    Swal.fire({
+        position: 'center',
+        icon: 'warning',
+        title: 'Member Already Exist',
+        showConfirmButton: false,
+        timer: 800
+    });
+</script>;
+{{ session()->forget('userExist') }}
+@endif
 
-        gradientStroke2.addColorStop(1, 'rgba(20,23,39,0.2)');
-        gradientStroke2.addColorStop(0.2, 'rgba(72,72,176,0.0)');
-        gradientStroke2.addColorStop(0, 'rgba(20,23,39,0)'); //purple colors
+@if (session()->pull('errorAdd'))
+<script>
+    Swal.fire({
+        position: 'center',
+        icon: 'warning',
+        title: 'Failed to Add Member',
+        showConfirmButton: false,
+        timer: 800
+    });
+</script>;
+{{ session()->forget('errorAdd') }}
+@endif
 
-        new Chart(ctx2, {
-            type: "line",
-            data: {
-                labels: ["Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"],
-                datasets: [{
-                        label: "Mobile apps",
-                        tension: 0.4,
-                        borderWidth: 0,
-                        pointRadius: 0,
-                        borderColor: "#cb0c9f",
-                        borderWidth: 3,
-                        backgroundColor: gradientStroke1,
-                        fill: true,
-                        data: [50, 40, 300, 220, 500, 250, 400, 230, 500],
-                        maxBarThickness: 6
+@if (session()->pull('errorType'))
+<script>
+    Swal.fire({
+        position: 'center',
+        icon: 'warning',
+        title: 'Unauthorized',
+        showConfirmButton: false,
+        timer: 800
+    });
+</script>;
+{{ session()->forget('errorType') }}
+@endif
 
-                    },
-                    {
-                        label: "Websites",
-                        tension: 0.4,
-                        borderWidth: 0,
-                        pointRadius: 0,
-                        borderColor: "#3A416F",
-                        borderWidth: 3,
-                        backgroundColor: gradientStroke2,
-                        fill: true,
-                        data: [30, 90, 40, 140, 290, 290, 340, 230, 400],
-                        maxBarThickness: 6
-                    },
-                ],
-            },
-            options: {
-                responsive: true,
-                maintainAspectRatio: false,
-                plugins: {
-                    legend: {
-                        display: false,
-                    }
-                },
-                interaction: {
-                    intersect: false,
-                    mode: 'index',
-                },
-                scales: {
-                    y: {
-                        grid: {
-                            drawBorder: false,
-                            display: true,
-                            drawOnChartArea: true,
-                            drawTicks: false,
-                            borderDash: [5, 5]
-                        },
-                        ticks: {
-                            display: true,
-                            padding: 10,
-                            color: '#b2b9bf',
-                            font: {
-                                size: 11,
-                                family: "Open Sans",
-                                style: 'normal',
-                                lineHeight: 2
-                            },
-                        }
-                    },
-                    x: {
-                        grid: {
-                            drawBorder: false,
-                            display: false,
-                            drawOnChartArea: false,
-                            drawTicks: false,
-                            borderDash: [5, 5]
-                        },
-                        ticks: {
-                            display: true,
-                            color: '#b2b9bf',
-                            padding: 20,
-                            font: {
-                                size: 11,
-                                family: "Open Sans",
-                                style: 'normal',
-                                lineHeight: 2
-                            },
-                        }
-                    },
-                },
-            },
-        });
-    </script>
-    <script>
-        var win = navigator.platform.indexOf('Win') > -1;
-        if (win && document.querySelector('#sidenav-scrollbar')) {
-            var options = {
-                damping: '0.5'
+@if (session()->pull('successUpdate'))
+<script>
+    Swal.fire({
+        position: 'center',
+        icon: 'success',
+        title: 'Successfully Updated Member',
+        showConfirmButton: false,
+        timer: 800
+    });
+</script>;
+{{ session()->forget('successUpdate') }}
+@endif
+
+@if (session()->pull('errorUpdate'))
+<script>
+    Swal.fire({
+        position: 'center',
+        icon: 'warning',
+        title: 'Failed To Update Member',
+        showConfirmButton: false,
+        timer: 800
+    });
+</script>;
+{{ session()->forget('errorUpdate') }}
+@endif
+<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
+    integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous">
+</script>
+<script src="https://cdn.jsdelivr.net/npm/popper.js@1.12.9/dist/umd/popper.min.js"
+    integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous">
+</script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/js/bootstrap.min.js"
+    integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous">
+</script>
+<!--   Core JS Files   -->
+<script src="js/core/popper.min.js"></script>
+<script src="js/core/bootstrap.min.js"></script>
+<script src="js/plugins/perfect-scrollbar.min.js"></script>
+<script src="js/plugins/smooth-scrollbar.min.js"></script>
+<script src="js/plugins/chartjs.min.js"></script>
+
+<script>
+    var win = navigator.platform.indexOf('Win') > -1;
+    if (win && document.querySelector('#sidenav-scrollbar')) {
+        var options = {
+            damping: '0.5'
+        }
+        Scrollbar.init(document.querySelector('#sidenav-scrollbar'), options);
+    }
+
+    function autocomplete(inp, arr) {
+        /*the autocomplete function takes two arguments,
+        the text field element and an array of possible autocompleted values:*/
+        var currentFocus;
+        /*execute a function when someone writes in the text field:*/
+        inp.addEventListener("input", function(e) {
+            var a, b, i, val = this.value;
+            /*close any already open lists of autocompleted values*/
+            closeAllLists();
+            if (!val) {
+                return false;
             }
-            Scrollbar.init(document.querySelector('#sidenav-scrollbar'), options);
+            currentFocus = -1;
+            /*create a DIV element that will contain the items (values):*/
+            a = document.createElement("DIV");
+            a.setAttribute("id", this.id + "autocomplete-list");
+            a.setAttribute("class", "autocomplete-items");
+            /*append the DIV element as a child of the autocomplete container:*/
+            this.parentNode.appendChild(a);
+            /*for each item in the array...*/
+            for (i = 0; i < arr.length; i++) {
+                /*check if the item starts with the same letters as the text field value:*/
+                if (arr[i].substr(0, val.length).toUpperCase() == val.toUpperCase()) {
+                    /*create a DIV element for each matching element:*/
+                    b = document.createElement("DIV");
+                    /*make the matching letters bold:*/
+                    b.innerHTML = "<strong>" + arr[i].substr(0, val.length) + "</strong>";
+                    b.innerHTML += arr[i].substr(val.length);
+                    /*insert a input field that will hold the current array item's value:*/
+                    b.innerHTML += "<input type='hidden' value='" + arr[i] + "'>";
+                    /*execute a function when someone clicks on the item value (DIV element):*/
+                    b.addEventListener("click", function(e) {
+                        /*insert the value for the autocomplete text field:*/
+                        inp.value = this.getElementsByTagName("input")[0].value;
+                        /*close the list of autocompleted values,
+                        (or any other open lists of autocompleted values:*/
+                        closeAllLists();
+                    });
+                    a.appendChild(b);
+                }
+            }
+        });
+        /*execute a function presses a key on the keyboard:*/
+        inp.addEventListener("keydown", function(e) {
+            var x = document.getElementById(this.id + "autocomplete-list");
+            if (x) x = x.getElementsByTagName("div");
+            if (e.keyCode == 40) {
+                /*If the arrow DOWN key is pressed,
+                increase the currentFocus variable:*/
+                currentFocus++;
+                /*and and make the current item more visible:*/
+                addActive(x);
+            } else if (e.keyCode == 38) { //up
+                /*If the arrow UP key is pressed,
+                decrease the currentFocus variable:*/
+                currentFocus--;
+                /*and and make the current item more visible:*/
+                addActive(x);
+            } else if (e.keyCode == 13) {
+                /*If the ENTER key is pressed, prevent the form from being submitted,*/
+                e.preventDefault();
+                if (currentFocus > -1) {
+                    /*and simulate a click on the "active" item:*/
+                    if (x) x[currentFocus].click();
+                }
+            }
+        });
+
+        function addActive(x) {
+            /*a function to classify an item as "active":*/
+            if (!x) return false;
+            /*start by removing the "active" class on all items:*/
+            removeActive(x);
+            if (currentFocus >= x.length) currentFocus = 0;
+            if (currentFocus < 0) currentFocus = (x.length - 1);
+            /*add class "autocomplete-active":*/
+            x[currentFocus].classList.add("autocomplete-active");
         }
 
-        function doOnAddingMember() {
-            let amount = document.getElementById('newMemberAmount');
-            amount.removeAttribute('value');
-            let newMemberPlan = document.getElementById('newMemberPlan');
-            newMemberPlan.selectedIndex = 0;
-            @php
-             $plans = json_decode(DB::table('vwactiveplan')->get(), true);
-            @endphp
+        function removeActive(x) {
+            /*a function to remove the "active" class from all autocomplete items:*/
+            for (var i = 0; i < x.length; i++) {
+                x[i].classList.remove("autocomplete-active");
+            }
         }
 
-        function planChange(e) {
-            console.log(e);
-            let amount = document.getElementById('newMemberAmount');
-            console.log(amount);
-            amount.setAttribute('value', e.getAttribute('am'));
+        function closeAllLists(elmnt) {
+            /*close all autocomplete lists in the document,
+            except the one passed as an argument:*/
+            var x = document.getElementsByClassName("autocomplete-items");
+            for (var i = 0; i < x.length; i++) {
+                if (elmnt != x[i] && elmnt != inp) {
+                    x[i].parentNode.removeChild(x[i]);
+                }
+            }
         }
-    </script>
-    <!-- Github buttons -->
-    <script async defer src="https://buttons.github.io/buttons.js"></script>
-    <!-- Control Center for Soft Dashboard: parallax effects, scripts for the example pages etc -->
-    <script src="js/soft-ui-dashboard.min.js?v=1.0.6"></script>
+        /*execute a function when someone clicks in the document:*/
+        document.addEventListener("click", function(e) {
+            closeAllLists(e.target);
+        });
+    }
+
+    function doOnAddCollection() {
+        var fullnames = {!! json_encode($fullnames, JSON_HEX_TAG) !!};
+        autocomplete(document.getElementById("myInput"), fullnames);
+    }
+</script>
+<!-- Github buttons -->
+<script async defer src="https://buttons.github.io/buttons.js"></script>
+<!-- Control Center for Soft Dashboard: parallax effects, scripts for the example pages etc -->
+<script src="js/soft-ui-dashboard.min.js?v=1.0.6"></script>
 
 
 </body>

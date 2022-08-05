@@ -23246,7 +23246,7 @@ hr.horizontal.gray-light {
 
 .navbar-vertical .navbar-nav>.nav-item .nav-link.active {
   color: #344767;
-  background-color: #fff;
+  background-color: #d5d5d5;
 }
 
 .navbar-vertical .navbar-nav>.nav-item .nav-link.active .icon {
@@ -23255,7 +23255,7 @@ hr.horizontal.gray-light {
 
 .navbar-vertical .navbar-nav>.nav-item .nav-link.active .icon svg .color-background,
 .navbar-vertical .navbar-nav>.nav-item .nav-link.active .icon svg .color-foreground {
-  fill: #fff;
+  fill: #d5d5d5;
 }
 
 .navbar-main {
