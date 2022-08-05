@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\CollectionController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\LoginController;
@@ -26,6 +27,7 @@ Route::get('/signout', [SignOutController::class, 'index']);
 Route::put('/update/members', [MembersController::class, 'update']);
 Route::delete('/delete/members/{id}', [MembersController::class, 'destroy'])->name('delete.member');
 Route::resource('/members', MembersController::class);
+Route::resource('/collection', CollectionController::class);
 Route::resource(
     '/login',
     LoginController::class

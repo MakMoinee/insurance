@@ -23,7 +23,7 @@
     <link rel="apple-touch-icon" sizes="76x76" href="img/apple-icon.png">
     <link rel="icon" type="image/png" href="/storage/image/favicon.ico">
     <title>
-        Members
+        Collection
     </title>
     <!--     Fonts and icons     -->
     <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700" rel="stylesheet" />
@@ -272,9 +272,9 @@
                     <ol class="breadcrumb bg-transparent mb-0 pb-0 pt-1 px-0 me-sm-6 me-5">
                         <li class="breadcrumb-item text-sm"><a class="opacity-5 text-dark"
                                 href="javascript:;">Pages</a></li>
-                        <li class="breadcrumb-item text-sm text-dark active" aria-current="page">Members</li>
+                        <li class="breadcrumb-item text-sm text-dark active" aria-current="page">Collection</li>
                     </ol>
-                    <h6 class="font-weight-bolder mb-0">Members</h6>
+                    <h6 class="font-weight-bolder mb-0">Collection</h6>
                 </nav>
                 <div class="collapse navbar-collapse mt-sm-0 mt-2 me-md-0 me-sm-4" id="navbar">
                     <div class="ms-md-auto pe-md-3 d-flex align-items-center">
@@ -419,7 +419,7 @@
                             @if ($utype == 1)
                                 <button onclick="doOnAddingMember()" class="btn btn-primary" data-toggle="modal"
                                     data-target="#exampleModal">Add
-                                    Member</button>
+                                    Collection</button>
                             @else
                                 <button disabled class="btn btn-primary">Add
                                     Member</button>
