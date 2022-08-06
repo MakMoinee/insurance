@@ -12,16 +12,18 @@
 
 * The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
 -->
+
 <!DOCTYPE html>
 <html lang="en">
 
 <head>
     <meta charset="utf-8" />
+    <meta name="csrf-token" content="{{ csrf_token() }}">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <link rel="apple-touch-icon" sizes="76x76" href="img/apple-icon.png">
     <link rel="icon" type="image/png" href="/storage/image/favicon.ico">
     <title>
-        Dashboard
+        Plans
     </title>
     <!--     Fonts and icons     -->
     <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700" rel="stylesheet" />
@@ -33,8 +35,48 @@
     <link href="css/nucleo-svg.css" rel="stylesheet" />
     <!-- CSS Files -->
     <link id="pagestyle" href="css/soft-ui-dashboard.css?v=1.0.6" rel="stylesheet" />
+
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css"
         integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    {{-- <script src="sweetalert2.min.js"></script> --}}
+    <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <style>
+        .autocomplete {
+            position: relative;
+            display: inline-block;
+        }
+
+        .autocomplete-items {
+            position: absolute;
+            border: 1px solid #d4d4d4;
+            border-bottom: none;
+            border-top: none;
+            z-index: 99;
+            /*position the autocomplete items to be the same width as the container:*/
+            top: 100%;
+            left: 0;
+            right: 0;
+        }
+
+        .autocomplete-items div {
+            padding: 10px;
+            cursor: pointer;
+            background-color: #fff;
+            border-bottom: 1px solid #d4d4d4;
+        }
+
+        /*when hovering an item:*/
+        .autocomplete-items div:hover {
+            background-color: #e9e9e9;
+        }
+
+        /*when navigating through the items using the arrow keys:*/
+        .autocomplete-active {
+            background-color: DodgerBlue !important;
+            color: #ffffff;
+        }
+    </style>
 </head>
 
 <body class="g-sidenav-show  bg-gray-100">
@@ -53,7 +95,7 @@
         <div class="collapse navbar-collapse  w-auto " id="sidenav-collapse-main">
             <ul class="navbar-nav">
                 <li class="nav-item">
-                    <a class="nav-link  active" href="/">
+                    <a class="nav-link" href="/">
                         <div
                             class="icon icon-shape icon-sm shadow border-radius-md bg-white text-center me-2 d-flex align-items-center justify-content-center">
                             <svg width="12px" height="12px" viewBox="0 0 45 40" version="1.1"
@@ -80,7 +122,7 @@
                     </a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link  " href="/members">
+                    <a class="nav-link" href="/members">
                         <div
                             class="icon icon-shape icon-sm shadow border-radius-md bg-white text-center me-2 d-flex align-items-center justify-content-center">
                             <img src="/storage/image/team2.png" alt="" width="15px" height="15px">
@@ -89,7 +131,7 @@
                     </a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link  " href="/collection">
+                    <a class="nav-link" href="/collection">
                         <div
                             class="icon icon-shape icon-sm shadow border-radius-md bg-white text-center me-2 d-flex align-items-center justify-content-center">
                             <svg width="12px" height="12px" viewBox="0 0 43 36" version="1.1"
@@ -116,7 +158,7 @@
                     </a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link " href="/plans">
+                    <a class="nav-link active" href="/plans">
                         <div
                             class="icon icon-shape icon-sm shadow border-radius-md bg-white text-center me-2 d-flex align-items-center justify-content-center">
                             <svg version="1.1" id="designs" xmlns="http://www.w3.org/2000/svg"
@@ -289,30 +331,11 @@
                     </a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link  " href="../pages/sign-in.html">
+                    <a class="nav-link  " href="/signout">
                         <div
                             class="icon icon-shape icon-sm shadow border-radius-md bg-white text-center me-2 d-flex align-items-center justify-content-center">
-                            <svg width="12px" height="12px" viewBox="0 0 40 44" version="1.1"
-                                xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
-                                <title>document</title>
-                                <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
-                                    <g transform="translate(-1870.000000, -591.000000)" fill="#FFFFFF"
-                                        fill-rule="nonzero">
-                                        <g transform="translate(1716.000000, 291.000000)">
-                                            <g transform="translate(154.000000, 300.000000)">
-                                                <path class="color-background opacity-6"
-                                                    d="M40,40 L36.3636364,40 L36.3636364,3.63636364 L5.45454545,3.63636364 L5.45454545,0 L38.1818182,0 C39.1854545,0 40,0.814545455 40,1.81818182 L40,40 Z">
-                                                </path>
-                                                <path class="color-background"
-                                                    d="M30.9090909,7.27272727 L1.81818182,7.27272727 C0.814545455,7.27272727 0,8.08727273 0,9.09090909 L0,41.8181818 C0,42.8218182 0.814545455,43.6363636 1.81818182,43.6363636 L30.9090909,43.6363636 C31.9127273,43.6363636 32.7272727,42.8218182 32.7272727,41.8181818 L32.7272727,9.09090909 C32.7272727,8.08727273 31.9127273,7.27272727 30.9090909,7.27272727 Z M18.1818182,34.5454545 L7.27272727,34.5454545 L7.27272727,30.9090909 L18.1818182,30.9090909 L18.1818182,34.5454545 Z M25.4545455,27.2727273 L7.27272727,27.2727273 L7.27272727,23.6363636 L25.4545455,23.6363636 L25.4545455,27.2727273 Z M25.4545455,20 L7.27272727,20 L7.27272727,16.3636364 L25.4545455,16.3636364 L25.4545455,20 Z">
-                                                </path>
-                                            </g>
-                                        </g>
-                                    </g>
-                                </g>
-                            </svg>
                         </div>
-                        <span class="nav-link-text ms-1">Sign In</span>
+                        <span class="nav-link-text ms-1">Sign Out</span>
                     </a>
                 </li>
                 <li class="nav-item">
@@ -366,20 +389,18 @@
                     <ol class="breadcrumb bg-transparent mb-0 pb-0 pt-1 px-0 me-sm-6 me-5">
                         <li class="breadcrumb-item text-sm"><a class="opacity-5 text-dark"
                                 href="javascript:;">Pages</a></li>
-                        <li class="breadcrumb-item text-sm text-dark active" aria-current="page">Dashboard</li>
+                        <li class="breadcrumb-item text-sm text-dark active" aria-current="page">Plans</li>
                     </ol>
-                    <h6 class="font-weight-bolder mb-0">Dashboard</h6>
+                    <h6 class="font-weight-bolder mb-0">Plans</h6>
                 </nav>
                 <div class="collapse navbar-collapse mt-sm-0 mt-2 me-md-0 me-sm-4" id="navbar">
                     <div class="ms-md-auto pe-md-3 d-flex align-items-center">
-                        <div class="input-group">
-                            <input type="text" class="form-control" placeholder="Type here...">
-                        </div>
+
                     </div>
                     <ul class="navbar-nav  justify-content-end">
                         <li class="nav-item d-flex align-items-center">
-                            <a href="#" class="nav-link text-body font-weight-bold px-0"
-                                style="cursor: pointer;" data-toggle="modal" data-target="#signOutModal">
+                            <a class="nav-link text-body font-weight-bold px-0" style="cursor: pointer;"
+                                data-toggle="modal" data-target="#signOutModal">
                                 <i class="fa fa-user me-sm-1"></i>
                                 <span class="d-sm-inline d-none">Sign Out</span>
                             </a>
@@ -409,7 +430,7 @@
                                     <a class="dropdown-item border-radius-md" href="javascript:;">
                                         <div class="d-flex py-1">
                                             <div class="my-auto">
-                                                <img src="img/team-2.jpg" class="avatar avatar-sm  me-3 ">
+                                                <img src="/storage/image/team-2.jpg" class="avatar avatar-sm  me-3 ">
                                             </div>
                                             <div class="d-flex flex-column justify-content-center">
                                                 <h6 class="text-sm font-weight-normal mb-1">
@@ -427,7 +448,7 @@
                                     <a class="dropdown-item border-radius-md" href="javascript:;">
                                         <div class="d-flex py-1">
                                             <div class="my-auto">
-                                                <img src="img/small-logos/logo-spotify.svg"
+                                                <img src="/img/small-logos/logo-spotify.svg"
                                                     class="avatar avatar-sm bg-gradient-dark  me-3 ">
                                             </div>
                                             <div class="d-flex flex-column justify-content-center">
@@ -486,79 +507,183 @@
                 </div>
             </div>
         </nav>
+
         <!-- End Navbar -->
         <div class="container-fluid py-4">
             <div class="row">
-                <div class="col-xl-3 col-sm-6 mb-xl-0 mb-4">
-                    <div class="card">
-                        <div class="card-body p-3">
-                            <div class="row">
-                                <div class="col-8">
-                                    <div class="numbers">
-                                        <p class="text-sm mb-0 text-capitalize font-weight-bold">Total Members</p>
-                                        <h5 class="font-weight-bolder mb-0">
-                                            {{ $totalMembers }}
-                                        </h5>
-                                    </div>
-                                </div>
+                <div class="col-12">
+                    <div class="card mb-4">
+                        <div class="card-header pb-0">
+                            @if ($utype == 1)
+                                <button class="btn btn-primary" data-toggle="modal" data-target="#exampleModal">Add
+                                    Plan</button>
+                            @else
+                                <button disabled class="btn btn-primary">Add
+                                    Member</button>
+                            @endif
+
+                            <div class="input-group">
+                                <input type="text" class="form-control" placeholder="Type here...">
+                            </div>
+                            <br>
+
+                        </div>
+                        <div class="card-body px-0 pt-0 pb-2">
+                            <div class="table-responsive p-0">
+                                <table class="table table-striped align-items-center mb-0">
+                                    <thead>
+                                        <tr>
+                                            <th
+                                                class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
+                                                Plan Description</th>
+                                            <th
+                                                class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">
+                                                Plan Amount</th>
+                                            <th
+                                                class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
+                                                Action</th>
+                                            <th class="text-secondary opacity-7"></th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        @foreach ($plans as $plan)
+                                            <tr>
+                                                <td>
+                                                    <div class="d-flex px-2 py-1">
+                                                        <div class="d-flex flex-column justify-content-center">
+                                                            <h6 class="mb-0 text-sm">
+                                                                {{ $plan['description'] }}
+                                                            </h6>
+                                                        </div>
+                                                    </div>
+                                                </td>
+                                                <td>
+                                                    <div class="d-flex px-2 py-1">
+                                                        <div class="d-flex flex-column justify-content-center">
+                                                            <h6 class="mb-0 text-sm">
+                                                                {{ $plan['amount'] }}
+                                                            </h6>
+                                                        </div>
+                                                    </div>
+                                                </td>
+                                                <td class="align-middle text-center text-sm">
+                                                    <button class="btn btn-sm bg-gradient-warning text-xs"
+                                                        data-toggle="modal"
+                                                        data-target="#editModal{{ $plan['planID'] }}">View/Edit</button>
+
+                                                    <div class="modal fade" id="editModal{{ $plan['planID'] }}"
+                                                        tabindex="-1" role="dialog"
+                                                        aria-labelledby="editModalLabel{{ $plan['planID'] }}"
+                                                        aria-hidden="true">
+                                                        <div class="modal-dialog" role="document">
+                                                            <div class="modal-content">
+                                                                <div class="modal-header">
+                                                                    <h5 class="modal-title"
+                                                                        id="editModalLabel{{ $plan['planID'] }}">
+                                                                        View/Edit
+                                                                        Plan</h5>
+                                                                    <button type="button" class="close"
+                                                                        data-dismiss="modal" aria-label="Close">
+                                                                        <span aria-hidden="true">&times;</span>
+                                                                    </button>
+                                                                </div>
+                                                                <div class="modal-body">
+                                                                    <div class="row">
+                                                                        <form autocomplete="off" action="/update/plan"
+                                                                            method="POST"
+                                                                            enctype="multipart/form-data">
+                                                                            @method('put')
+                                                                            @csrf
+                                                                            <div class="form-group">
+                                                                                <label for="description"
+                                                                                    class="for">Plan
+                                                                                    Description:</label>
+                                                                                <input style="width: 350px;" required
+                                                                                    type="text" name="description"
+                                                                                    id="editDesc"
+                                                                                    value="{{ $plan['description'] }}">
+                                                                                <input type="hidden" name="pid"
+                                                                                    value="{{ $plan['planID'] }}">
+                                                                            </div>
+                                                                            <div class="form-group">
+                                                                                <label for="amount"
+                                                                                    class="for">Plan Amount:</label>
+                                                                                <input required
+                                                                                    style="width: 350px;margin-left: 20px;"
+                                                                                    type="number" name="amount"
+                                                                                    id="editAmount"
+                                                                                    value="{{ $plan['amount'] }}">
+                                                                            </div>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="modal-footer">
+                                                                    <button type="button" class="btn btn-secondary"
+                                                                        data-dismiss="modal">Close</button>
+                                                                    <button type="submit"
+                                                                        class="btn btn-primary">Update Plan</button>
+                                                                </div>
+                                                                </form>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </td>
+                                                <td>
+                                                    @if ($utype == 1)
+                                                        <a href="javascript:;"
+                                                            class="text-secondary font-weight-bold text-xs"
+                                                            data-toggle="modal"
+                                                            data-target="#deleteModal{{ $plan['planID'] }}">
+                                                            <button
+                                                                class="btn btn-sm bg-gradient-danger text-xs">Delete</button>
+                                                        </a>
+                                                        <div class="modal fade" id="deleteModal{{ $plan['planID'] }}"
+                                                            tabindex="-1" role="dialog"
+                                                            aria-labelledby="deleteModalLabel{{ $plan['planID'] }}"
+                                                            aria-hidden="true">
+                                                            <div class="modal-dialog" role="document">
+                                                                <div class="modal-content">
+                                                                    <form
+                                                                        action="{{ route('delete.plan', ['id' => $plan['planID']]) }}"
+                                                                        method="POST" enctype="multipart/form-data">
+                                                                        @method('delete')
+                                                                        @csrf
+                                                                        <div class="form-group">
+                                                                            <input type="hidden" name="mID"
+                                                                                value="{{ $plan['planID'] }}">
+                                                                        </div>
+                                                                        <div class="modal-body">
+                                                                            <h5 class="modal-title"
+                                                                                id="deleteModalLabel">
+                                                                                Do you want to
+                                                                                proceed Delete Plan ?</h5>
+                                                                        </div>
+                                                                        <div class="modal-footer">
+                                                                            <button type="submit"
+                                                                                class="btn btn-primary">Yes,
+                                                                                Proceed</button>
+                                                                            <button type="button"
+                                                                                class="btn btn-secondary"
+                                                                                data-dismiss="modal">Close</button>
+                                                                        </div>
+                                                                    </form>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    @else
+                                                        <button disabled
+                                                            class="btn btn-sm bg-gradient-danger">Delete</button>
+                                                    @endif
+
+                                                </td>
+                                            </tr>
+                                        @endforeach
+
+
+                                    </tbody>
+                                </table>
                             </div>
                         </div>
                     </div>
-                </div>
-                <div class="col-xl-3 col-sm-6 mb-xl-0 mb-4">
-                    <div class="card">
-                        <div class="card-body p-3">
-                            <div class="row">
-                                <div class="col-8">
-                                    <div class="numbers">
-                                        <p class="text-sm mb-0 text-capitalize font-weight-bold">New Members</p>
-                                        <h5 class="font-weight-bolder mb-0">
-                                            {{ $totalNewMembers }}
-                                        </h5>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-xl-3 col-sm-6">
-                    <div class="card">
-                        <div class="card-body p-3">
-                            <div class="row">
-                                <div class="col-8">
-                                    <div class="numbers">
-                                        <p class="text-sm mb-0 text-capitalize font-weight-bold">Sales</p>
-                                        <h5 class="font-weight-bolder mb-0">
-                                            $103,430
-                                            <span class="text-success text-sm font-weight-bolder">+5%</span>
-                                        </h5>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="row mt-4">
-                <div class="col-lg-7 mb-lg-0 mb-4">
-                    <div class="card">
-                        <div class="card-body p-3">
-                            <div class="row">
-                                <div class="col-lg-6">
-                                    <div class="d-flex flex-column h-100">
-                                        <p class="mb-3 pt-2 text-bold">
-                                            Quick Access</p>
-                                        <a href="/members" class="btn btn-primary">
-                                            Members</a>
-                                        <a href="/collection" class="btn btn-primary">
-                                            Collections</a>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-lg-5">
                 </div>
             </div>
             <footer class="footer pt-3  fixed-bottom">
@@ -579,20 +704,8 @@
                         <div class="col-lg-6">
                             <ul class="nav nav-footer justify-content-center justify-content-lg-end">
                                 <li class="nav-item">
-                                    <a href="https://www.creative-tim.com" class="nav-link text-muted"
-                                        target="_blank">Creative Tim</a>
-                                </li>
-                                <li class="nav-item">
                                     <a href="https://www.creative-tim.com/presentation" class="nav-link text-muted"
                                         target="_blank">About Us</a>
-                                </li>
-                                <li class="nav-item">
-                                    <a href="https://www.creative-tim.com/blog" class="nav-link text-muted"
-                                        target="_blank">Blog</a>
-                                </li>
-                                <li class="nav-item">
-                                    <a href="https://www.creative-tim.com/license" class="nav-link pe-0 text-muted"
-                                        target="_blank">License</a>
                                 </li>
                             </ul>
                         </div>
@@ -683,6 +796,42 @@
             </div>
         </div>
     </div>
+    <!-- Modal -->
+    <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+        aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Add Plan</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div class="row">
+                        <form autocomplete="off" action="/plans" method="POST" enctype="multipart/form-data">
+                            @csrf
+                            <div class="form-group">
+                                <label for="description" class="for">Plan Description:</label>
+                                <input style="width: 350px;" required type="text" name="description"
+                                    id="addDesc">
+                            </div>
+                            <div class="form-group">
+                                <label for="amount" class="for">Plan Amount:</label>
+                                <input required style="width: 350px;margin-left: 20px;" type="number" name="amount"
+                                    id="addAmount">
+                            </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    <button type="submit" class="btn btn-primary">Save changes</button>
+                </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
 
     <div class="modal fade" id="signOutModal" tabindex="-1" role="dialog" aria-labelledby="signOutModalLabel"
         aria-hidden="true">
@@ -700,6 +849,122 @@
             </div>
         </div>
     </div>
+    @if (session()->pull('successPlanAdd'))
+        <script>
+            Swal.fire({
+                position: 'center',
+                icon: 'success',
+                title: 'Successfully Added Plan',
+                showConfirmButton: false,
+                timer: 500
+            });
+        </script>;
+        {{ session()->forget('successPlanAdd') }}
+    @endif
+
+    @if (session()->pull('errorPlanAdd'))
+        <script>
+            Swal.fire({
+                position: 'center',
+                icon: 'warning',
+                title: 'Failed To Add Plan',
+                showConfirmButton: false,
+                timer: 800
+            });
+        </script>;
+        {{ session()->forget('errorPlanAdd') }}
+    @endif
+
+    @if (session()->pull('successPlanDelete'))
+        <script>
+            Swal.fire({
+                position: 'center',
+                icon: 'success',
+                title: 'Successfully Deleted Plan',
+                showConfirmButton: false,
+                timer: 800
+            });
+        </script>;
+        {{ session()->forget('successPlanDelete') }}
+    @endif
+
+    @if (session()->pull('errorPlanDelete'))
+        <script>
+            Swal.fire({
+                position: 'center',
+                icon: 'warning',
+                title: 'Failed To Delete Plan',
+                showConfirmButton: false,
+                timer: 800
+            });
+        </script>;
+        {{ session()->forget('errorPlanDelete') }}
+    @endif
+
+    @if (session()->pull('userExist'))
+        <script>
+            Swal.fire({
+                position: 'center',
+                icon: 'warning',
+                title: 'Member Already Exist',
+                showConfirmButton: false,
+                timer: 800
+            });
+        </script>;
+        {{ session()->forget('userExist') }}
+    @endif
+
+    @if (session()->pull('errorAdd'))
+        <script>
+            Swal.fire({
+                position: 'center',
+                icon: 'warning',
+                title: 'Failed to Add Member',
+                showConfirmButton: false,
+                timer: 800
+            });
+        </script>;
+        {{ session()->forget('errorAdd') }}
+    @endif
+
+    @if (session()->pull('errorPlanType'))
+        <script>
+            Swal.fire({
+                position: 'center',
+                icon: 'warning',
+                title: 'Unauthorized',
+                showConfirmButton: false,
+                timer: 800
+            });
+        </script>;
+        {{ session()->forget('errorPlanType') }}
+    @endif
+
+    @if (session()->pull('successPlanUpdate'))
+        <script>
+            Swal.fire({
+                position: 'center',
+                icon: 'success',
+                title: 'Successfully Updated Plan',
+                showConfirmButton: false,
+                timer: 800
+            });
+        </script>;
+        {{ session()->forget('successPlanUpdate') }}
+    @endif
+
+    @if (session()->pull('errorPlanUpdate'))
+        <script>
+            Swal.fire({
+                position: 'center',
+                icon: 'warning',
+                title: 'Failed To Update Plan',
+                showConfirmButton: false,
+                timer: 800
+            });
+        </script>;
+        {{ session()->forget('errorPlanUpdate') }}
+    @endif
     <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
         integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous">
     </script>
@@ -724,11 +989,115 @@
             }
             Scrollbar.init(document.querySelector('#sidenav-scrollbar'), options);
         }
+
+        function autocomplete(inp, arr) {
+            /*the autocomplete function takes two arguments,
+            the text field element and an array of possible autocompleted values:*/
+            var currentFocus;
+            /*execute a function when someone writes in the text field:*/
+            inp.addEventListener("input", function(e) {
+                var a, b, i, val = this.value;
+                /*close any already open lists of autocompleted values*/
+                closeAllLists();
+                if (!val) {
+                    return false;
+                }
+                currentFocus = -1;
+                /*create a DIV element that will contain the items (values):*/
+                a = document.createElement("DIV");
+                a.setAttribute("id", this.id + "autocomplete-list");
+                a.setAttribute("class", "autocomplete-items");
+                /*append the DIV element as a child of the autocomplete container:*/
+                this.parentNode.appendChild(a);
+                /*for each item in the array...*/
+                for (i = 0; i < arr.length; i++) {
+                    /*check if the item starts with the same letters as the text field value:*/
+                    if (arr[i].substr(0, val.length).toUpperCase() == val.toUpperCase()) {
+                        /*create a DIV element for each matching element:*/
+                        b = document.createElement("DIV");
+                        /*make the matching letters bold:*/
+                        b.innerHTML = "<strong>" + arr[i].substr(0, val.length) + "</strong>";
+                        b.innerHTML += arr[i].substr(val.length);
+                        /*insert a input field that will hold the current array item's value:*/
+                        b.innerHTML += "<input type='hidden' value='" + arr[i] + "'>";
+                        /*execute a function when someone clicks on the item value (DIV element):*/
+                        b.addEventListener("click", function(e) {
+                            /*insert the value for the autocomplete text field:*/
+                            inp.value = this.getElementsByTagName("input")[0].value;
+                            /*close the list of autocompleted values,
+                            (or any other open lists of autocompleted values:*/
+                            closeAllLists();
+                        });
+                        a.appendChild(b);
+                    }
+                }
+            });
+            /*execute a function presses a key on the keyboard:*/
+            inp.addEventListener("keydown", function(e) {
+                var x = document.getElementById(this.id + "autocomplete-list");
+                if (x) x = x.getElementsByTagName("div");
+                if (e.keyCode == 40) {
+                    /*If the arrow DOWN key is pressed,
+                    increase the currentFocus variable:*/
+                    currentFocus++;
+                    /*and and make the current item more visible:*/
+                    addActive(x);
+                } else if (e.keyCode == 38) { //up
+                    /*If the arrow UP key is pressed,
+                    decrease the currentFocus variable:*/
+                    currentFocus--;
+                    /*and and make the current item more visible:*/
+                    addActive(x);
+                } else if (e.keyCode == 13) {
+                    /*If the ENTER key is pressed, prevent the form from being submitted,*/
+                    e.preventDefault();
+                    if (currentFocus > -1) {
+                        /*and simulate a click on the "active" item:*/
+                        if (x) x[currentFocus].click();
+                    }
+                }
+            });
+
+            function addActive(x) {
+                /*a function to classify an item as "active":*/
+                if (!x) return false;
+                /*start by removing the "active" class on all items:*/
+                removeActive(x);
+                if (currentFocus >= x.length) currentFocus = 0;
+                if (currentFocus < 0) currentFocus = (x.length - 1);
+                /*add class "autocomplete-active":*/
+                x[currentFocus].classList.add("autocomplete-active");
+            }
+
+            function removeActive(x) {
+                /*a function to remove the "active" class from all autocomplete items:*/
+                for (var i = 0; i < x.length; i++) {
+                    x[i].classList.remove("autocomplete-active");
+                }
+            }
+
+            function closeAllLists(elmnt) {
+                /*close all autocomplete lists in the document,
+                except the one passed as an argument:*/
+                var x = document.getElementsByClassName("autocomplete-items");
+                for (var i = 0; i < x.length; i++) {
+                    if (elmnt != x[i] && elmnt != inp) {
+                        x[i].parentNode.removeChild(x[i]);
+                    }
+                }
+            }
+            /*execute a function when someone clicks in the document:*/
+            document.addEventListener("click", function(e) {
+                closeAllLists(e.target);
+            });
+        }
     </script>
     <!-- Github buttons -->
     <script async defer src="https://buttons.github.io/buttons.js"></script>
     <!-- Control Center for Soft Dashboard: parallax effects, scripts for the example pages etc -->
     <script src="js/soft-ui-dashboard.min.js?v=1.0.6"></script>
+
+
 </body>
 
 </html>
