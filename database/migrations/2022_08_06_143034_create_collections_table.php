@@ -14,7 +14,11 @@ class CreateCollectionsTable extends Migration
     public function up()
     {
         Schema::create('collections', function (Blueprint $table) {
-            $table->id();
+            $table->id('collectionID');
+            $table->integer('or')->nullable(true);
+            $table->date('ordate')->nullable(true);
+            $table->float('amountpaid');
+            $table->integer('memberID');
             $table->timestamps();
         });
     }

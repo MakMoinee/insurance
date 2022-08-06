@@ -28,6 +28,10 @@ class MembersController extends Controller
             $userType = session('users')[0]->uType;
             $queryResult = DB::table('vwactiveplan')->get();
             $plans = json_decode($queryResult, true);
+            $countPlan = count($plans);
+            if ($countPlan == 0) {
+                session()->put('errorPlanEmpty', true);
+            }
             return view('members', ['totalMembers' => $membersCount, 'totalNewMembers' => $total, 'members' => $members, 'civil' => $civil, 'gend' => $gend, 'utype' => $userType, 'plans' => $plans]);
         } else {
             return redirect('/');

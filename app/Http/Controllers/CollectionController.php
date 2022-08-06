@@ -32,7 +32,11 @@ class CollectionController extends Controller
             foreach ($fullnames as $fn) {
                 array_push($data, $fn['FullName']);
             }
-            return view('collection', ['totalMembers' => $membersCount, 'totalNewMembers' => $total, 'members' => $members,  'utype' => $userType, 'fullnames' => $data]);
+            $idData = [];
+            foreach ($members as $member) {
+                array_push($idData, $member['memberID']);
+            }
+            return view('collection', ['totalMembers' => $membersCount, 'totalNewMembers' => $total, 'members' => $members,  'utype' => $userType, 'fullnames' => $data, 'idData' => $idData]);
         } else {
             return redirect('/');
         }

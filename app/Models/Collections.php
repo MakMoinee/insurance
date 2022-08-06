@@ -8,4 +8,14 @@ use Illuminate\Database\Eloquent\Model;
 class Collections extends Model
 {
     use HasFactory;
+
+    protected $table = 'collections';
+    protected $primaryKey = 'collectionID';
+
+    protected $fillable = [
+        'or',
+        'ordate',
+        'amountpaid',
+        'memberID'
+    ];
 }
