@@ -17,7 +17,8 @@ class HomeController extends Controller
             $membersCount = $members->count();
             $newMembers = DB::table('vwtotalnewmembers')->first();
             $total = $newMembers->TotalNewMembers;
-            return view('dashboard', ['totalMembers' => $membersCount, 'totalNewMembers' => $total]);
+            $userType = session('users')[0]->uType;
+            return view('dashboard', ['totalMembers' => $membersCount, 'totalNewMembers' => $total, 'utype' => $userType]);
         } else {
             return view('home');
         }

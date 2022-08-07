@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Collections;
 use App\Models\Members;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -18,14 +19,18 @@ class CollectionController extends Controller
         //
         if (session()->exists('users')) {
             $members = Members::all();
-            $membersCount = $members->count();
-            $newMembers = DB::table('vwtotalnewmembers')->first();
-            $total = $newMembers->TotalNewMembers;
-            $civil = ['Single', 'Married', 'Widow', 'Separated', 'Divorced'];
-            $gend = ['Male', 'Female'];
+
+            $queryResult = DB::table('vwtotalcollections')->get();
+            $totalC = json_decode($queryResult, true);
+            $totalCollection = 0;
+            foreach($totalC as $total){
+                $totalCollection = $total['TotalCollections'];
+                break;
+            }
+
             $userType = session('users')[0]->uType;
-            $queryResult = DB::table('vwactiveplan')->get();
-            $plans = json_decode($queryResult, true);
+           
+            
             $queryResult = DB::table('vwfullnames')->get();
             $fullnames = json_decode($queryResult, true);
             $data = [];
@@ -36,7 +41,11 @@ class CollectionController extends Controller
             foreach ($members as $member) {
                 array_push($idData, $member['memberID']);
             }
-            return view('collection', ['totalMembers' => $membersCount, 'totalNewMembers' => $total, 'members' => $members,  'utype' => $userType, 'fullnames' => $data, 'idData' => $idData]);
+
+            $queryResult = DB::table('vwcollections')->get();
+            $collections = json_decode($queryResult, true);
+
+            return view('collection', ['totalCollections' => $totalCollection, 'collections' => $collections,  'utype' => $userType, 'fullnames' => $data, 'idData' => $idData]);
         } else {
             return redirect('/');
         }
@@ -61,6 +70,22 @@ class CollectionController extends Controller
     public function store(Request $request)
     {
         //
+        if (session()->exists('users')) {
+            $collection = new Collections();
+            $collection->or = $request['or'];
+            $collection->ordate = $request['ordate'];
+            $collection->amountpaid = $request['amountpaid'];
+            $collection->memberID = $request['cid'];
+            $isSave = $collection->save();
+            if ($isSave) {
+                session()->put('successAdd', true);
+            } else {
+                session()->put('errorAdd', true);
+            }
+            return redirect('/collection');
+        } else {
+            return redirect('/');
+        }
     }
 
     /**
