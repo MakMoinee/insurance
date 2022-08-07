@@ -16,6 +16,9 @@ class CreateUserTypesTable extends Migration
         Schema::create('user_types', function (Blueprint $table) {
             $table->id('uType');
             $table->string('description');
+            $table->boolean('members');
+            $table->boolean('collections');
+            $table->boolean('plans');
             $table->timestamps();
         });
     }

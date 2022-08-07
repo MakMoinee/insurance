@@ -14,5 +14,8 @@ class UserTypes extends Model
 
     protected $fillable = [
         'description',
+        'members',
+        'collections',
+        'plans',
     ];
 }
