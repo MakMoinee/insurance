@@ -18,7 +18,10 @@ class CreateMembersTable extends Migration
             $table->string('firstName');
             $table->string('middleName');
             $table->string('lastName');
-            $table->string('address');
+            $table->string('addresspurok');
+            $table->string('addressbrgy');
+            $table->string('addresscity');
+            $table->string('addressprovince');
             $table->string('contactNum', 13);
             $table->string('civilStat');
             $table->string('gender', 6);

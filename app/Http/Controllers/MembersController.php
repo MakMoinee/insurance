@@ -68,7 +68,10 @@ class MembersController extends Controller
                 $newMembers->firstName = $request['firstname'];
                 $newMembers->middleName = $request['middlename'];
                 $newMembers->lastName = $request['lastname'];
-                $newMembers->address = str_replace(",", " ", $request['address']);
+                $newMembers->addresspurok = str_replace(",", " ", $request['addresspurok']);
+                $newMembers->addressbrgy = str_replace(",", " ", $request['addressbrgy']);
+                $newMembers->addresscity = str_replace(",", " ", $request['addresscity']);
+                $newMembers->addressprovince = str_replace(",", " ", $request['addressprovince']);
                 $newMembers->contactNum = $request['contact'];
                 $newMembers->birthDate = $request['birthdate'];
                 $newMembers->gender = $request['gender'];
@@ -146,7 +149,10 @@ class MembersController extends Controller
             $newMembers->firstName = $request['firstname'];
             $newMembers->middleName = $request['middlename'];
             $newMembers->lastName = $request['lastname'];
-            $newMembers->address = str_replace(",", " ", $request['address']);
+            $newMembers->addresspurok = str_replace(",", " ", $request['addresspurok']);
+            $newMembers->addressbrgy = str_replace(",", " ", $request['addressbrgy']);
+            $newMembers->addresscity = str_replace(",", " ", $request['addresscity']);
+            $newMembers->addressprovince = str_replace(",", " ", $request['addressprovince']);
             $newMembers->contactNum = $request['contact'];
             $newMembers->birthDate = date('Y-m-d', strtotime($request['birthdate']));
             $newMembers->gender = $request['gender'];
@@ -177,6 +183,10 @@ class MembersController extends Controller
                     'lastName' => $newMembers->lastName,
                     'contactNum' => $newMembers->contactNum,
                     'birthDate' => $newMembers->birthDate,
+                    'addresspurok' => $newMembers->addresspurok,
+                    'addressbrgy' => $newMembers->addressbrgy,
+                    'addresscity' => $newMembers->addresscity,
+                    'addressprovince' => $newMembers->addressprovince,
                     'gender' => $newMembers->gender,
                     'religion' => $newMembers->religion,
                     'height' => $newMembers->height,

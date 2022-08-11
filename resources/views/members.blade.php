@@ -408,9 +408,10 @@
                     </a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link  " href="/signout">
+                    <a class="nav-link  " href="javascript;;" data-toggle="modal" data-target="#signOutModal">
                         <div
                             class="icon icon-shape icon-sm shadow border-radius-md bg-white text-center me-2 d-flex align-items-center justify-content-center">
+                            <img src="/img/signout.png" alt="" srcset="" width="20px" height="20px">
                         </div>
                         <span class="nav-link-text ms-1">Sign Out</span>
                     </a>
@@ -661,7 +662,8 @@
                                                     </div>
                                                 </td>
                                                 <td>
-                                                    <p class="text-xs font-weight-bold mb-0">{{ $member['address'] }}
+                                                    <p class="text-xs font-weight-bold mb-0">
+                                                        {{ $member['addresspurok'] . ' ' . $member['addressbrgy'] . ' ' . $member['addresscity'] . ' ' . $member['addressprovince'] }}
                                                     </p>
                                                 </td>
                                                 <td>
@@ -719,12 +721,30 @@
                                                                                     placeholder="Last Name"
                                                                                     value="{{ $member['lastName'] }}">
                                                                             </div>
+
                                                                             <div class="form-group">
+
+                                                                                <label for="Address"
+                                                                                    for="Address">Address:</label>
                                                                                 <input disabled required type="text"
-                                                                                    style="width: 460px;"
-                                                                                    name="address" id="address"
-                                                                                    placeholder="Address"
-                                                                                    value="{{ $member['address'] }}">
+                                                                                    name="addresspurok" id="address"
+                                                                                    placeholder="Purok/Street Name"
+                                                                                    value="{{ $member['addresspurok'] }}">
+                                                                                <input disabled required type="text"
+                                                                                    name="addressbrgy" id="address"
+                                                                                    placeholder="Barangay"
+                                                                                    value="{{ $member['addressbrgy'] }}">
+                                                                                <input disabled required
+                                                                                    style="margin-left: 56px;"
+                                                                                    type="text" name="addresscity"
+                                                                                    id="address"
+                                                                                    placeholder="City/Municipality"
+                                                                                    value="{{ $member['addresscity'] }}">
+                                                                                <input disabled required type="text"
+                                                                                    name="addressprovince"
+                                                                                    id="address"
+                                                                                    placeholder="Province"
+                                                                                    value="{{ $member['addressprovince'] }}">
                                                                             </div>
                                                                             <div class="form-group">
                                                                                 <input disabled required type="text"
@@ -992,11 +1012,31 @@
                                                                                         value="{{ $member['lastName'] }}">
                                                                                 </div>
                                                                                 <div class="form-group">
+
+                                                                                    <label for="Address"
+                                                                                        for="Address">Address:</label>
                                                                                     <input required type="text"
-                                                                                        style="width: 460px;"
-                                                                                        name="address" id="address"
-                                                                                        placeholder="Address"
-                                                                                        value="{{ $member['address'] }}">
+                                                                                        name="addresspurok"
+                                                                                        id="address"
+                                                                                        placeholder="Purok/Street Name"
+                                                                                        value="{{ $member['addresspurok'] }}">
+                                                                                    <input required type="text"
+                                                                                        name="addressbrgy"
+                                                                                        id="address"
+                                                                                        placeholder="Barangay"
+                                                                                        value="{{ $member['addressbrgy'] }}">
+                                                                                    <input required
+                                                                                        style="margin-left: 56px;"
+                                                                                        type="text"
+                                                                                        name="addresscity"
+                                                                                        id="address"
+                                                                                        placeholder="City/Municipality"
+                                                                                        value="{{ $member['addresscity'] }}">
+                                                                                    <input required type="text"
+                                                                                        name="addressprovince"
+                                                                                        id="address"
+                                                                                        placeholder="Province"
+                                                                                        value="{{ $member['addressprovince'] }}">
                                                                                 </div>
                                                                                 <div class="form-group">
                                                                                     <input required type="text"
@@ -1348,8 +1388,15 @@
                                     placeholder="Last Name">
                             </div>
                             <div class="form-group">
-                                <input required type="text" style="width: 460px;" name="address" id="address"
-                                    placeholder="Address">
+                                <label for="Address" for="Address">Address:</label>
+                                <input required type="text" name="addresspurok" id="address"
+                                    placeholder="Purok/Street Name">
+                                <input required type="text" name="addressbrgy" id="address"
+                                    placeholder="Barangay">
+                                <input required style="margin-left: 56px;" type="text" name="addresscity"
+                                    id="address" placeholder="City/Municipality">
+                                <input required type="text" name="addressprovince" id="address"
+                                    placeholder="Province">
                             </div>
                             <div class="form-group">
                                 <input required type="text" maxlength="13" name="contact" id="mn"
@@ -1387,8 +1434,8 @@
                             </div>
                             <div class="form-group">
                                 <label for="height" class="for">Height:</label>
-                                <input required type="number" style="width: 150px;margin-right: 5px;"
-                                    name="height" id="height" placeholder="Height (cm)">
+                                <input required type="number" style="width: 150px;margin-right: 5px;" name="height"
+                                    id="height" placeholder="Height (cm)">
                                 <label for="weight" class="for">Weight:</label>
                                 <input required type="number" style="width: 150px;" name="weight"
                                     id="weight" placeholder="Weight (kg)">

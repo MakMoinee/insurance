@@ -406,6 +406,7 @@
                     <a class="nav-link  " href="javascript;;" data-toggle="modal" data-target="#signOutModal">
                         <div
                             class="icon icon-shape icon-sm shadow border-radius-md bg-white text-center me-2 d-flex align-items-center justify-content-center">
+                            <img src="/img/signout.png" alt="" srcset="" width="20px" height="20px">
                         </div>
                         <span class="nav-link-text ms-1">Sign Out</span>
                     </a>
