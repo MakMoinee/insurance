@@ -411,7 +411,8 @@
                     <a class="nav-link  " href="javascript;;" data-toggle="modal" data-target="#signOutModal">
                         <div
                             class="icon icon-shape icon-sm shadow border-radius-md bg-white text-center me-2 d-flex align-items-center justify-content-center">
-                            <img src="/img/signout.png" alt="" srcset="" width="20px" height="20px">
+                            <img src="/img/signout.png" alt="" srcset="" width="20px"
+                                height="20px">
                         </div>
                         <span class="nav-link-text ms-1">Sign Out</span>
                     </a>
@@ -734,6 +735,7 @@
                                                                                     name="addressbrgy" id="address"
                                                                                     placeholder="Barangay"
                                                                                     value="{{ $member['addressbrgy'] }}">
+                                                                                <br>
                                                                                 <input disabled required
                                                                                     style="margin-left: 56px;"
                                                                                     type="text" name="addresscity"
@@ -1025,6 +1027,7 @@
                                                                                         id="address"
                                                                                         placeholder="Barangay"
                                                                                         value="{{ $member['addressbrgy'] }}">
+                                                                                    <br>
                                                                                     <input required
                                                                                         style="margin-left: 56px;"
                                                                                         type="text"
@@ -1434,8 +1437,8 @@
                             </div>
                             <div class="form-group">
                                 <label for="height" class="for">Height:</label>
-                                <input required type="number" style="width: 150px;margin-right: 5px;" name="height"
-                                    id="height" placeholder="Height (cm)">
+                                <input required type="number" style="width: 150px;margin-right: 5px;"
+                                    name="height" id="height" placeholder="Height (cm)">
                                 <label for="weight" class="for">Weight:</label>
                                 <input required type="number" style="width: 150px;" name="weight"
                                     id="weight" placeholder="Weight (kg)">

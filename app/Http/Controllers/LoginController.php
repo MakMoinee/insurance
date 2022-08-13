@@ -55,7 +55,9 @@ class LoginController extends Controller
                 $newMembers = DB::table('vwtotalnewmembers')->first();
                 $total = $newMembers->TotalNewMembers;
                 $userType = $musers->uType;
-                return view('dashboard', ['totalMembers' => $membersCount, 'totalNewMembers' => $total, 'utype' => $userType]);
+                $collection = DB::table('vwtotalcollections')->first();
+                $ctotal = $collection->TotalCollections;
+                return view('dashboard', ['totalMembers' => $membersCount, 'totalNewMembers' => $total, 'utype' => $userType, 'ctotal' => $ctotal]);
             } else {
                 Session::flush();
                 return view('home');

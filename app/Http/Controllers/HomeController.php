@@ -16,9 +16,11 @@ class HomeController extends Controller
             $members = Members::all();
             $membersCount = $members->count();
             $newMembers = DB::table('vwtotalnewmembers')->first();
+            $collection = DB::table('vwtotalcollections')->first();
+            $ctotal = $collection->TotalCollections;
             $total = $newMembers->TotalNewMembers;
             $userType = session('users')[0]->uType;
-            return view('dashboard', ['totalMembers' => $membersCount, 'totalNewMembers' => $total, 'utype' => $userType]);
+            return view('dashboard', ['totalMembers' => $membersCount, 'totalNewMembers' => $total, 'utype' => $userType, 'ctotal' => $ctotal]);
         } else {
             return view('home');
         }

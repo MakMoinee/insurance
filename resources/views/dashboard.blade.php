@@ -406,7 +406,8 @@
                     <a class="nav-link  " href="javascript;;" data-toggle="modal" data-target="#signOutModal">
                         <div
                             class="icon icon-shape icon-sm shadow border-radius-md bg-white text-center me-2 d-flex align-items-center justify-content-center">
-                            <img src="/img/signout.png" alt="" srcset="" width="20px" height="20px">
+                            <img src="/img/signout.png" alt="" srcset="" width="20px"
+                                height="20px">
                         </div>
                         <span class="nav-link-text ms-1">Sign Out</span>
                     </a>
@@ -584,23 +585,25 @@
                         </div>
                     </div>
                 </div>
-                <div class="col-xl-3 col-sm-6">
-                    <div class="card">
-                        <div class="card-body p-3">
-                            <div class="row">
-                                <div class="col-8">
-                                    <div class="numbers">
-                                        <p class="text-sm mb-0 text-capitalize font-weight-bold">Sales</p>
-                                        <h5 class="font-weight-bolder mb-0">
-                                            $103,430
-                                            <span class="text-success text-sm font-weight-bolder">+5%</span>
-                                        </h5>
+                @if ($utype == 1)
+                    <div class="col-xl-3 col-sm-6">
+                        <div class="card">
+                            <div class="card-body p-3">
+                                <div class="row">
+                                    <div class="col-8">
+                                        <div class="numbers">
+                                            <p class="text-sm mb-0 text-capitalize font-weight-bold">Collections</p>
+                                            <h5 class="font-weight-bolder mb-0">
+                                                PHP {{ $ctotal }}
+                                                {{-- <span class="text-success text-sm font-weight-bolder">+5%</span> --}}
+                                            </h5>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
                     </div>
-                </div>
+                @endif
             </div>
             <div class="row mt-4">
                 <div class="col-lg-7 mb-lg-0 mb-4">
