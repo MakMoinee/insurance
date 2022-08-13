@@ -11,7 +11,7 @@
  Target Server Version : 80029
  File Encoding         : 65001
 
- Date: 09/08/2022 21:59:20
+ Date: 14/08/2022 00:30:36
 */
 
 SET NAMES utf8mb4;
@@ -27,14 +27,17 @@ CREATE TABLE `collections`  (
   `ordate` date NULL DEFAULT NULL,
   `amountpaid` double(8, 2) NOT NULL,
   `memberID` int NOT NULL,
+  `collector` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
   PRIMARY KEY (`collectionID`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of collections
 -- ----------------------------
+INSERT INTO `collections` VALUES (1, 11000, '2022-08-13', 1500.00, 1, 'Simon', '2022-08-13 09:39:37', '2022-08-13 09:39:37');
+INSERT INTO `collections` VALUES (2, 1232323, '2022-07-08', 1000.00, 1, 'Simon', '2022-08-13 16:10:59', '2022-08-13 16:10:59');
 
 -- ----------------------------
 -- Table structure for failed_jobs
@@ -68,12 +71,12 @@ CREATE TABLE `iusers`  (
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 2 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of iusers
 -- ----------------------------
-INSERT INTO `iusers` VALUES (1, 'mak', 'mak', 1, '2022-08-07 19:53:24', '2022-08-07 19:53:28');
+INSERT INTO `iusers` VALUES (1, 'mak', 'mak', 1, '2022-08-13 17:34:49', '2022-08-13 17:34:52');
 
 -- ----------------------------
 -- Table structure for members
@@ -84,7 +87,10 @@ CREATE TABLE `members`  (
   `firstName` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
   `middleName` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
   `lastName` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
-  `address` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `addresspurok` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `addressbrgy` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `addresscity` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `addressprovince` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
   `contactNum` varchar(13) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
   `civilStat` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
   `gender` varchar(6) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
@@ -109,11 +115,12 @@ CREATE TABLE `members`  (
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
   PRIMARY KEY (`memberID`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of members
 -- ----------------------------
+INSERT INTO `members` VALUES (1, 'Judelyn', 'Pueblo', 'Salvador', 'Purok 8', 'Sinayawan', 'Valencia City', 'Bukidnon', '09090464345', 'Married', 'Female', 'BPH Malaybalay', 'Iglesia Ni Cristo', '171', '45', 2, '1998-06-06', 2, 'Xander Ford', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 40000.00, '2022-08-13 09:39:04', '2022-08-13 09:39:04');
 
 -- ----------------------------
 -- Table structure for migrations
@@ -124,7 +131,7 @@ CREATE TABLE `migrations`  (
   `migration` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
   `batch` int NOT NULL,
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 11 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of migrations
@@ -240,13 +247,11 @@ CREATE TABLE `user_types`  (
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
   PRIMARY KEY (`uType`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 3 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of user_types
 -- ----------------------------
-INSERT INTO `user_types` VALUES (1, 'Administrator', 1, 1, 1, '2022-08-07 19:54:33', '2022-08-07 19:54:37');
-INSERT INTO `user_types` VALUES (2, 'Collector', 1, 0, 0, '2022-08-07 12:12:13', '2022-08-07 12:12:13');
 
 -- ----------------------------
 -- Table structure for users
@@ -276,16 +281,34 @@ DROP VIEW IF EXISTS `vwactiveplan`;
 CREATE ALGORITHM = UNDEFINED SQL SECURITY DEFINER VIEW `vwactiveplan` AS select `plans`.`planID` AS `planID`,`plans`.`description` AS `description`,`plans`.`amount` AS `amount`,`plans`.`status` AS `status`,`plans`.`created_at` AS `created_at`,`plans`.`updated_at` AS `updated_at` from `plans` where (`plans`.`status` <> 2);
 
 -- ----------------------------
+-- View structure for vwaddress
+-- ----------------------------
+DROP VIEW IF EXISTS `vwaddress`;
+CREATE ALGORITHM = UNDEFINED SQL SECURITY DEFINER VIEW `vwaddress` AS select `members`.`addresspurok` AS `addresspurok`,`members`.`addressbrgy` AS `addressbrgy`,`members`.`addresscity` AS `addresscity`,`members`.`addressprovince` AS `addressprovince` from `members` group by `members`.`addresspurok`,`members`.`addressbrgy`,`members`.`addresscity`,`members`.`addressprovince`;
+
+-- ----------------------------
+-- View structure for vwcollectionreport
+-- ----------------------------
+DROP VIEW IF EXISTS `vwcollectionreport`;
+CREATE ALGORITHM = UNDEFINED SQL SECURITY DEFINER VIEW `vwcollectionreport` AS select `collections`.`collectionID` AS `collectionID`,`members`.`memberID` AS `memberID`,`members`.`firstName` AS `firstName`,`members`.`middleName` AS `middleName`,`members`.`lastName` AS `lastName`,`members`.`addresspurok` AS `addresspurok`,`members`.`addressbrgy` AS `addressbrgy`,`members`.`addresscity` AS `addresscity`,`members`.`addressprovince` AS `addressprovince`,`collections`.`or` AS `or`,`collections`.`ordate` AS `ordate`,`collections`.`amountpaid` AS `amountpaid` from (`collections` join `members` on((`collections`.`memberID` = `members`.`memberID`)));
+
+-- ----------------------------
 -- View structure for vwcollections
 -- ----------------------------
 DROP VIEW IF EXISTS `vwcollections`;
-CREATE ALGORITHM = UNDEFINED SQL SECURITY DEFINER VIEW `vwcollections` AS select `collections`.`collectionID` AS `collectionID`,concat(`members`.`firstName`,' ',`members`.`middleName`,' ',`members`.`lastName`) AS `FullName`,`collections`.`or` AS `or`,`collections`.`ordate` AS `ordate`,`collections`.`amountpaid` AS `amountpaid`,`members`.`memberID` AS `memberID`,`collections`.`created_at` AS `created_at` from (`collections` join `members` on((`collections`.`memberID` = `members`.`memberID`)));
+CREATE ALGORITHM = UNDEFINED SQL SECURITY DEFINER VIEW `vwcollections` AS select `collections`.`collectionID` AS `collectionID`,concat(`members`.`firstName`,' ',`members`.`middleName`,' ',`members`.`lastName`) AS `FullName`,`collections`.`or` AS `or`,`collections`.`ordate` AS `ordate`,`collections`.`amountpaid` AS `amountpaid`,`members`.`memberID` AS `memberID`,`collections`.`created_at` AS `created_at`,`collections`.`collector` AS `collector` from (`collections` join `members` on((`collections`.`memberID` = `members`.`memberID`)));
 
 -- ----------------------------
 -- View structure for vwfullnames
 -- ----------------------------
 DROP VIEW IF EXISTS `vwfullnames`;
 CREATE ALGORITHM = UNDEFINED SQL SECURITY DEFINER VIEW `vwfullnames` AS select distinct concat(`members`.`firstName`,' ',`members`.`middleName`,' ',`members`.`lastName`) AS `FullName` from `members`;
+
+-- ----------------------------
+-- View structure for vwmemberswithplan
+-- ----------------------------
+DROP VIEW IF EXISTS `vwmemberswithplan`;
+CREATE ALGORITHM = UNDEFINED SQL SECURITY DEFINER VIEW `vwmemberswithplan` AS select `members`.`memberID` AS `memberID`,`members`.`firstName` AS `firstName`,`members`.`middleName` AS `middleName`,`members`.`lastName` AS `lastName`,`members`.`addresspurok` AS `addresspurok`,`members`.`addressbrgy` AS `addressbrgy`,`members`.`addresscity` AS `addresscity`,`members`.`addressprovince` AS `addressprovince`,`members`.`contactNum` AS `contactNum`,`members`.`civilStat` AS `civilStat`,`members`.`gender` AS `gender`,`members`.`birthPlace` AS `birthPlace`,`members`.`religion` AS `religion`,`members`.`height` AS `height`,`members`.`weight` AS `weight`,`members`.`mop` AS `mop`,`members`.`birthDate` AS `birthDate`,`members`.`plan` AS `plan`,`members`.`dep1` AS `dep1`,`members`.`dep2` AS `dep2`,`members`.`dep3` AS `dep3`,`members`.`dep4` AS `dep4`,`members`.`dep5` AS `dep5`,`members`.`dep6` AS `dep6`,`members`.`dep7` AS `dep7`,`members`.`dep8` AS `dep8`,`members`.`dep9` AS `dep9`,`members`.`dep10` AS `dep10`,`members`.`amount` AS `amount`,`members`.`created_at` AS `created_at`,`members`.`updated_at` AS `updated_at`,`plans`.`description` AS `description` from (`members` join `plans` on((`members`.`plan` = `plans`.`planID`)));
 
 -- ----------------------------
 -- View structure for vwroles

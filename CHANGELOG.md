@@ -1,3 +1,7 @@
+## [1.0.3] - 08-14-2022
+### Added
+- Print Statement and Collection Report Page
+
 ## [1.0.2] - 08-11-2022
 ### Added
 - Sales Report Page
