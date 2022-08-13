@@ -448,7 +448,8 @@
                     <a class="nav-link  " href="javascript;;" data-toggle="modal" data-target="#signOutModal">
                         <div
                             class="icon icon-shape icon-sm shadow border-radius-md bg-white text-center me-2 d-flex align-items-center justify-content-center">
-                            <img src="/img/signout.png" alt="" srcset="" width="20px" height="20px">
+                            <img src="/img/signout.png" alt="" srcset="" width="20px"
+                                height="20px">
                         </div>
                         <span class="nav-link-text ms-1">Sign Out</span>
                     </a>
@@ -754,6 +755,13 @@
                                                                                     value="{{ $collection['ordate'] }}">
                                                                             </div>
                                                                             <div class="form-group">
+                                                                                <label for="collector">Collector
+                                                                                    Name:</label>
+                                                                                <input required type="text"
+                                                                                    name="collector" id="collector"
+                                                                                    value="{{ $collection['collector'] }}">
+                                                                            </div>
+                                                                            <div class="form-group">
                                                                                 <label for="amountpaid">Amount
                                                                                     Paid:</label>
                                                                                 <input required type="number"
@@ -848,16 +856,20 @@
                                 <div class="autocomplete" style="width:300px;">
                                     <input style="width: 380px;" id="myInput" type="text" name="fullname"
                                         placeholder="Full Name">
-                                    <input type="hidden" id="collectionid" name="cid">
+                                    <input type="hidden" id="addcollectionid" name="cid">
                                 </div>
                             </div>
                             <div class="form-group">
                                 <label for="or">Official Receipt Number:</label>
-                                <input style="width: 300px;" type="text" name="or" id="addOr">
+                                <input required style="width: 300px;" type="text" name="or" id="addOr">
                             </div>
                             <div class="form-group">
                                 <label for="ordate">Official Receipt Date:</label>
-                                <input type="date" name="ordate" id="addOrdate">
+                                <input required type="date" name="ordate" id="addOrdate">
+                            </div>
+                            <div class="form-group">
+                                <label for="collector">Collector Name:</label>
+                                <input required type="text" name="collector" id="collector">
                             </div>
                             <div class="form-group">
                                 <label for="amountpaid">Amount Paid:</label>
@@ -1059,7 +1071,7 @@
                             inp.value = this.getElementsByTagName("input")[0].value;
                             inp.setAttribute('mid', this.getElementsByTagName("input")[0].getAttribute(
                                 'mid'));
-                            let cid = document.getElementById('collectionid');
+                            let cid = document.getElementById('addcollectionid');
                             cid.value = this.getElementsByTagName("input")[0].getAttribute(
                                 'mid');
                             /*close the list of autocompleted values,
@@ -1135,7 +1147,7 @@
             addOr.value = '';
             let addOrdate = document.getElementById('addOrdate');
             addOrdate.value = '';
-            let collectionid = document.getElementById('collectionid');
+            let collectionid = document.getElementById('addcollectionid');
             collectionid.value = '';
             let addAmountPaid = document.getElementById('addAmountPaid');
             addAmountPaid.value = '';

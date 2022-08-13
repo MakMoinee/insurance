@@ -16,6 +16,7 @@ class Collections extends Model
         'or',
         'ordate',
         'amountpaid',
-        'memberID'
+        'memberID',
+        'collector'
     ];
 }

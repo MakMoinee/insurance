@@ -75,6 +75,7 @@ class CollectionController extends Controller
             $collection->or = $request['or'];
             $collection->ordate = $request['ordate'];
             $collection->amountpaid = $request['amountpaid'];
+            $collection->collector = $request['collector'];
             $collection->memberID = $request['cid'];
             $isSave = $collection->save();
             if ($isSave) {

@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Members;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
@@ -19,6 +20,7 @@ class SalesReportController extends Controller
             $userType = session('users')[0]->uType;
             $queryResult = DB::table('vwaddress')->get();
             $year =  date('Y', strtotime(now()));
+            $mon =  date('m', strtotime(now()));
             $addresses = json_decode($queryResult, true);
             $provinces = [];
             $cities = [];
@@ -28,7 +30,14 @@ class SalesReportController extends Controller
                 array_push($cities, $addr['addresscity']);
                 array_push($brgy, $addr['addressbrgy']);
             }
-            return view('sales', ['utype' => $userType, 'addrs' => $addresses, 'year' => $year, 'provinces' => $provinces, 'cities' => $cities, 'brgy' => $brgy]);
+            $queryResult = DB::table('vwfullnames')->get();
+            $ccollect = json_decode($queryResult, true);
+            $fullName = [];
+            foreach ($ccollect as $c) {
+                array_push($fullName, $c['FullName']);
+            }
+            
+            return view('sales', ['utype' => $userType, 'addrs' => $addresses, 'year' => $year, 'provinces' => $provinces, 'cities' => $cities, 'brgy' => $brgy, 'mon' => $mon, 'fullName' => $fullName]);
         } else {
             return redirect('/');
         }

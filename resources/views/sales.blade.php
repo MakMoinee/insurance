@@ -17,6 +17,7 @@
 
 <head>
     <meta charset="utf-8" />
+    <meta name="csrf-token" content="{{ csrf_token() }}">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <link rel="apple-touch-icon" sizes="76x76" href="img/apple-icon.png">
     <link rel="icon" type="image/png" href="/storage/image/favicon.ico">
@@ -444,7 +445,8 @@
                     <a class="nav-link  " href="javascript;;" data-toggle="modal" data-target="#signOutModal">
                         <div
                             class="icon icon-shape icon-sm shadow border-radius-md bg-white text-center me-2 d-flex align-items-center justify-content-center">
-                            <img src="/img/signout.png" alt="" srcset="" width="20px" height="20px">
+                            <img src="/img/signout.png" alt="" srcset="" width="20px"
+                                height="20px">
                         </div>
                         <span class="nav-link-text ms-1">Sign Out</span>
                     </a>
@@ -602,12 +604,18 @@
                                             Quick Access</p>
                                         <a href="javascript;" data-toggle="modal"
                                             data-target="#collectionByBrgyModal">
-                                            <button style="text-transform: none" class="btn btn-primary">Collection
+                                            <button style="text-transform: none" class="btn btn-primary"
+                                                onclick="clearFields()">Collection
                                                 Report By <b style="color:yellow"> Barangay </b></button></a>
                                         <a href="javascript;" data-toggle="modal"
                                             data-target="#collectionByCityModal">
-                                            <button style="text-transform: none" class="btn btn-primary">Collection
+                                            <button style="text-transform: none" class="btn btn-primary"
+                                                onclick="clearFields()">Collection
                                                 Report By <b style="color:yellow">City</b></button></a>
+                                        <a href="javascript;" data-toggle="modal" data-target="#printStatementModal">
+                                            <button style="text-transform: none" class="btn btn-primary"
+                                                onclick="clearFields()">Print Statement
+                                                By <b style="color:yellow">Name</b></button></a>
                                     </div>
                                 </div>
                             </div>
@@ -670,7 +678,8 @@
                 </div>
                 <div class="modal-body">
                     <div class="row">
-                        <form autocomplete="off" action="/user_roles" method="GET" enctype="multipart/form-data">
+                        <form autocomplete="off" action="/report" method="POST" enctype="multipart/form-data"
+                            target="_blank">
                             @csrf
                             <div class="form-group">
                                 <label for="province" for="province">Province:</label>
@@ -697,25 +706,24 @@
                             <div class="form-group">
                                 <label for="cmonth" for="cmonth">Collection Month:</label>
                                 <select required name="cmonth" id="cmonth">
-                                    <option value="1">1</option>
-                                    <option value="2">2</option>
-                                    <option value="3">3</option>
-                                    <option value="4">4</option>
-                                    <option value="5">5</option>
-                                    <option value="6">6</option>
-                                    <option value="7">7</option>
-                                    <option value="8">8</option>
-                                    <option value="9">9</option>
-                                    <option value="10">10</option>
-                                    <option value="11">11</option>
-                                    <option value="12">12</option>
+                                    @for ($i = 1; $i <= 12; $i++)
+                                        @if ($mon == $i)
+                                            <option value="{{ $i }}" selected>{{ $i }}</option>
+                                        @else
+                                            <option value="{{ $i }}">{{ $i }}</option>
+                                        @endif
+                                    @endfor
                                 </select>
                             </div>
                             <div class="form-group">
-                                <label for="cmonth" for="cmonth">Collection Year:</label>
-                                <select required name="cmonth" id="cmonth">
+                                <label for="cyear" for="cyear">Collection Year:</label>
+                                <select required name="cyear" id="cyear">
                                     @for ($i = 1970; $i <= $year; $i++)
-                                        <option value="{{ $i }}">{{ $i }}</option>
+                                        @if ($year == $i)
+                                            <option value="{{ $i }}" selected>{{ $i }}</option>
+                                        @else
+                                            <option value="{{ $i }}">{{ $i }}</option>
+                                        @endif
                                     @endfor
                                 </select>
                             </div>
@@ -723,13 +731,15 @@
                     </div>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                    <button type="submit" class="btn btn-primary">Open Report</button>
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal"
+                        id="btnClose">Close</button>
+                    <button type="submit" class="btn btn-primary" onclick="closeMe()">Open Report</button>
                 </div>
                 </form>
             </div>
         </div>
     </div>
+
     <div class="modal fade" id="collectionByCityModal" tabindex="-1" role="dialog"
         aria-labelledby="collectionByCityModalLabel" aria-hidden="true">
         <div class="modal-dialog" role="document">
@@ -742,44 +752,43 @@
                 </div>
                 <div class="modal-body">
                     <div class="row">
-                        <form autocomplete="off" action="/user_roles" method="GET" enctype="multipart/form-data">
+                        <form autocomplete="off" action="/report" method="POST" enctype="multipart/form-data" target="_blank">
                             @csrf
                             <div class="form-group">
                                 <label for="province" for="province">Province:</label>
                                 <div class="autocomplete" style="width:300px;">
-                                    <input style="width: 380px;" id="myProvince" type="text" name="province"
+                                    <input style="width: 380px;" id="myProvince2" type="text" name="province"
                                         placeholder="Province">
                                 </div>
                             </div>
                             <div class="form-group">
                                 <label for="city" for="city">City:</label>
                                 <div class="autocomplete" style="width:300px;">
-                                    <input style="width: 408px;" id="myCity" type="text" name="city"
+                                    <input style="width: 408px;" id="myCity2" type="text" name="city"
                                         placeholder="City">
                                 </div>
                             </div>
                             <div class="form-group">
                                 <label for="cmonth" for="cmonth">Collection Month:</label>
                                 <select required name="cmonth" id="cmonth">
-                                    <option value="1">1</option>
-                                    <option value="2">2</option>
-                                    <option value="3">3</option>
-                                    <option value="4">4</option>
-                                    <option value="5">5</option>
-                                    <option value="6">6</option>
-                                    <option value="7">7</option>
-                                    <option value="8">8</option>
-                                    <option value="9">9</option>
-                                    <option value="10">10</option>
-                                    <option value="11">11</option>
-                                    <option value="12">12</option>
+                                    @for ($i = 1; $i <= 12; $i++)
+                                        @if ($mon == $i)
+                                            <option value="{{ $i }}" selected>{{ $i }}</option>
+                                        @else
+                                            <option value="{{ $i }}">{{ $i }}</option>
+                                        @endif
+                                    @endfor
                                 </select>
                             </div>
                             <div class="form-group">
-                                <label for="cmonth" for="cmonth">Collection Year:</label>
-                                <select required name="cmonth" id="cmonth">
+                                <label for="cyear" for="cyear">Collection Year:</label>
+                                <select required name="cyear" id="cyear">
                                     @for ($i = 1970; $i <= $year; $i++)
-                                        <option value="{{ $i }}">{{ $i }}</option>
+                                        @if ($year == $i)
+                                            <option value="{{ $i }}" selected>{{ $i }}</option>
+                                        @else
+                                            <option value="{{ $i }}">{{ $i }}</option>
+                                        @endif
                                     @endfor
                                 </select>
                             </div>
@@ -787,8 +796,44 @@
                     </div>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                    <button type="submit" class="btn btn-primary">Open Report</button>
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal"
+                        id="btnClose">Close</button>
+                    <button type="submit" class="btn btn-primary" onclick="closeMe()">Open Report</button>
+                </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade" id="printStatementModal" tabindex="-1" role="dialog"
+        aria-labelledby="printStatementModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="printStatementModalLabel">Print Statement By Name</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div class="row">
+                        <form autocomplete="off" action="/report" method="POST" enctype="multipart/form-data" target="_blank">
+                            @csrf
+                            <div class="form-group">
+                                <label for="province" for="province">Province:</label>
+                                <div class="autocomplete" style="width:300px;">
+                                    <input style="width: 380px;" id="myName" type="text" name="fullname"
+                                        placeholder="Full Name">
+                                    <input type="hidden" name="print" value="true">
+                                </div>
+                            </div>
+
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal"
+                        id="btnCloseP">Close</button>
+                    <button type="submit" class="btn btn-primary" onclick="closeMe()">Open Report</button>
                 </div>
                 </form>
             </div>
@@ -810,6 +855,46 @@
             </div>
         </div>
     </div>
+
+    @if (session()->pull('errorBrgyField'))
+        <script>
+            Swal.fire({
+                position: 'center',
+                icon: 'warning',
+                title: 'Error in Generating Collection Report By Barangay',
+                showConfirmButton: false,
+                timer: 1300
+            });
+        </script>;
+        {{ session()->forget('errorBrgyField') }}
+    @endif
+
+    @if (session()->pull('errorEmptyBrgy'))
+        <script>
+            Swal.fire({
+                position: 'center',
+                icon: 'warning',
+                title: 'Collection Report By Barangay Failed, Record Doesn\'t exist',
+                showConfirmButton: false,
+                timer: 1300
+            });
+        </script>;
+        {{ session()->forget('errorEmptyBrgy') }}
+    @endif
+
+    @if (session()->pull('errorEmptyBrgy'))
+        <script>
+            Swal.fire({
+                position: 'center',
+                icon: 'warning',
+                title: 'Collection Report By Barangay Failed, Record Doesn\'t exist',
+                showConfirmButton: false,
+                timer: 1300
+            });
+        </script>;
+        {{ session()->forget('errorEmptyBrgy') }}
+    @endif
+
     <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
         integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous">
     </script>
@@ -834,6 +919,8 @@
             }
             Scrollbar.init(document.querySelector('#sidenav-scrollbar'), options);
         }
+
+
 
         function autocomplete(inp, arr) {
             /*the autocomplete function takes two arguments,
@@ -937,14 +1024,50 @@
                 closeAllLists(e.target);
             });
         }
+
+        var mname = {!! json_encode($fullName, JSON_HEX_TAG) !!};
+        autocomplete(document.getElementById("myName"), mname);
+
         var provinces = {!! json_encode($provinces, JSON_HEX_TAG) !!};
         autocomplete(document.getElementById("myProvince"), provinces);
+        autocomplete(document.getElementById("myProvince2"), provinces);
 
         var cities = {!! json_encode($cities, JSON_HEX_TAG) !!};
         autocomplete(document.getElementById("myCity"), cities);
+        autocomplete(document.getElementById("myCity2"), cities);
 
         var brgy = {!! json_encode($brgy, JSON_HEX_TAG) !!};
         autocomplete(document.getElementById("myBrgy"), brgy);
+
+
+
+        function closeMe() {
+            let close = document.getElementById('btnClose');
+            close.click();
+
+            let closeP = document.getElementById("btnCloseP");
+            closeP.click();
+        }
+
+        function clearFields() {
+            let p = document.getElementById("myProvince");
+            p.value = '';
+
+            let p2 = document.getElementById("myProvince2");
+            p2.value = '';
+
+            let c = document.getElementById("myCity");
+            c.value = '';
+
+            let c2 = document.getElementById("myCity2");
+            c2.value = '';
+
+            let b = document.getElementById("myBrgy");
+            b.value = '';
+
+            let mname = document.getElementById("myName");
+            mname.value = '';
+        }
     </script>
     <!-- Github buttons -->
     <script async defer src="https://buttons.github.io/buttons.js"></script>

@@ -19,6 +19,7 @@ class CreateCollectionsTable extends Migration
             $table->date('ordate')->nullable(true);
             $table->float('amountpaid');
             $table->integer('memberID');
+            $table->string('collector');
             $table->timestamps();
         });
     }
