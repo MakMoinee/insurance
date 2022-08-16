@@ -23,7 +23,7 @@
     <link rel="apple-touch-icon" sizes="76x76" href="img/apple-icon.png">
     <link rel="icon" type="image/png" href="/storage/image/favicon.ico">
     <title>
-        Collection
+        Users
     </title>
     <!--     Fonts and icons     -->
     <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700" rel="stylesheet" />
@@ -130,7 +130,7 @@
                     </a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link  active" href="/collection">
+                    <a class="nav-link" href="/collection">
                         <div
                             class="icon icon-shape icon-sm shadow border-radius-md bg-white text-center me-2 d-flex align-items-center justify-content-center">
                             <svg width="12px" height="12px" viewBox="0 0 43 36" version="1.1"
@@ -238,7 +238,7 @@
                 </li>
                 @if ($utype == 1)
                     <li class="nav-item">
-                        <a class="nav-link  " href="/user_roles">
+                        <a class="nav-link" href="/user_roles">
                             <div
                                 class="icon icon-shape icon-sm shadow border-radius-md bg-white text-center me-2 d-flex align-items-center justify-content-center">
                                 <?xml version="1.0" encoding="iso-8859-1"?>
@@ -415,7 +415,7 @@
                     <h6 class="ps-4 ms-2 text-uppercase text-xs font-weight-bolder opacity-6">Account pages</h6>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link  " href="/users">
+                    <a class="nav-link  active" href="/users">
                         <div
                             class="icon icon-shape icon-sm shadow border-radius-md bg-white text-center me-2 d-flex align-items-center justify-content-center">
                             <img src="/img/users.svg" alt="" height="25px" width="25px">
@@ -451,9 +451,9 @@
                     <ol class="breadcrumb bg-transparent mb-0 pb-0 pt-1 px-0 me-sm-6 me-5">
                         <li class="breadcrumb-item text-sm"><a class="opacity-5 text-dark"
                                 href="javascript:;">Pages</a></li>
-                        <li class="breadcrumb-item text-sm text-dark active" aria-current="page">Collection</li>
+                        <li class="breadcrumb-item text-sm text-dark active" aria-current="page">Users</li>
                     </ol>
-                    <h6 class="font-weight-bolder mb-0">Collection</h6>
+                    <h6 class="font-weight-bolder mb-0">Users</h6>
                 </nav>
                 <div class="collapse navbar-collapse mt-sm-0 mt-2 me-md-0 me-sm-4" id="navbar">
                     <div class="ms-md-auto pe-md-3 d-flex align-items-center">
@@ -569,26 +569,6 @@
                 </div>
             </div>
         </nav>
-        <div class="container-fluid py-4">
-            <div class="row">
-                <div class="col-xl-3 col-sm-6 mb-xl-0 mb-2">
-                    <div class="card">
-                        <div class="card-body p-3">
-                            <div class="row">
-                                <div class="col-8">
-                                    <div class="numbers">
-                                        <p class="text-sm mb-0 text-capitalize font-weight-bold">Total Collections</p>
-                                        <h5 class="font-weight-bolder mb-0">
-                                            {{ $totalCollections }}
-                                        </h5>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
         <!-- End Navbar -->
         <div class="container-fluid py-4">
             <div class="row">
@@ -596,17 +576,14 @@
                     <div class="card mb-4">
                         <div class="card-header pb-0">
                             @if ($utype == 1)
-                                <button onclick="doOnAddCollection()" class="btn btn-primary" data-toggle="modal"
-                                    data-target="#exampleModal">Add
-                                    Collection</button>
+                                <button style="text-transform: none;" onclick="doOnAddCollection()"
+                                    class="btn btn-primary" data-toggle="modal" data-target="#exampleModal">Add
+                                    User</button>
                             @else
                                 <button disabled class="btn btn-primary">Add
-                                    Member</button>
+                                    User</button>
                             @endif
 
-                            <div class="input-group">
-                                <input type="text" class="form-control" placeholder="Type here...">
-                            </div>
                             <br>
 
                         </div>
@@ -617,16 +594,19 @@
                                         <tr>
                                             <th
                                                 class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
-                                                Full Name</th>
+                                                Username</th>
                                             <th
-                                                class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">
-                                                Official Receipt</th>
+                                                class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
+                                                Role Description</th>
                                             <th
-                                                class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">
-                                                Official Receipt Date</th>
+                                                class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
+                                                Has Access To Member</th>
                                             <th
-                                                class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
-                                                Amount Paid</th>
+                                                class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
+                                                Has Access To Collections</th>
+                                            <th
+                                                class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
+                                                Has Access To Plans</th>
                                             <th
                                                 class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
                                                 Action</th>
@@ -634,13 +614,13 @@
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        @foreach ($collections as $collection)
+                                        @foreach ($roles as $role)
                                             <tr>
                                                 <td>
                                                     <div class="d-flex px-2 py-1">
                                                         <div class="d-flex flex-column justify-content-center">
                                                             <h6 class="mb-0 text-sm">
-                                                                {{ $collection['FullName'] }}
+                                                                {{ $role['username'] }}
                                                             </h6>
                                                         </div>
                                                     </div>
@@ -649,17 +629,7 @@
                                                     <div class="d-flex px-2 py-1">
                                                         <div class="d-flex flex-column justify-content-center">
                                                             <h6 class="mb-0 text-sm">
-                                                                {{ $collection['or'] }}
-                                                            </h6>
-                                                        </div>
-                                                    </div>
-
-                                                </td>
-                                                <td>
-                                                    <div class="d-flex px-2 py-1">
-                                                        <div class="d-flex flex-column justify-content-center">
-                                                            <h6 class="mb-0 text-sm">
-                                                                {{ $collection['ordate'] }}
+                                                                {{ $role['description'] }}
                                                             </h6>
                                                         </div>
                                                     </div>
@@ -668,101 +638,180 @@
                                                     <div class="d-flex px-2 py-1">
                                                         <div class="d-flex flex-column justify-content-center">
                                                             <h6 class="mb-0 text-sm">
-                                                                {{ $collection['amountpaid'] }}
+                                                                @if ($role['members'] == 1)
+                                                                    true
+                                                                @else
+                                                                    false
+                                                                @endif
+                                                            </h6>
+                                                        </div>
+                                                    </div>
+                                                </td>
+                                                <td>
+                                                    <div class="d-flex px-2 py-1">
+                                                        <div class="d-flex flex-column justify-content-center">
+                                                            <h6 class="mb-0 text-sm">
+                                                                @if ($role['collections'] == 1)
+                                                                    true
+                                                                @else
+                                                                    false
+                                                                @endif
+                                                            </h6>
+                                                        </div>
+                                                    </div>
+                                                </td>
+                                                <td>
+                                                    <div class="d-flex px-2 py-1">
+                                                        <div class="d-flex flex-column justify-content-center">
+                                                            <h6 class="mb-0 text-sm">
+                                                                @if ($role['plans'] == 1)
+                                                                    true
+                                                                @else
+                                                                    false
+                                                                @endif
                                                             </h6>
                                                         </div>
                                                     </div>
                                                 </td>
                                                 <td class="align-middle text-sm">
-                                                    <button class="badge badge-sm bg-gradient-success"
-                                                        data-toggle="modal"
-                                                        data-target="#viewModal{{ $collection['collectionID'] }}">View/Edit</button>
-
-                                                    <div class="modal fade"
-                                                        id="viewModal{{ $collection['collectionID'] }}" tabindex="-1"
-                                                        role="dialog"
-                                                        aria-labelledby="viewModalLabel{{ $collection['collectionID'] }}"
-                                                        aria-hidden="true">
-                                                        <div class="modal-dialog" role="document">
-                                                            <div class="modal-content">
-                                                                <div class="modal-header">
-                                                                    <h5 class="modal-title"
-                                                                        id="viewModalLabel{{ $collection['collectionID'] }}">
-                                                                        View/Edit
-                                                                        Collection</h5>
-                                                                    <button type="button" class="close"
-                                                                        data-dismiss="modal" aria-label="Close">
-                                                                        <span aria-hidden="true">&times;</span>
-                                                                    </button>
-                                                                </div>
-                                                                <div class="modal-body">
-                                                                    <div class="row">
-                                                                        <form autocomplete="off" action="/collection"
-                                                                            method="POST"
-                                                                            enctype="multipart/form-data">
-                                                                            @csrf
-                                                                            <div class="form-group">
-                                                                                <label for="fullname">Full
-                                                                                    Name:</label>
-                                                                                <div class="autocomplete"
-                                                                                    style="width:300px;">
-                                                                                    <input readonly
-                                                                                        style="width: 380px;"
-                                                                                        id="editInput" type="text"
-                                                                                        name="fullname"
-                                                                                        placeholder="Full Name"
-                                                                                        value="{{ $collection['FullName'] }}">
-                                                                                    <input type="hidden"
-                                                                                        id="collectionid"
-                                                                                        name="cid"
-                                                                                        value="{{ $collection['memberID'] }}">
-                                                                                </div>
-                                                                            </div>
-                                                                            <div class="form-group">
-                                                                                <label for="or">Official Receipt
-                                                                                    Number:</label>
-                                                                                <input style="width: 300px;"
-                                                                                    type="text" name="or"
-                                                                                    id="addOr"
-                                                                                    value="{{ $collection['or'] }}">
-                                                                            </div>
-                                                                            <div class="form-group">
-                                                                                <label for="ordate">Official Receipt
-                                                                                    Date:</label>
-                                                                                <input type="date" name="ordate"
-                                                                                    id="addOrdate"
-                                                                                    value="{{ $collection['ordate'] }}">
-                                                                            </div>
-                                                                            <div class="form-group">
-                                                                                <label for="collector">Collector
-                                                                                    Name:</label>
-                                                                                <input required type="text"
-                                                                                    name="collector" id="collector"
-                                                                                    value="{{ $collection['collector'] }}">
-                                                                            </div>
-                                                                            <div class="form-group">
-                                                                                <label for="amountpaid">Amount
-                                                                                    Paid:</label>
-                                                                                <input required type="number"
-                                                                                    name="amountpaid"
-                                                                                    id="addAmountPaid"
-                                                                                    value="{{ $collection['amountpaid'] }}">
-                                                                            </div>
-
-
-
+                                                    <br>
+                                                    @if ($role['uType'] != 1)
+                                                        <button style="text-transform: none;"
+                                                            class="btn badge-sm bg-gradient-success text-xs"
+                                                            data-toggle="modal"
+                                                            data-target="#viewModal{{ $role['uType'] }}">View/Edit</button>
+                                                        <button style="text-transform: none;margin-left: 10px;"
+                                                            class="btn badge-sm bg-gradient-danger text-xs">
+                                                            Delete
+                                                        </button>
+                                                        <div class="modal fade" id="viewModal{{ $role['uType'] }}"
+                                                            tabindex="-1" role="dialog"
+                                                            aria-labelledby="viewModalLabel{{ $role['uType'] }}"
+                                                            aria-hidden="true">
+                                                            <div class="modal-dialog" role="document">
+                                                                <div class="modal-content">
+                                                                    <div class="modal-header">
+                                                                        <h5 class="modal-title"
+                                                                            id="viewModalLabel{{ $role['uType'] }}">
+                                                                            View/Edit
+                                                                            Roles</h5>
+                                                                        <button type="button" class="close"
+                                                                            data-dismiss="modal" aria-label="Close">
+                                                                            <span aria-hidden="true">&times;</span>
+                                                                        </button>
                                                                     </div>
+                                                                    <div class="modal-body">
+                                                                        <div class="row">
+                                                                            <form autocomplete="off"
+                                                                                action="/update/user_roles"
+                                                                                method="POST"
+                                                                                enctype="multipart/form-data">
+                                                                                @method('put')
+                                                                                @csrf
+                                                                                <div class="form-group">
+                                                                                    <label for="fullname">Role
+                                                                                        Description:</label>
+                                                                                    <div class="autocomplete"
+                                                                                        style="width:300px;">
+                                                                                        <input required
+                                                                                            style="width: 350px;"
+                                                                                            id="roledesc"
+                                                                                            type="text"
+                                                                                            name="roledesc"
+                                                                                            placeholder="Role Description"
+                                                                                            title="Role Description"
+                                                                                            value="{{ $role['description'] }}">
+                                                                                    </div>
+                                                                                </div>
+                                                                                <div class="form-group">
+                                                                                    <p><b>Can access the following:</b>
+                                                                                    </p>
+                                                                                    <label for="inst"
+                                                                                        class="for">Note: If not
+                                                                                        given access, <br> Automatically
+                                                                                        it will
+                                                                                        only have write
+                                                                                        access and do not have
+                                                                                        edit/delete</label>
+                                                                                </div>
+                                                                                <div class="form-group">
+                                                                                    @if ($role['members'] == 1)
+                                                                                        <input style="cursor: pointer;"
+                                                                                            type="checkbox"
+                                                                                            name="checkmember"
+                                                                                            id="checkmember" checked>
+                                                                                        <label for="checkmember"
+                                                                                            for="checkmember">Members</label>
+                                                                                    @else
+                                                                                        <input style="cursor: pointer;"
+                                                                                            type="checkbox"
+                                                                                            name="checkmember"
+                                                                                            id="checkmember">
+                                                                                        <label for="checkmember"
+                                                                                            for="checkmember">Members</label>
+                                                                                    @endif
+                                                                                    @if ($role['collections'] == 1)
+                                                                                        <input
+                                                                                            style="cursor: pointer;margin-left: 20px;"
+                                                                                            type="checkbox"
+                                                                                            name="checkcollections"
+                                                                                            id="checkcollections"
+                                                                                            checked>
+                                                                                        <label for="checkcollections"
+                                                                                            for="checkcollections">Collections</label>
+                                                                                    @else
+                                                                                        <input
+                                                                                            style="cursor: pointer;margin-left: 20px;"
+                                                                                            type="checkbox"
+                                                                                            name="checkcollections"
+                                                                                            id="checkcollections">
+                                                                                        <label for="checkcollections"
+                                                                                            for="checkcollections">Collections</label>
+                                                                                    @endif
+
+                                                                                    @if ($role['plans'] == 1)
+                                                                                        <input
+                                                                                            style="cursor: pointer;margin-left: 20px;"
+                                                                                            type="checkbox"
+                                                                                            name="checkplans"
+                                                                                            id="checkplans" checked>
+                                                                                        <label for="checkplans"
+                                                                                            for="checkplans">Plans</label>
+                                                                                    @else
+                                                                                        <input
+                                                                                            style="cursor: pointer;margin-left: 20px;"
+                                                                                            type="checkbox"
+                                                                                            name="checkplans"
+                                                                                            id="checkplans">
+                                                                                        <label for="checkplans"
+                                                                                            for="checkplans">Plans</label>
+                                                                                    @endif
+                                                                                </div>
+
+
+
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="modal-footer">
+                                                                        <button type="button"
+                                                                            class="btn btn-secondary"
+                                                                            data-dismiss="modal">Close</button>
+                                                                        <button type="submit"
+                                                                            class="btn btn-primary">Update
+                                                                            Role</button>
+                                                                    </div>
+                                                                    </form>
                                                                 </div>
-                                                                <div class="modal-footer">
-                                                                    <button type="button" class="btn btn-secondary"
-                                                                        data-dismiss="modal">Close</button>
-                                                                    <button type="submit"
-                                                                        class="btn btn-primary">Save changes</button>
-                                                                </div>
-                                                                </form>
                                                             </div>
                                                         </div>
-                                                    </div>
+                                                    @else
+                                                        <button disabled style="text-transform: none;"
+                                                            class="btn badge-sm bg-gradient-success text-xs">View/Edit</button>
+                                                        <button disabled style="text-transform: none;margin-left: 10px;"
+                                                            class="btn badge-sm bg-gradient-danger text-xs">
+                                                            Delete
+                                                        </button>
+                                                    @endif
                                                 </td>
                                             </tr>
                                         @endforeach
@@ -821,38 +870,36 @@
         <div class="modal-dialog" role="document">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel">Add Collection</h5>
+                    <h5 class="modal-title" id="exampleModalLabel">Add Roles</h5>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>
                 </div>
                 <div class="modal-body">
                     <div class="row">
-                        <form autocomplete="off" action="/collection" method="POST" enctype="multipart/form-data">
+                        <form autocomplete="off" action="/user_roles" method="POST" enctype="multipart/form-data">
                             @csrf
                             <div class="form-group">
-                                <label for="fullname">Full Name:</label>
+                                <label for="fullname">Role Description:</label>
                                 <div class="autocomplete" style="width:300px;">
-                                    <input style="width: 380px;" id="myInput" type="text" name="fullname"
-                                        placeholder="Full Name">
-                                    <input type="hidden" id="addcollectionid" name="cid">
+                                    <input required style="width: 350px;" id="roledesc" type="text"
+                                        name="roledesc" placeholder="Role Description" title="Role Description">
                                 </div>
                             </div>
                             <div class="form-group">
-                                <label for="or">Official Receipt Number:</label>
-                                <input required style="width: 300px;" type="text" name="or" id="addOr">
+                                <p><b>Can access the following:</b></p>
+                                <label for="inst">Note: If not given access, Automatically it will only have write
+                                    access and do not have edit/delete</label>
                             </div>
                             <div class="form-group">
-                                <label for="ordate">Official Receipt Date:</label>
-                                <input required type="date" name="ordate" id="addOrdate">
-                            </div>
-                            <div class="form-group">
-                                <label for="collector">Collector Name:</label>
-                                <input required type="text" name="collector" id="collector">
-                            </div>
-                            <div class="form-group">
-                                <label for="amountpaid">Amount Paid:</label>
-                                <input required type="number" name="amountpaid" id="addAmountPaid">
+                                <input style="cursor: pointer;" type="checkbox" name="checkmember" id="checkmember">
+                                <label for="checkmember" for="checkmember">Members</label>
+                                <input style="cursor: pointer;margin-left: 20px;" type="checkbox"
+                                    name="checkcollections" id="checkcollections">
+                                <label for="checkcollections" for="checkcollections">Collections</label>
+                                <input style="cursor: pointer;margin-left: 20px;" type="checkbox" name="checkplans"
+                                    id="checkplans">
+                                <label for="checkplans" for="checkplans">Plans</label>
                             </div>
 
 
@@ -885,17 +932,17 @@
             </div>
         </div>
     </div>
-    @if (session()->pull('successAdd'))
+    @if (session()->pull('successRoleAdd'))
         <script>
             Swal.fire({
                 position: 'center',
                 icon: 'success',
-                title: 'Successfully Added Record',
+                title: 'Successfully Added Role',
                 showConfirmButton: false,
                 timer: 500
             });
         </script>;
-        {{ session()->forget('successAdd') }}
+        {{ session()->forget('successRoleAdd') }}
     @endif
 
     @if (session()->pull('successDelete'))
@@ -937,17 +984,17 @@
         {{ session()->forget('userExist') }}
     @endif
 
-    @if (session()->pull('errorAdd'))
+    @if (session()->pull('errorAddRole'))
         <script>
             Swal.fire({
                 position: 'center',
                 icon: 'warning',
-                title: 'Failed to Add Member',
+                title: 'Failed to Add Role',
                 showConfirmButton: false,
                 timer: 800
             });
         </script>;
-        {{ session()->forget('errorAdd') }}
+        {{ session()->forget('errorAddRole') }}
     @endif
 
     @if (session()->pull('errorType'))
@@ -1013,126 +1060,10 @@
             Scrollbar.init(document.querySelector('#sidenav-scrollbar'), options);
         }
 
-        function autocomplete(inp, arr, arr2) {
-            /*the autocomplete function takes two arguments,
-            the text field element and an array of possible autocompleted values:*/
-            var currentFocus;
-            /*execute a function when someone writes in the text field:*/
-            inp.value = '';
-            inp.addEventListener("input", function(e) {
-                var a, b, i, val = this.value;
-                /*close any already open lists of autocompleted values*/
-                closeAllLists();
-                if (!val) {
-                    return false;
-                }
-                currentFocus = -1;
-                /*create a DIV element that will contain the items (values):*/
-                a = document.createElement("DIV");
-                a.setAttribute("id", this.id + "autocomplete-list");
-                a.setAttribute("class", "autocomplete-items");
-                /*append the DIV element as a child of the autocomplete container:*/
-                this.parentNode.appendChild(a);
-                /*for each item in the array...*/
-                for (i = 0; i < arr.length; i++) {
-                    /*check if the item starts with the same letters as the text field value:*/
-                    if (arr[i].substr(0, val.length).toUpperCase() == val.toUpperCase()) {
-                        /*create a DIV element for each matching element:*/
-                        b = document.createElement("DIV");
-                        /*make the matching letters bold:*/
-                        b.innerHTML = "<strong>" + arr[i].substr(0, val.length) + "</strong>";
-                        b.innerHTML += arr[i].substr(val.length);
-                        /*insert a input field that will hold the current array item's value:*/
-                        b.innerHTML += "<input type='hidden' value='" + arr[i] + "' mid='" + arr2[i] + "'>";
-                        /*execute a function when someone clicks on the item value (DIV element):*/
-                        b.addEventListener("click", function(e) {
-                            /*insert the value for the autocomplete text field:*/
-                            inp.value = this.getElementsByTagName("input")[0].value;
-                            inp.setAttribute('mid', this.getElementsByTagName("input")[0].getAttribute(
-                                'mid'));
-                            let cid = document.getElementById('addcollectionid');
-                            cid.value = this.getElementsByTagName("input")[0].getAttribute(
-                                'mid');
-                            /*close the list of autocompleted values,
-                            (or any other open lists of autocompleted values:*/
-                            closeAllLists();
-                        });
-                        a.appendChild(b);
-                    }
-                }
-            });
-            /*execute a function presses a key on the keyboard:*/
-            inp.addEventListener("keydown", function(e) {
-                var x = document.getElementById(this.id + "autocomplete-list");
-                if (x) x = x.getElementsByTagName("div");
-                if (e.keyCode == 40) {
-                    /*If the arrow DOWN key is pressed,
-                    increase the currentFocus variable:*/
-                    currentFocus++;
-                    /*and and make the current item more visible:*/
-                    addActive(x);
-                } else if (e.keyCode == 38) { //up
-                    /*If the arrow UP key is pressed,
-                    decrease the currentFocus variable:*/
-                    currentFocus--;
-                    /*and and make the current item more visible:*/
-                    addActive(x);
-                } else if (e.keyCode == 13) {
-                    /*If the ENTER key is pressed, prevent the form from being submitted,*/
-                    e.preventDefault();
-                    if (currentFocus > -1) {
-                        /*and simulate a click on the "active" item:*/
-                        if (x) x[currentFocus].click();
-                    }
-                }
-            });
-
-            function addActive(x) {
-                /*a function to classify an item as "active":*/
-                if (!x) return false;
-                /*start by removing the "active" class on all items:*/
-                removeActive(x);
-                if (currentFocus >= x.length) currentFocus = 0;
-                if (currentFocus < 0) currentFocus = (x.length - 1);
-                /*add class "autocomplete-active":*/
-                x[currentFocus].classList.add("autocomplete-active");
-            }
-
-            function removeActive(x) {
-                /*a function to remove the "active" class from all autocomplete items:*/
-                for (var i = 0; i < x.length; i++) {
-                    x[i].classList.remove("autocomplete-active");
-                }
-            }
-
-            function closeAllLists(elmnt) {
-                /*close all autocomplete lists in the document,
-                except the one passed as an argument:*/
-                var x = document.getElementsByClassName("autocomplete-items");
-                for (var i = 0; i < x.length; i++) {
-                    if (elmnt != x[i] && elmnt != inp) {
-                        x[i].parentNode.removeChild(x[i]);
-                    }
-                }
-            }
-            /*execute a function when someone clicks in the document:*/
-            document.addEventListener("click", function(e) {
-                closeAllLists(e.target);
-            });
-        }
 
         function doOnAddCollection() {
-            let addOr = document.getElementById('addOr');
+            let addOr = document.getElementById('roledesc');
             addOr.value = '';
-            let addOrdate = document.getElementById('addOrdate');
-            addOrdate.value = '';
-            let collectionid = document.getElementById('addcollectionid');
-            collectionid.value = '';
-            let addAmountPaid = document.getElementById('addAmountPaid');
-            addAmountPaid.value = '';
-            var fullnames = {!! json_encode($fullnames, JSON_HEX_TAG) !!};
-            var idData = {!! json_encode($idData, JSON_HEX_TAG) !!};
-            autocomplete(document.getElementById("myInput"), fullnames, idData);
 
         }
     </script>

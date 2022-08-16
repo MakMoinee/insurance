@@ -10,6 +10,7 @@ use App\Http\Controllers\ReportsController;
 use App\Http\Controllers\RolesController;
 use App\Http\Controllers\SalesReportController;
 use App\Http\Controllers\SignOutController;
+use App\Http\Controllers\UsersFormController;
 use Illuminate\Support\Facades\Route;
 use SebastianBergmann\CodeCoverage\Report\Html\Dashboard;
 
@@ -33,9 +34,11 @@ Route::resource('/plans', PlansController::class);
 Route::resource('/user_roles', RolesController::class);
 Route::resource('/sales_report', SalesReportController::class);
 Route::resource('/report', ReportsController::class);
+Route::resource('/users', UsersFormController::class);
 Route::put('/update/user_roles', [RolesController::class, 'update']);
 Route::delete('/delete/members/{id}', [MembersController::class, 'destroy'])->name('delete.member');
 Route::delete('/delete/plan/{id}', [PlansController::class, 'destroy'])->name('delete.plan');
+Route::delete('/delete/role/{id}', [RolesController::class, 'destroy'])->name('delete.role');
 Route::put('/update/plan', [PlansController::class, 'update']);
 
 Route::resource('/members', MembersController::class);

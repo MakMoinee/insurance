@@ -38,74 +38,72 @@
         <div class="col-md-12 text-right">
             <b>Print Date: </b> {{ date('m/d/Y', strtotime(now())) }}
         </div>
-        @foreach ($members as $member)
-            <table class="table table-striped table-bordered">
-                <thead>
-                    <tr>
-                        <th>Statement of Account</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr>
-                        <td>
-                            <b> MSC No.:</b> {{ $member['memberID'] }}
-                        </td>
-                        <td>
-                            <b> Name:</b> {{ $fullname }}
-                        </td>
-                        <td>
-                            <b> Bdate:</b> {{ $member['birthDate'] }}
-                        </td>
-                        <td>
-                            <b> Contact No.:</b> {{ $member['contactNum'] }}
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>
-                            <b>Package:</b> {{ $member['description'] }}
-                        </td>
-                        <td>
-                            @if ($member['mop'] == 1)
+        <table class="table table-striped table-bordered">
+            <thead>
+                <tr>
+                    <th>Statement of Account</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>
+                        {{-- <b> MSC No.:</b> {{ $member['memberID'] }} --}}
+                    </td>
+                    <td>
+                        {{-- <b> Name:</b> {{ $fullname }} --}}
+                    </td>
+                    <td>
+                        {{-- <b> Bdate:</b> {{ $member['birthDate'] }} --}}
+                    </td>
+                    <td>
+                        {{-- <b> Contact No.:</b> {{ $member['contactNum'] }} --}}
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        {{-- <b>Package:</b> {{ $member['description'] }} --}}
+                    </td>
+                    <td>
+                        {{-- @if ($member['mop'] == 1)
                                 <b>Mode:</b> Regular
                             @else
                                 <b>Mode:</b> Indigent
-                            @endif
+                            @endif --}}
 
-                        </td>
-                        <td>
-                            <b>TAP:</b> P{{ $member['amount'] }}
-                        </td>
-                        <td>
-                            <b> Discounted:</b>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>
-                            <b> Address:</b>
-                            {{ $member['addresspurok'] . ' ' . $member['addressbrgy'] . ' ' . $member['addresscity'] . ' ' . $member['addressprovince'] }}
-                        </td>
-                        <td></td>
-                        <td></td>
-                        <td>
-                            <b> Collector:</b>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>
-                        </td>
-                        <td></td>
-                        <td></td>
-                        <td>
-                            APC: <b>SALVADOR,ELINA P.</b>
-                        </td>
-                    </tr>
-                    <tr>
-                    </tr>
-                </tbody>
-            </table>
-        @endforeach
+                    </td>
+                    <td>
+                        {{-- <b>TAP:</b> P{{ $member['amount'] }} --}}
+                    </td>
+                    <td>
+                        {{-- <b> Discounted:</b> --}}
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <b> Address:</b>
+                        {{ $address }}
+                    </td>
+                    <td></td>
+                    <td></td>
+                    <td>
+                        <b> Collector:</b>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                    </td>
+                    <td></td>
+                    <td></td>
+                    <td>
+                        APC: <b>SALVADOR,ELINA P.</b>
+                    </td>
+                </tr>
+                <tr>
+                </tr>
+            </tbody>
+        </table>
 
-        <table class="table table-striped table-bordered">
+        {{-- <table class="table table-striped table-bordered">
             <thead>
                 <th>
                     OR No.
@@ -120,7 +118,7 @@
                 </th>
             </thead>
             <tbody>
-                @foreach ($statements as $statement)
+                {{-- @foreach ($statements as $statement)
                     <tr>
                         <td>
                             {{ $statement['or'] }}
@@ -133,22 +131,22 @@
                             {{ $statement['amountpaid'] }}
                         </td>
                     </tr>
-                @endforeach
-            </tbody>
-        </table>
+                @endforeach --}}
+        {{-- </tbody> --}}
+        {{-- </table> --}}
 
         <table class="table table-striped table-bordered text-right">
             <thead>
             </thead>
             <tbody>
                 <tr>
-                    <td> <b> Amount Package:</b> P{{ $balance }}</td>
+                    {{-- <td> <b> Amount Package:</b> P{{ $balance }}</td> --}}
                 </tr>
                 <tr>
-                    <td> <b> Payments:</b> P{{ $total }}</td>
+                    <td> <b> Collected:</b> P{{ $total }}</td>
                 </tr>
                 <tr>
-                    <td> <b> Outstanding Balance:</b> P{{ $outstanding }}</td>
+                    {{-- <td> <b> Outstanding Balance:</b> P{{ $outstanding }}</td> --}}
                 </tr>
             </tbody>
         </table>
@@ -156,7 +154,7 @@
         <div class="container">
             <div class="row">
                 <div class="col-md-12">
-                    <p><b>Prepared By:</b></p>
+                    <p><b>Prepared By:</b></p> 
                 </div>
                 <div class="col-md-12" style="margin-top: 20px">
                     <div class="row">

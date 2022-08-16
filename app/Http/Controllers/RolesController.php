@@ -152,5 +152,18 @@ class RolesController extends Controller
     public function destroy($id)
     {
         //
+        if (session()->exists('users')) {
+            $affectedRow = DB::table('user_types')
+                ->where(['uType' => $id])
+                ->delete();
+            if ($affectedRow > 0) {
+                session()->put('successDeleteRole', true);
+            }else{
+                session()->put('errorDeleteRole', true);
+            }
+            return redirect('/user_roles');
+        } else {
+            return redirect('/');
+        }
     }
 }

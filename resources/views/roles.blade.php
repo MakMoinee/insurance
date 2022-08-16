@@ -415,40 +415,20 @@
                     <h6 class="ps-4 ms-2 text-uppercase text-xs font-weight-bolder opacity-6">Account pages</h6>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link  " href="../pages/profile.html">
+                    <a class="nav-link  " href="/users">
                         <div
                             class="icon icon-shape icon-sm shadow border-radius-md bg-white text-center me-2 d-flex align-items-center justify-content-center">
-                            <svg width="12px" height="12px" viewBox="0 0 46 42" version="1.1"
-                                xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
-                                <title>customer-support</title>
-                                <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
-                                    <g transform="translate(-1717.000000, -291.000000)" fill="#FFFFFF"
-                                        fill-rule="nonzero">
-                                        <g transform="translate(1716.000000, 291.000000)">
-                                            <g transform="translate(1.000000, 0.000000)">
-                                                <path class="color-background opacity-6"
-                                                    d="M45,0 L26,0 C25.447,0 25,0.447 25,1 L25,20 C25,20.379 25.214,20.725 25.553,20.895 C25.694,20.965 25.848,21 26,21 C26.212,21 26.424,20.933 26.6,20.8 L34.333,15 L45,15 C45.553,15 46,14.553 46,14 L46,1 C46,0.447 45.553,0 45,0 Z">
-                                                </path>
-                                                <path class="color-background"
-                                                    d="M22.883,32.86 C20.761,32.012 17.324,31 13,31 C8.676,31 5.239,32.012 3.116,32.86 C1.224,33.619 0,35.438 0,37.494 L0,41 C0,41.553 0.447,42 1,42 L25,42 C25.553,42 26,41.553 26,41 L26,37.494 C26,35.438 24.776,33.619 22.883,32.86 Z">
-                                                </path>
-                                                <path class="color-background"
-                                                    d="M13,28 C17.432,28 21,22.529 21,18 C21,13.589 17.411,10 13,10 C8.589,10 5,13.589 5,18 C5,22.529 8.568,28 13,28 Z">
-                                                </path>
-                                            </g>
-                                        </g>
-                                    </g>
-                                </g>
-                            </svg>
+                            <img src="/img/users.svg" alt="" height="25px" width="25px">
                         </div>
-                        <span class="nav-link-text ms-1">Profile</span>
+                        <span class="nav-link-text ms-1">Users</span>
                     </a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link  " href="javascript;;" data-toggle="modal" data-target="#signOutModal">
                         <div
                             class="icon icon-shape icon-sm shadow border-radius-md bg-white text-center me-2 d-flex align-items-center justify-content-center">
-                            <img src="/img/signout.png" alt="" srcset="" width="20px" height="20px">
+                            <img src="/img/signout.png" alt="" srcset="" width="20px"
+                                height="20px">
                         </div>
                         <span class="nav-link-text ms-1">Sign Out</span>
                     </a>
@@ -601,7 +581,7 @@
                                     Roles</button>
                             @else
                                 <button disabled class="btn btn-primary">Add
-                                    Member</button>
+                                    Roles</button>
                             @endif
 
                             <br>
@@ -688,9 +668,42 @@
                                                         data-toggle="modal"
                                                         data-target="#viewModal{{ $role['uType'] }}">View/Edit</button>
                                                     <button style="text-transform: none;margin-left: 10px;"
-                                                        class="btn badge-sm bg-gradient-danger text-xs">
+                                                        class="btn badge-sm bg-gradient-danger text-xs"
+                                                        data-toggle="modal"
+                                                        data-target="#deleteViewModal{{ $role['uType'] }}">
                                                         Delete
                                                     </button>
+                                                    <div class="modal fade" id="deleteViewModal{{ $role['uType'] }}"
+                                                        tabindex="-1" role="dialog"
+                                                        aria-labelledby="deleteViewModalLabel{{ $role['uType'] }}"
+                                                        aria-hidden="true">
+                                                        <div class="modal-dialog" role="document">
+                                                            <div class="modal-content">
+                                                                <form
+                                                                    action="{{ route('delete.role', ['id' => $role['uType']]) }}"
+                                                                    method="POST" enctype="multipart/form-data">
+                                                                    @method('delete')
+                                                                    @csrf
+                                                                    <div class="modal-body">
+                                                                        <h5 class="modal-title"
+                                                                            id="deleteViewModalLabel{{ $role['uType'] }}">
+                                                                            Do you want to
+                                                                            proceed deleting role ?</h5>
+                                                                        <input type="hidden" name="roleid"
+                                                                            value="{{ $role['uType'] }}">
+                                                                    </div>
+                                                                    <div class="modal-footer">
+                                                                        <button type="submit"
+                                                                            class="btn btn-primary">Yes,
+                                                                            Proceed</button>
+                                                                        <button type="button"
+                                                                            class="btn btn-secondary"
+                                                                            data-dismiss="modal">Close</button>
+                                                                    </div>
+                                                                </form>
+                                                            </div>
+                                                        </div>
+                                                    </div>
                                                     <div class="modal fade" id="viewModal{{ $role['uType'] }}"
                                                         tabindex="-1" role="dialog"
                                                         aria-labelledby="viewModalLabel{{ $role['uType'] }}"
@@ -709,8 +722,8 @@
                                                                 </div>
                                                                 <div class="modal-body">
                                                                     <div class="row">
-                                                                        <form autocomplete="off" action="/update/user_roles"
-                                                                            method="POST"
+                                                                        <form autocomplete="off"
+                                                                            action="/update/user_roles" method="POST"
                                                                             enctype="multipart/form-data">
                                                                             @method('put')
                                                                             @csrf
@@ -730,8 +743,10 @@
                                                                             </div>
                                                                             <div class="form-group">
                                                                                 <p><b>Can access the following:</b></p>
-                                                                                <label for="inst" class="for">Note: If not
-                                                                                    given access, <br> Automatically it will
+                                                                                <label for="inst"
+                                                                                    class="for">Note: If not
+                                                                                    given access, <br> Automatically it
+                                                                                    will
                                                                                     only have write
                                                                                     access and do not have
                                                                                     edit/delete</label>
@@ -988,6 +1003,31 @@
         {{ session()->forget('errorAddRole') }}
     @endif
 
+    @if (session()->pull('successDeleteRole'))
+        <script>
+            Swal.fire({
+                position: 'center',
+                icon: 'success',
+                title: 'Successfully Deleted Role',
+                showConfirmButton: false,
+                timer: 800
+            });
+        </script>;
+        {{ session()->forget('successDeleteRole') }}
+    @endif
+    
+    @if (session()->pull('errorDeleteRole'))
+        <script>
+            Swal.fire({
+                position: 'center',
+                icon: 'warning',
+                title: 'Failed to Delete Role',
+                showConfirmButton: false,
+                timer: 800
+            });
+        </script>;
+        {{ session()->forget('errorDeleteRole') }}
+    @endif
     @if (session()->pull('errorType'))
         <script>
             Swal.fire({

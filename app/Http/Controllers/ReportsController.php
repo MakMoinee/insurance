@@ -53,30 +53,42 @@ class ReportsController extends Controller
                     ])->get();
                 $report = json_decode($queryResult, true);
                 $count = count($report);
+                $totalC = 0;
+                $address = "";
+                $today = date('Y-m-d', strtotime(now()));
+                foreach ($report as $r) {
+                    $totalC += $r['amountpaid'];
+                    $address = $r['addressbrgy'] . ' ' . $r['addresscity'] . ' ' . $r['addressprovince'];
+                }
                 if ($count > 0) {
                     // dd($request);
-                    return view('reports');
+                    return view('reports2', ['address' => $address, 'total' => $totalC, 'today' => $today]);
                 } else {
                     session()->put('errorEmptyBrgy', true);
                 }
             } else if ($request['print'] == "true") {
                 $queryResult = DB::table('vwcollections')->where(['FullName' => $request['fullname']])->get();
                 $statements = json_decode($queryResult, true);
-                $memberID = 0;
-                $total = 0;
-                foreach ($statements as $statement) {
-                    $memberID = $statement['memberID'];
-                    $total += $statement['amountpaid'];
+                $countState = count($statements);
+                if ($countState > 0) {
+                    $memberID = 0;
+                    $total = 0;
+                    foreach ($statements as $statement) {
+                        $memberID = $statement['memberID'];
+                        $total += $statement['amountpaid'];
+                    }
+                    $queryResult = DB::table('vwmemberswithplan')->where(['memberID' => $memberID])->get();
+                    $members = json_decode($queryResult, true);
+                    $balance = 0;
+                    foreach ($members as $member) {
+                        $balance = $member['amount'];
+                        break;
+                    }
+                    $outstanding = $balance - $total;
+                    return view('reports', ['statements' => $statements, 'members' => $members, 'fullname' => $request['fullname'], 'total' => $total, 'balance' => $balance, 'outstanding' => $outstanding]);
+                } else {
+                    session()->put('errorNotAvailable', true);
                 }
-                $queryResult = DB::table('vwmemberswithplan')->where(['memberID' => $memberID])->get();
-                $members = json_decode($queryResult, true);
-                $balance = 0;
-                foreach ($members as $member) {
-                    $balance = $member['amount'];
-                    break;
-                }
-                $outstanding = $balance - $total;
-                return view('reports', ['statements' => $statements, 'members' => $members, 'fullname' => $request['fullname'], 'total' => $total, 'balance' => $balance, 'outstanding' => $outstanding]);
             } else {
                 session()->put('errorBrgyField', true);
             }
