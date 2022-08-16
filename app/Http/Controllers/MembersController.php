@@ -32,7 +32,46 @@ class MembersController extends Controller
             if ($countPlan == 0) {
                 session()->put('errorPlanEmpty', true);
             }
-            return view('members', ['totalMembers' => $membersCount, 'totalNewMembers' => $total, 'members' => $members, 'civil' => $civil, 'gend' => $gend, 'utype' => $userType, 'plans' => $plans]);
+
+            $hasAccess = $userType == 1;
+            $hasAccessMember = false;
+            $hasAccessPlans = false;
+            $hasAccessCollection = false;
+            $userRoleDesc = "";
+
+            $queryResult = DB::table('vwuserswithroles')
+                ->where(['uType' => $userType])
+                ->get();
+
+            $result = json_decode($queryResult, true);
+
+            foreach ($result as $r) {
+                $userRoleDesc = $r['description'];
+                if ($r['members'] == 1) {
+                    $hasAccessMember = true;
+                }
+                if ($r['plans'] == 1) {
+                    $hasAccessPlans = true;
+                }
+                if ($r['collections'] == 1) {
+                    $hasAccessCollection = true;
+                }
+                break;
+            }
+            return view('members', [
+                'totalMembers' => $membersCount,
+                'totalNewMembers' => $total,
+                'members' => $members,
+                'civil' => $civil,
+                'gend' => $gend,
+                'utype' => $userType,
+                'plans' => $plans,
+                'hasAccess' => $hasAccess,
+                'hasAccessMember' => $hasAccessMember,
+                'hasAccessPlans' => $hasAccessPlans,
+                'hasAccessCollections' => $hasAccessCollection,
+                'loginAs' => $userRoleDesc
+            ]);
         } else {
             return redirect('/');
         }

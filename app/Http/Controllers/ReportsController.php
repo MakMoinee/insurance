@@ -89,6 +89,27 @@ class ReportsController extends Controller
                 } else {
                     session()->put('errorNotAvailable', true);
                 }
+            } else if ($request['city'] != "" && $request['province'] != "") {
+                $queryResult = DB::table('vwcollectionreport')
+                    ->where([
+                        'addressprovince' => $request['province'],
+                        'addresscity' => $request['city'],
+                    ])->get();
+                $report = json_decode($queryResult, true);
+                $count = count($report);
+                $totalC = 0;
+                $address = "";
+                $today = date('Y-m-d', strtotime(now()));
+                foreach ($report as $r) {
+                    $totalC += $r['amountpaid'];
+                    $address = $r['addresscity'] . ' ' . $r['addressprovince'];
+                }
+                if ($count > 0) {
+                    // dd($request);
+                    return view('reports2', ['address' => $address, 'total' => $totalC, 'today' => $today]);
+                } else {
+                    session()->put('errorEmptyCity', true);
+                }
             } else {
                 session()->put('errorBrgyField', true);
             }

@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\IUsers;
+use App\Models\UserTypes;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
@@ -21,7 +23,46 @@ class UsersFormController extends Controller
             $queryResult = DB::table('vwuserswithroles')->get();
             $roles = json_decode($queryResult, true);
 
-            return view('users', ['roles' => $roles,  'utype' => $userType]);
+            $hasAccess = $userType == 1;
+            $userTypes = UserTypes::all();
+
+            $hasAccessMember = false;
+            $hasAccessPlans = false;
+            $hasAccessCollection = false;
+            $userRoleDesc = "";
+
+            $queryResult = DB::table('vwuserswithroles')
+                ->where(['uType' => $userType])
+                ->get();
+
+            $result = json_decode($queryResult, true);
+
+            foreach ($result as $r) {
+                $userRoleDesc = $r['description'];
+                if ($r['members'] == 1) {
+                    $hasAccessMember = true;
+                }
+                if ($r['plans'] == 1) {
+                    $hasAccessPlans = true;
+                }
+                if ($r['collections'] == 1) {
+                    $hasAccessCollection = true;
+                }
+                break;
+            }
+
+
+
+            return view('users', [
+                'roles' => $roles,
+                'utype' => $userType,
+                'userTypes' => $userTypes,
+                'hasAccess' => $hasAccess,
+                'hasAccessMember' => $hasAccessMember,
+                'hasAccessPlans' => $hasAccessPlans,
+                'hasAccessCollections' => $hasAccessCollection,
+                'loginAs' => $userRoleDesc
+            ]);
         } else {
             return redirect('/');
         }
@@ -46,6 +87,36 @@ class UsersFormController extends Controller
     public function store(Request $request)
     {
         //
+        if (session()->exists('users')) {
+
+            if ($request['password'] == $request['cpassword']) {
+                $queryResult = DB::table('iusers')
+                    ->where(['username' => $request['username'], 'password' => $request['password']])
+                    ->get();
+                $users = json_decode($queryResult, true);
+                $userCount = count($users);
+                if ($userCount == 0) {
+
+                    $newUser = new IUsers();
+                    $newUser->username = $request['username'];
+                    $newUser->password = $request['password'];
+                    $newUser->uType = $request['utype'];
+                    $affectedRow = $newUser->save();
+                    if ($affectedRow > 0) {
+                        session()->put('successSaveUser', true);
+                    } else {
+                        session()->put('errorSaveUser', true);
+                    }
+                } else {
+                    session()->put('userExist', true);
+                }
+            } else {
+                session()->put('errorPwNotMatch', true);
+            }
+            return redirect('/users');
+        } else {
+            return redirect('/');
+        }
     }
 
     /**

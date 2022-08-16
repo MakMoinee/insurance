@@ -20,7 +20,40 @@ class PlansController extends Controller
             $userType = session('users')[0]->uType;
             $queryResult = DB::table('vwactiveplan')->get();
             $plans = json_decode($queryResult, true);
-            return view('plans', ['utype' => $userType, 'plans' => $plans]);
+            $hasAccess = $userType == 1;
+            $hasAccessMember = false;
+            $hasAccessPlans = false;
+            $hasAccessCollection = false;
+            $userRoleDesc = "";
+
+            $queryResult = DB::table('vwuserswithroles')
+                ->where(['uType' => $userType])
+                ->get();
+
+            $result = json_decode($queryResult, true);
+
+            foreach ($result as $r) {
+                $userRoleDesc = $r['description'];
+                if ($r['members'] == 1) {
+                    $hasAccessMember = true;
+                }
+                if ($r['plans'] == 1) {
+                    $hasAccessPlans = true;
+                }
+                if ($r['collections'] == 1) {
+                    $hasAccessCollection = true;
+                }
+                break;
+            }
+            return view('plans', [
+                'utype' => $userType,
+                'plans' => $plans,
+                'hasAccess' => $hasAccess,
+                'hasAccessMember' => $hasAccessMember,
+                'hasAccessPlans' => $hasAccessPlans,
+                'hasAccessCollections' => $hasAccessCollection,
+                'loginAs' => $userRoleDesc
+            ]);
         } else {
             return redirect('/');
         }
@@ -103,7 +136,7 @@ class PlansController extends Controller
                     ->update([
                         'status' => 1,
                         'amount' => $request['amount'],
-                        'description'=> $request['description']
+                        'description' => $request['description']
                     ]);
 
                 if ($affectedRow > 0) {

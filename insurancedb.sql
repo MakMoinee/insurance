@@ -11,7 +11,7 @@
  Target Server Version : 80029
  File Encoding         : 65001
 
- Date: 14/08/2022 00:30:36
+ Date: 16/08/2022 22:22:52
 */
 
 SET NAMES utf8mb4;
@@ -31,13 +31,14 @@ CREATE TABLE `collections`  (
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
   PRIMARY KEY (`collectionID`) USING BTREE
-) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 3 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of collections
 -- ----------------------------
 INSERT INTO `collections` VALUES (1, 11000, '2022-08-13', 1500.00, 1, 'Simon', '2022-08-13 09:39:37', '2022-08-13 09:39:37');
 INSERT INTO `collections` VALUES (2, 1232323, '2022-07-08', 1000.00, 1, 'Simon', '2022-08-13 16:10:59', '2022-08-13 16:10:59');
+INSERT INTO `collections` VALUES (3, 1032255, '2022-08-16', 10000.00, 2, 'Simon', '2022-08-16 09:16:23', '2022-08-16 09:16:23');
 
 -- ----------------------------
 -- Table structure for failed_jobs
@@ -71,12 +72,13 @@ CREATE TABLE `iusers`  (
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 2 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of iusers
 -- ----------------------------
 INSERT INTO `iusers` VALUES (1, 'mak', 'mak', 1, '2022-08-13 17:34:49', '2022-08-13 17:34:52');
+INSERT INTO `iusers` VALUES (2, 'ken', 'ken', 3, '2022-08-16 12:24:51', '2022-08-16 12:24:51');
 
 -- ----------------------------
 -- Table structure for members
@@ -115,12 +117,13 @@ CREATE TABLE `members`  (
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
   PRIMARY KEY (`memberID`) USING BTREE
-) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 3 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of members
 -- ----------------------------
 INSERT INTO `members` VALUES (1, 'Judelyn', 'Pueblo', 'Salvador', 'Purok 8', 'Sinayawan', 'Valencia City', 'Bukidnon', '09090464345', 'Married', 'Female', 'BPH Malaybalay', 'Iglesia Ni Cristo', '171', '45', 2, '1998-06-06', 2, 'Xander Ford', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 40000.00, '2022-08-13 09:39:04', '2022-08-13 09:39:04');
+INSERT INTO `members` VALUES (2, 'Sheenie', 'Ucab', 'Borbon', 'Door 10 Rahmann Extension', 'Kamputhaw', 'Cebu City', 'Cebu', '09090464399', 'Married', 'Female', 'Purok 10 Poblacion Valencia City Bukidnon', 'Roman Catholic', '171', '44', 2, '1998-12-22', 3, 'Kennen C. Borbon', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 50000.00, '2022-08-16 09:02:01', '2022-08-16 09:02:01');
 
 -- ----------------------------
 -- Table structure for migrations
@@ -131,7 +134,7 @@ CREATE TABLE `migrations`  (
   `migration` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
   `batch` int NOT NULL,
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 11 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of migrations
@@ -228,7 +231,7 @@ CREATE TABLE `staffs`  (
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
   PRIMARY KEY (`staffID`) USING BTREE
-) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of staffs
@@ -247,11 +250,13 @@ CREATE TABLE `user_types`  (
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
   PRIMARY KEY (`uType`) USING BTREE
-) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of user_types
 -- ----------------------------
+INSERT INTO `user_types` VALUES (1, 'Administrator', 1, 1, 1, '2022-08-16 18:26:27', '2022-08-16 18:26:33');
+INSERT INTO `user_types` VALUES (3, 'Collector', 0, 1, 0, '2022-08-16 10:46:16', '2022-08-16 10:46:16');
 
 -- ----------------------------
 -- Table structure for users
@@ -333,5 +338,11 @@ CREATE ALGORITHM = UNDEFINED SQL SECURITY DEFINER VIEW `vwtotalmembers` AS selec
 -- ----------------------------
 DROP VIEW IF EXISTS `vwtotalnewmembers`;
 CREATE ALGORITHM = UNDEFINED SQL SECURITY DEFINER VIEW `vwtotalnewmembers` AS select count(`members`.`memberID`) AS `TotalNewMembers` from `members` where (month(`members`.`created_at`) = month(now()));
+
+-- ----------------------------
+-- View structure for vwuserswithroles
+-- ----------------------------
+DROP VIEW IF EXISTS `vwuserswithroles`;
+CREATE ALGORITHM = UNDEFINED SQL SECURITY DEFINER VIEW `vwuserswithroles` AS select `iusers`.`id` AS `id`,`iusers`.`username` AS `username`,`iusers`.`password` AS `password`,`iusers`.`uType` AS `uType`,`iusers`.`created_at` AS `created_at`,`iusers`.`updated_at` AS `updated_at`,`user_types`.`description` AS `description`,`user_types`.`members` AS `members`,`user_types`.`collections` AS `collections`,`user_types`.`plans` AS `plans` from (`iusers` join `user_types` on((`iusers`.`uType` = `user_types`.`uType`)));
 
 SET FOREIGN_KEY_CHECKS = 1;

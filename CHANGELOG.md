@@ -1,3 +1,10 @@
+## [1.0.4] - 08-16-2022
+### Updated
+- Fix Print Statement
+- Update form for Collection Report By City and Barangay
+- Update db
+- Finish Milestone
+
 ## [1.0.3] - 08-14-2022
 ### Added
 - Print Statement and Collection Report Page

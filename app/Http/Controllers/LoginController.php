@@ -57,7 +57,42 @@ class LoginController extends Controller
                 $userType = $musers->uType;
                 $collection = DB::table('vwtotalcollections')->first();
                 $ctotal = $collection->TotalCollections;
-                return view('dashboard', ['totalMembers' => $membersCount, 'totalNewMembers' => $total, 'utype' => $userType, 'ctotal' => $ctotal]);
+                $hasAccess = $userType == 1;
+                $hasAccessMember = false;
+                $hasAccessPlans = false;
+                $hasAccessCollection = false;
+                $userRoleDesc = "";
+
+                $queryResult = DB::table('vwuserswithroles')
+                    ->where(['uType' => $userType])
+                    ->get();
+
+                $result = json_decode($queryResult, true);
+
+                foreach ($result as $r) {
+                    $userRoleDesc = $r['description'];
+                    if ($r['members'] == 1) {
+                        $hasAccessMember = true;
+                    }
+                    if ($r['plans'] == 1) {
+                        $hasAccessPlans = true;
+                    }
+                    if ($r['collections'] == 1) {
+                        $hasAccessCollection = true;
+                    }
+                    break;
+                }
+                return view('dashboard', [
+                    'totalMembers' => $membersCount,
+                    'totalNewMembers' => $total,
+                    'utype' => $userType,
+                    'ctotal' => $ctotal,
+                    'hasAccess' => $hasAccess,
+                    'hasAccessMember' => $hasAccessMember,
+                    'hasAccessPlans' => $hasAccessPlans,
+                    'hasAccessCollections' => $hasAccessCollection,
+                    'loginAs' => $userRoleDesc
+                ]);
             } else {
                 Session::flush();
                 return view('home');

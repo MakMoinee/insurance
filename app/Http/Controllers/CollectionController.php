@@ -23,14 +23,14 @@ class CollectionController extends Controller
             $queryResult = DB::table('vwtotalcollections')->get();
             $totalC = json_decode($queryResult, true);
             $totalCollection = 0;
-            foreach($totalC as $total){
+            foreach ($totalC as $total) {
                 $totalCollection = $total['TotalCollections'];
                 break;
             }
 
             $userType = session('users')[0]->uType;
-           
-            
+
+
             $queryResult = DB::table('vwfullnames')->get();
             $fullnames = json_decode($queryResult, true);
             $data = [];
@@ -45,7 +45,47 @@ class CollectionController extends Controller
             $queryResult = DB::table('vwcollections')->get();
             $collections = json_decode($queryResult, true);
 
-            return view('collection', ['totalCollections' => $totalCollection, 'collections' => $collections,  'utype' => $userType, 'fullnames' => $data, 'idData' => $idData]);
+            $hasAccessU = false;
+            $hasAccessMember = false;
+            $hasAccessPlans = false;
+            $hasAccessCollection = false;
+            $userRoleDesc = "";
+
+            $queryResult = DB::table('vwuserswithroles')
+                ->where(['uType' => $userType])
+                ->get();
+
+            $result = json_decode($queryResult, true);
+
+            foreach ($result as $r) {
+                $userRoleDesc = $r['description'];
+                if ($r['members'] == 1) {
+                    $hasAccessMember = true;
+                }
+                if ($r['plans'] == 1) {
+                    $hasAccessPlans = true;
+                }
+                if ($r['collections'] == 1) {
+                    $hasAccessCollection = true;
+                }
+                if ($r['uType'] == 1) {
+                    $hasAccessU = true;
+                }
+                break;
+            }
+
+            return view('collection', [
+                'totalCollections' => $totalCollection,
+                'collections' => $collections,
+                'utype' => $userType,
+                'fullnames' => $data,
+                'idData' => $idData,
+                'hasAccessU' => $hasAccessU,
+                'hasAccessMember' => $hasAccessMember,
+                'hasAccessPlans' => $hasAccessPlans,
+                'hasAccessCollections' => $hasAccessCollection,
+                'loginAs' => $userRoleDesc
+            ]);
         } else {
             return redirect('/');
         }

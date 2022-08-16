@@ -20,7 +20,43 @@ class HomeController extends Controller
             $ctotal = $collection->TotalCollections;
             $total = $newMembers->TotalNewMembers;
             $userType = session('users')[0]->uType;
-            return view('dashboard', ['totalMembers' => $membersCount, 'totalNewMembers' => $total, 'utype' => $userType, 'ctotal' => $ctotal]);
+            $hasAccess = $userType == 1;
+            $hasAccessMember = false;
+            $hasAccessPlans = false;
+            $hasAccessCollection = false;
+            $userRoleDesc = "";
+
+            $queryResult = DB::table('vwuserswithroles')
+                ->where(['uType' => $userType])
+                ->get();
+
+            $result = json_decode($queryResult, true);
+
+            foreach ($result as $r) {
+                $userRoleDesc = $r['description'];
+                if ($r['members'] == 1) {
+                    $hasAccessMember = true;
+                }
+                if ($r['plans'] == 1) {
+                    $hasAccessPlans = true;
+                }
+                if ($r['collections'] == 1) {
+                    $hasAccessCollection = true;
+                }
+                break;
+            }
+
+            return view('dashboard', [
+                'totalMembers' => $membersCount,
+                'totalNewMembers' => $total,
+                'utype' => $userType,
+                'ctotal' => $ctotal,
+                'hasAccess' => $hasAccess,
+                'hasAccessMember' => $hasAccessMember,
+                'hasAccessPlans' => $hasAccessPlans,
+                'hasAccessCollections' => $hasAccessCollection,
+                'loginAs' => $userRoleDesc
+            ]);
         } else {
             return view('home');
         }

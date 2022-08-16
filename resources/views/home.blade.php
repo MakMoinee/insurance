@@ -65,7 +65,7 @@ $version = \Config::get('app.appVersion');
                                     <button type="submit" class="form-control btn btn-primary rounded submit px-3">Sign
                                         In</button>
                                 </div>
-                                <div class="form-group d-md-flex">
+                                {{-- <div class="form-group d-md-flex">
                                     <div class="w-50 text-left">
                                         <label class="checkbox-wrap checkbox-primary mb-0">Remember Me
                                             <input type="checkbox" checked>
@@ -75,9 +75,9 @@ $version = \Config::get('app.appVersion');
                                     <div class="w-50 text-md-right">
                                         <a href="#">Forgot Password</a>
                                     </div>
-                                </div>
+                                </div> --}}
                             </form>
-                            <p class="text-center">Not a member? <a data-toggle="tab" href="#signup">Sign Up</a>
+                            {{-- <p class="text-center">Not a member? <a data-toggle="tab" href="#signup">Sign Up</a> --}}
                                 <br>
                                 version <?php echo $version; ?>
                             </p>

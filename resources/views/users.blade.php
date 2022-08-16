@@ -87,7 +87,10 @@
                 aria-hidden="true" id="iconSidenav"></i>
             <a class="navbar-brand m-0" href="/" target="_blank">
                 <img src="/storage/image/favicon.ico" class="navbar-brand-img h-100" alt="main_logo">
-                <span class="ms-1 font-weight-bold">Admin Dashboard</span>
+                <span class="ms-1 font-weight-bold">Dashboard</span>
+                <br>
+                
+                <p>Login as: <b>{{ $loginAs }}</b></p>
             </a>
         </div>
         <hr class="horizontal dark mt-0">
@@ -676,138 +679,140 @@
                                                 <td class="align-middle text-sm">
                                                     <br>
                                                     @if ($role['uType'] != 1)
-                                                        <button style="text-transform: none;"
-                                                            class="btn badge-sm bg-gradient-success text-xs"
-                                                            data-toggle="modal"
-                                                            data-target="#viewModal{{ $role['uType'] }}">View/Edit</button>
-                                                        <button style="text-transform: none;margin-left: 10px;"
-                                                            class="btn badge-sm bg-gradient-danger text-xs">
-                                                            Delete
-                                                        </button>
-                                                        <div class="modal fade" id="viewModal{{ $role['uType'] }}"
-                                                            tabindex="-1" role="dialog"
-                                                            aria-labelledby="viewModalLabel{{ $role['uType'] }}"
-                                                            aria-hidden="true">
-                                                            <div class="modal-dialog" role="document">
-                                                                <div class="modal-content">
-                                                                    <div class="modal-header">
-                                                                        <h5 class="modal-title"
-                                                                            id="viewModalLabel{{ $role['uType'] }}">
-                                                                            View/Edit
-                                                                            Roles</h5>
-                                                                        <button type="button" class="close"
-                                                                            data-dismiss="modal" aria-label="Close">
-                                                                            <span aria-hidden="true">&times;</span>
-                                                                        </button>
-                                                                    </div>
-                                                                    <div class="modal-body">
-                                                                        <div class="row">
-                                                                            <form autocomplete="off"
-                                                                                action="/update/user_roles"
-                                                                                method="POST"
-                                                                                enctype="multipart/form-data">
-                                                                                @method('put')
-                                                                                @csrf
-                                                                                <div class="form-group">
-                                                                                    <label for="fullname">Role
-                                                                                        Description:</label>
-                                                                                    <div class="autocomplete"
-                                                                                        style="width:300px;">
-                                                                                        <input required
-                                                                                            style="width: 350px;"
-                                                                                            id="roledesc"
-                                                                                            type="text"
-                                                                                            name="roledesc"
-                                                                                            placeholder="Role Description"
-                                                                                            title="Role Description"
-                                                                                            value="{{ $role['description'] }}">
-                                                                                    </div>
-                                                                                </div>
-                                                                                <div class="form-group">
-                                                                                    <p><b>Can access the following:</b>
-                                                                                    </p>
-                                                                                    <label for="inst"
-                                                                                        class="for">Note: If not
-                                                                                        given access, <br> Automatically
-                                                                                        it will
-                                                                                        only have write
-                                                                                        access and do not have
-                                                                                        edit/delete</label>
-                                                                                </div>
-                                                                                <div class="form-group">
-                                                                                    @if ($role['members'] == 1)
-                                                                                        <input style="cursor: pointer;"
-                                                                                            type="checkbox"
-                                                                                            name="checkmember"
-                                                                                            id="checkmember" checked>
-                                                                                        <label for="checkmember"
-                                                                                            for="checkmember">Members</label>
-                                                                                    @else
-                                                                                        <input style="cursor: pointer;"
-                                                                                            type="checkbox"
-                                                                                            name="checkmember"
-                                                                                            id="checkmember">
-                                                                                        <label for="checkmember"
-                                                                                            for="checkmember">Members</label>
-                                                                                    @endif
-                                                                                    @if ($role['collections'] == 1)
-                                                                                        <input
-                                                                                            style="cursor: pointer;margin-left: 20px;"
-                                                                                            type="checkbox"
-                                                                                            name="checkcollections"
-                                                                                            id="checkcollections"
-                                                                                            checked>
-                                                                                        <label for="checkcollections"
-                                                                                            for="checkcollections">Collections</label>
-                                                                                    @else
-                                                                                        <input
-                                                                                            style="cursor: pointer;margin-left: 20px;"
-                                                                                            type="checkbox"
-                                                                                            name="checkcollections"
-                                                                                            id="checkcollections">
-                                                                                        <label for="checkcollections"
-                                                                                            for="checkcollections">Collections</label>
-                                                                                    @endif
-
-                                                                                    @if ($role['plans'] == 1)
-                                                                                        <input
-                                                                                            style="cursor: pointer;margin-left: 20px;"
-                                                                                            type="checkbox"
-                                                                                            name="checkplans"
-                                                                                            id="checkplans" checked>
-                                                                                        <label for="checkplans"
-                                                                                            for="checkplans">Plans</label>
-                                                                                    @else
-                                                                                        <input
-                                                                                            style="cursor: pointer;margin-left: 20px;"
-                                                                                            type="checkbox"
-                                                                                            name="checkplans"
-                                                                                            id="checkplans">
-                                                                                        <label for="checkplans"
-                                                                                            for="checkplans">Plans</label>
-                                                                                    @endif
-                                                                                </div>
-
-
-
+                                                        @if ($hasAccess)
+                                                            <button style="text-transform: none;"
+                                                                class="btn badge-sm bg-gradient-success text-xs"
+                                                                data-toggle="modal"
+                                                                data-target="#viewModal{{ $role['uType'] }}">View/Edit</button>
+                                                            <button style="text-transform: none;margin-left: 10px;"
+                                                                class="btn badge-sm bg-gradient-danger text-xs">
+                                                                Delete
+                                                            </button>
+                                                            <div class="modal fade" id="viewModal{{ $role['uType'] }}"
+                                                                tabindex="-1" role="dialog"
+                                                                aria-labelledby="viewModalLabel{{ $role['uType'] }}"
+                                                                aria-hidden="true">
+                                                                <div class="modal-dialog" role="document">
+                                                                    <div class="modal-content">
+                                                                        <div class="modal-header">
+                                                                            <h5 class="modal-title"
+                                                                                id="viewModalLabel{{ $role['uType'] }}">
+                                                                                View/Edit
+                                                                                User</h5>
+                                                                            <button type="button" class="close"
+                                                                                data-dismiss="modal"
+                                                                                aria-label="Close">
+                                                                                <span aria-hidden="true">&times;</span>
+                                                                            </button>
                                                                         </div>
+                                                                        <div class="modal-body">
+                                                                            <div class="row">
+                                                                                <form autocomplete="off"
+                                                                                    action="/users" method="POST"
+                                                                                    enctype="multipart/form-data">
+                                                                                    @csrf
+                                                                                    <div class="form-group">
+                                                                                        <label for="username"
+                                                                                            class="username">Username:</label>
+                                                                                        <div class="autocomplete"
+                                                                                            style="width:300px;">
+                                                                                            <input required
+                                                                                                style="width: 350px;"
+                                                                                                id="username"
+                                                                                                type="text"
+                                                                                                name="username"
+                                                                                                placeholder="Username"
+                                                                                                title="Username"
+                                                                                                class="form-control"
+                                                                                                value="{{ $role['username'] }}">
+                                                                                        </div>
+                                                                                    </div>
+                                                                                    <div class="form-group">
+                                                                                        <label for="password"
+                                                                                            class="password">Password:</label>
+                                                                                        <div class="autocomplete"
+                                                                                            style="width:300px;">
+                                                                                            <input required
+                                                                                                style="width: 350px;"
+                                                                                                id="txtPassword"
+                                                                                                type="password"
+                                                                                                name="password"
+                                                                                                placeholder="Password"
+                                                                                                title="Password"
+                                                                                                class="form-control"
+                                                                                                value="{{ $role['password'] }}">
+                                                                                        </div>
+                                                                                    </div>
+                                                                                    <div class="form-group">
+                                                                                        <label for="cpassword"
+                                                                                            class="cpassword">Confirm
+                                                                                            Password:</label>
+                                                                                        <div class="autocomplete"
+                                                                                            style="width:300px;">
+                                                                                            <input required
+                                                                                                style="width: 350px;"
+                                                                                                id="txtConfirmPassword"
+                                                                                                type="password"
+                                                                                                name="cpassword"
+                                                                                                placeholder="Confirm Password"
+                                                                                                title="Confirm Password"
+                                                                                                class="form-control">
+                                                                                        </div>
+                                                                                    </div>
+                                                                                    <div class="form-group">
+                                                                                        <label for="role"
+                                                                                            for="role">User
+                                                                                            Role:</label>
+                                                                                        <select name="utype"
+                                                                                            id="utype">
+                                                                                            @foreach ($userTypes as $types)
+                                                                                                @if ($role['uType'] == $types['uType'])
+                                                                                                    <option
+                                                                                                        value="{{ $types['uType'] }}"
+                                                                                                        selected>
+                                                                                                        {{ $types['description'] }}
+                                                                                                    </option>
+                                                                                                @else
+                                                                                                    <option
+                                                                                                        value="{{ $types['uType'] }}">
+                                                                                                        {{ $types['description'] }}
+                                                                                                    </option>
+                                                                                                @endif
+                                                                                            @endforeach
+                                                                                        </select>
+
+                                                                                    </div>
+
+
+
+                                                                            </div>
+                                                                        </div>
+                                                                        <div class="modal-footer">
+                                                                            <button type="button"
+                                                                                class="btn btn-secondary"
+                                                                                data-dismiss="modal">Close</button>
+                                                                            <button type="submit"
+                                                                                class="btn btn-primary">Update
+                                                                                Role</button>
+                                                                        </div>
+                                                                        </form>
                                                                     </div>
-                                                                    <div class="modal-footer">
-                                                                        <button type="button"
-                                                                            class="btn btn-secondary"
-                                                                            data-dismiss="modal">Close</button>
-                                                                        <button type="submit"
-                                                                            class="btn btn-primary">Update
-                                                                            Role</button>
-                                                                    </div>
-                                                                    </form>
                                                                 </div>
                                                             </div>
-                                                        </div>
+                                                        @else
+                                                            <button disabled style="text-transform: none;"
+                                                                class="btn badge-sm bg-gradient-success text-xs">View/Edit</button>
+                                                            <button disabled
+                                                                style="text-transform: none;margin-left: 10px;"
+                                                                class="btn badge-sm bg-gradient-danger text-xs">
+                                                                Delete
+                                                            </button>
+                                                        @endif
                                                     @else
                                                         <button disabled style="text-transform: none;"
                                                             class="btn badge-sm bg-gradient-success text-xs">View/Edit</button>
-                                                        <button disabled style="text-transform: none;margin-left: 10px;"
+                                                        <button disabled
+                                                            style="text-transform: none;margin-left: 10px;"
                                                             class="btn badge-sm bg-gradient-danger text-xs">
                                                             Delete
                                                         </button>
@@ -870,36 +875,47 @@
         <div class="modal-dialog" role="document">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel">Add Roles</h5>
+                    <h5 class="modal-title" id="exampleModalLabel">Add User</h5>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>
                 </div>
                 <div class="modal-body">
                     <div class="row">
-                        <form autocomplete="off" action="/user_roles" method="POST" enctype="multipart/form-data">
+                        <form autocomplete="off" action="/users" method="POST" enctype="multipart/form-data">
                             @csrf
                             <div class="form-group">
-                                <label for="fullname">Role Description:</label>
+                                <label for="username" class="username">Username:</label>
                                 <div class="autocomplete" style="width:300px;">
-                                    <input required style="width: 350px;" id="roledesc" type="text"
-                                        name="roledesc" placeholder="Role Description" title="Role Description">
+                                    <input required style="width: 350px;" id="username" type="text"
+                                        name="username" placeholder="Username" title="Username"
+                                        class="form-control">
                                 </div>
                             </div>
                             <div class="form-group">
-                                <p><b>Can access the following:</b></p>
-                                <label for="inst">Note: If not given access, Automatically it will only have write
-                                    access and do not have edit/delete</label>
+                                <label for="password" class="password">Password:</label>
+                                <div class="autocomplete" style="width:300px;">
+                                    <input required style="width: 350px;" id="txtPassword" type="password"
+                                        name="password" placeholder="Password" title="Password"
+                                        class="form-control">
+                                </div>
                             </div>
                             <div class="form-group">
-                                <input style="cursor: pointer;" type="checkbox" name="checkmember" id="checkmember">
-                                <label for="checkmember" for="checkmember">Members</label>
-                                <input style="cursor: pointer;margin-left: 20px;" type="checkbox"
-                                    name="checkcollections" id="checkcollections">
-                                <label for="checkcollections" for="checkcollections">Collections</label>
-                                <input style="cursor: pointer;margin-left: 20px;" type="checkbox" name="checkplans"
-                                    id="checkplans">
-                                <label for="checkplans" for="checkplans">Plans</label>
+                                <label for="cpassword" class="cpassword">Confirm Password:</label>
+                                <div class="autocomplete" style="width:300px;">
+                                    <input required style="width: 350px;" id="txtConfirmPassword" type="password"
+                                        name="cpassword" placeholder="Confirm Password" title="Confirm Password"
+                                        class="form-control">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="role" for="role">User Role:</label>
+                                <select name="utype" id="utype">
+                                    @foreach ($userTypes as $types)
+                                        <option value="{{ $types['uType'] }}">{{ $types['description'] }}</option>
+                                    @endforeach
+                                </select>
+
                             </div>
 
 
@@ -932,17 +948,17 @@
             </div>
         </div>
     </div>
-    @if (session()->pull('successRoleAdd'))
+    @if (session()->pull('successSaveUser'))
         <script>
             Swal.fire({
                 position: 'center',
                 icon: 'success',
-                title: 'Successfully Added Role',
+                title: 'Successfully Added User',
                 showConfirmButton: false,
                 timer: 500
             });
         </script>;
-        {{ session()->forget('successRoleAdd') }}
+        {{ session()->forget('successSaveUser') }}
     @endif
 
     @if (session()->pull('successDelete'))
@@ -976,7 +992,7 @@
             Swal.fire({
                 position: 'center',
                 icon: 'warning',
-                title: 'Member Already Exist',
+                title: 'User Already Exist',
                 showConfirmButton: false,
                 timer: 800
             });
@@ -984,17 +1000,17 @@
         {{ session()->forget('userExist') }}
     @endif
 
-    @if (session()->pull('errorAddRole'))
+    @if (session()->pull('errorSaveUser'))
         <script>
             Swal.fire({
                 position: 'center',
                 icon: 'warning',
-                title: 'Failed to Add Role',
+                title: 'Failed to Add User',
                 showConfirmButton: false,
                 timer: 800
             });
         </script>;
-        {{ session()->forget('errorAddRole') }}
+        {{ session()->forget('errorSaveUser') }}
     @endif
 
     @if (session()->pull('errorType'))
@@ -1062,9 +1078,23 @@
 
 
         function doOnAddCollection() {
-            let addOr = document.getElementById('roledesc');
-            addOr.value = '';
+            let un = document.getElementById('username');
+            un.value = '';
 
+        }
+
+        window.onload = function() {
+            var txtPassword = document.getElementById("txtPassword");
+            var txtConfirmPassword = document.getElementById("txtConfirmPassword");
+            txtPassword.onchange = ConfirmPassword;
+            txtConfirmPassword.onkeyup = ConfirmPassword;
+
+            function ConfirmPassword() {
+                txtConfirmPassword.setCustomValidity("");
+                if (txtPassword.value != txtConfirmPassword.value) {
+                    txtConfirmPassword.setCustomValidity("Passwords do not match.");
+                }
+            }
         }
     </script>
     <!-- Github buttons -->

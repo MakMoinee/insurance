@@ -35,6 +35,7 @@
     <link id="pagestyle" href="css/soft-ui-dashboard.css?v=1.0.6" rel="stylesheet" />
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css"
         integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 </head>
 
 <body class="g-sidenav-show  bg-gray-100">
@@ -43,11 +44,15 @@
         <div class="sidenav-header">
             <i class="fas fa-times p-3 cursor-pointer text-secondary opacity-5 position-absolute end-0 top-0 d-none d-xl-none"
                 aria-hidden="true" id="iconSidenav"></i>
-            <a class="navbar-brand m-0" href="/" target="_blank">
+            <a class="navbar-brand m-0" href="/">
                 <img src="/storage/image/favicon.ico" class="navbar-brand-img h-100" alt="main_logo">
-                <span class="ms-1 font-weight-bold">Admin Dashboard</span>
+                <span class="ms-1 font-weight-bold">Dashboard</span>
+                <br>
+                
+                <p>Login as: <b>{{ $loginAs }}</b></p>
             </a>
         </div>
+        <br>
         <hr class="horizontal dark mt-0">
         <div class="collapse navbar-collapse  w-auto " id="sidenav-collapse-main">
             <ul class="navbar-nav">
@@ -79,56 +84,73 @@
                     </a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link  " href="/members">
-                        <div
-                            class="icon icon-shape icon-sm shadow border-radius-md bg-white text-center me-2 d-flex align-items-center justify-content-center">
-                            <img src="/storage/image/team2.png" alt="" width="15px" height="15px">
-                        </div>
-                        <span class="nav-link-text ms-1">Members</span>
+                    @if ($hasAccessMember)
+                        <a class="nav-link  " href="/members">
+                        @else
+                            <a class="nav-link  " href="#javascript;;" onclick="doDisabled()">
+                    @endif
+
+                    <div
+                        class="icon icon-shape icon-sm shadow border-radius-md bg-white text-center me-2 d-flex align-items-center justify-content-center">
+                        <img src="/storage/image/team2.png" alt="" width="15px" height="15px">
+                    </div>
+                    <span class="nav-link-text ms-1">Members</span>
                     </a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link  " href="/collection">
-                        <div
-                            class="icon icon-shape icon-sm shadow border-radius-md bg-white text-center me-2 d-flex align-items-center justify-content-center">
-                            <svg width="12px" height="12px" viewBox="0 0 43 36" version="1.1"
-                                xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
-                                <title>credit-card</title>
-                                <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
-                                    <g transform="translate(-2169.000000, -745.000000)" fill="#FFFFFF"
-                                        fill-rule="nonzero">
-                                        <g transform="translate(1716.000000, 291.000000)">
-                                            <g transform="translate(453.000000, 454.000000)">
-                                                <path class="color-background opacity-6"
-                                                    d="M43,10.7482083 L43,3.58333333 C43,1.60354167 41.3964583,0 39.4166667,0 L3.58333333,0 C1.60354167,0 0,1.60354167 0,3.58333333 L0,10.7482083 L43,10.7482083 Z">
-                                                </path>
-                                                <path class="color-background"
-                                                    d="M0,16.125 L0,32.25 C0,34.2297917 1.60354167,35.8333333 3.58333333,35.8333333 L39.4166667,35.8333333 C41.3964583,35.8333333 43,34.2297917 43,32.25 L43,16.125 L0,16.125 Z M19.7083333,26.875 L7.16666667,26.875 L7.16666667,23.2916667 L19.7083333,23.2916667 L19.7083333,26.875 Z M35.8333333,26.875 L28.6666667,26.875 L28.6666667,23.2916667 L35.8333333,23.2916667 L35.8333333,26.875 Z">
-                                                </path>
-                                            </g>
+                    @if ($hasAccessCollections)
+                        <a class="nav-link  " href="/collection">
+                        @else
+                            <a class="nav-link  " href="#javascript;;" onclick="doDisabled()">
+                    @endif
+
+                    <div
+                        class="icon icon-shape icon-sm shadow border-radius-md bg-white text-center me-2 d-flex align-items-center justify-content-center">
+                        <svg width="12px" height="12px" viewBox="0 0 43 36" version="1.1"
+                            xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+                            <title>credit-card</title>
+                            <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+                                <g transform="translate(-2169.000000, -745.000000)" fill="#FFFFFF" fill-rule="nonzero">
+                                    <g transform="translate(1716.000000, 291.000000)">
+                                        <g transform="translate(453.000000, 454.000000)">
+                                            <path class="color-background opacity-6"
+                                                d="M43,10.7482083 L43,3.58333333 C43,1.60354167 41.3964583,0 39.4166667,0 L3.58333333,0 C1.60354167,0 0,1.60354167 0,3.58333333 L0,10.7482083 L43,10.7482083 Z">
+                                            </path>
+                                            <path class="color-background"
+                                                d="M0,16.125 L0,32.25 C0,34.2297917 1.60354167,35.8333333 3.58333333,35.8333333 L39.4166667,35.8333333 C41.3964583,35.8333333 43,34.2297917 43,32.25 L43,16.125 L0,16.125 Z M19.7083333,26.875 L7.16666667,26.875 L7.16666667,23.2916667 L19.7083333,23.2916667 L19.7083333,26.875 Z M35.8333333,26.875 L28.6666667,26.875 L28.6666667,23.2916667 L35.8333333,23.2916667 L35.8333333,26.875 Z">
+                                            </path>
                                         </g>
                                     </g>
                                 </g>
-                            </svg>
-                        </div>
-                        <span class="nav-link-text ms-1">Collection</span>
+                            </g>
+                        </svg>
+                    </div>
+                    <span class="nav-link-text ms-1">Collection</span>
                     </a>
                 </li>
+
+
                 <li class="nav-item">
-                    <a class="nav-link " href="/plans">
-                        <div
-                            class="icon icon-shape icon-sm shadow border-radius-md bg-white text-center me-2 d-flex align-items-center justify-content-center">
-                            <svg version="1.1" id="designs" xmlns="http://www.w3.org/2000/svg"
-                                xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
-                                width="32px" height="32px" viewBox="0 0 32 32"
-                                style="enable-background:new 0 0 32 32;" xml:space="preserve">
-                                <style type="text/css">
-                                    .sketchy_een {
-                                        fill: #111918;
-                                    }
-                                </style>
-                                <path class="sketchy_een"
-                                    d="M29.998,27.465c-0.057-0.778-0.039-1.565-0.036-2.345c0.002-0.796,0.002-1.594-0.004-2.39
+
+                    @if ($hasAccessPlans)
+                        <a class="nav-link " href="/plans">
+                        @else
+                            <a class="nav-link " href="#javascript;;;" onclick="doDisabled()">
+                    @endif
+
+                    <div
+                        class="icon icon-shape icon-sm shadow border-radius-md bg-white text-center me-2 d-flex align-items-center justify-content-center">
+                        <svg version="1.1" id="designs" xmlns="http://www.w3.org/2000/svg"
+                            xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" width="32px"
+                            height="32px" viewBox="0 0 32 32" style="enable-background:new 0 0 32 32;"
+                            xml:space="preserve">
+                            <style type="text/css">
+                                .sketchy_een {
+                                    fill: #111918;
+                                }
+                            </style>
+                            <path class="sketchy_een"
+                                d="M29.998,27.465c-0.057-0.778-0.039-1.565-0.036-2.345c0.002-0.796,0.002-1.594-0.004-2.39
 	c-0.012-1.679-0.024-3.358-0.077-5.035c-0.026-0.826-0.053-1.647-0.057-2.473c-0.004-0.861-0.01-1.723-0.028-2.584
 	c-0.016-0.836-0.024-1.673-0.016-2.509c0.006-0.915,0.038-1.827,0.045-2.742c0.002-0.146,0.002-0.292,0.004-0.438
 	c0.002-0.458-0.383-0.84-0.84-0.84c-0.06,0-0.114,0.023-0.171,0.035c-0.013-0.016-0.019-0.036-0.034-0.051
@@ -189,12 +211,12 @@
 	c0.247-0.029,0.481,0.02,0.669,0.207c0.142,0.144,0.223,0.34,0.223,0.543c0,0.433-0.348,0.745-0.765,0.765
 	c-0.294,0.016-0.585,0.012-0.879,0.01c-0.62-0.002-1.241,0.006-1.859,0.014c-0.685,0.01-1.371,0.02-2.054,0.012
 	c-0.371-0.002-0.743-0.004-1.114-0.012c-0.122-0.002-0.243-0.002-0.365-0.002C8.626,13.836,8.47,13.836,8.316,13.83z" />
-                            </svg>
-                        </div>
-                        <span class="nav-link-text ms-1">Plans</span>
+                        </svg>
+                    </div>
+                    <span class="nav-link-text ms-1">Plans</span>
                     </a>
                 </li>
-                @if ($utype == 1)
+                @if ($hasAccess)
                     <li class="nav-item">
                         <a class="nav-link  " href="/user_roles">
                             <div
@@ -372,15 +394,28 @@
                 <li class="nav-item mt-3">
                     <h6 class="ps-4 ms-2 text-uppercase text-xs font-weight-bolder opacity-6">Account pages</h6>
                 </li>
-                <li class="nav-item">
-                    <a class="nav-link  " href="/users">
-                        <div
-                            class="icon icon-shape icon-sm shadow border-radius-md bg-white text-center me-2 d-flex align-items-center justify-content-center">
-                            <img src="/img/users.svg" alt="" height="25px" width="25px">
-                        </div>
-                        <span class="nav-link-text ms-1">Users</span>
-                    </a>
-                </li>
+                @if ($hasAccess)
+                    <li class="nav-item">
+                        <a class="nav-link  " href="/users">
+                            <div
+                                class="icon icon-shape icon-sm shadow border-radius-md bg-white text-center me-2 d-flex align-items-center justify-content-center">
+                                <img src="/img/users.svg" alt="" height="25px" width="25px">
+                            </div>
+                            <span class="nav-link-text ms-1">Users</span>
+                        </a>
+                    </li>
+                @else
+                    <li disabled class="nav-item">
+                        <a disabled class="nav-link  " href="#javascript;;;" onclick="doDisabled()">
+                            <div
+                                class="icon icon-shape icon-sm shadow border-radius-md bg-white text-center me-2 d-flex align-items-center justify-content-center">
+                                <img src="/img/users.svg" alt="" height="25px" width="25px">
+                            </div>
+                            <span disabled class="disable-links nav-link-text ms-1">Users</span>
+                        </a>
+                    </li>
+                @endif
+
                 <li class="nav-item">
                     <a class="nav-link  " href="javascript;;" data-toggle="modal" data-target="#signOutModal">
                         <div
@@ -768,6 +803,16 @@
                 damping: '0.5'
             }
             Scrollbar.init(document.querySelector('#sidenav-scrollbar'), options);
+        }
+
+        function doDisabled() {
+            Swal.fire({
+                position: 'center',
+                icon: 'warning',
+                title: 'You are not authorized to access this',
+                showConfirmButton: false,
+                timer: 800
+            });
         }
     </script>
     <!-- Github buttons -->
