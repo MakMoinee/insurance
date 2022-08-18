@@ -148,9 +148,10 @@ class UsersFormController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update($request)
     {
         //
+        dd($request);
     }
 
     /**
@@ -161,6 +162,18 @@ class UsersFormController extends Controller
      */
     public function destroy($id)
     {
-        //
+        if (session()->exists('users')) {
+            $affectedRow = DB::table('iusers')
+                ->where(['uType' => $id])
+                ->delete();
+            if ($affectedRow > 0) {
+                session()->put('successDeleteUser', true);
+            }else{
+                session()->put('errorDeleteUser', true);
+            }
+            return redirect('/users');
+        } else {
+            return redirect('/');
+        }
     }
 }

@@ -89,7 +89,7 @@
                 <img src="/storage/image/favicon.ico" class="navbar-brand-img h-100" alt="main_logo">
                 <span class="ms-1 font-weight-bold">Dashboard</span>
                 <br>
-                
+
                 <p>Login as: <b>{{ $loginAs }}</b></p>
             </a>
         </div>
@@ -683,34 +683,71 @@
                                                             <button style="text-transform: none;"
                                                                 class="btn badge-sm bg-gradient-success text-xs"
                                                                 data-toggle="modal"
-                                                                data-target="#viewModal{{ $role['uType'] }}">View/Edit</button>
+                                                                data-target="#viewModal{{ $role['id'] }}">View/Edit</button>
                                                             <button style="text-transform: none;margin-left: 10px;"
-                                                                class="btn badge-sm bg-gradient-danger text-xs">
+                                                                class="btn badge-sm bg-gradient-danger text-xs"
+                                                                data-toggle="modal"
+                                                                data-target="#deleteViewModal{{ $role['id'] }}">
                                                                 Delete
                                                             </button>
-                                                            <div class="modal fade" id="viewModal{{ $role['uType'] }}"
-                                                                tabindex="-1" role="dialog"
-                                                                aria-labelledby="viewModalLabel{{ $role['uType'] }}"
+                                                            <div class="modal fade"
+                                                                id="deleteViewModal{{ $role['id'] }}" tabindex="-1"
+                                                                role="dialog"
+                                                                aria-labelledby="deleteViewModalLabel{{ $role['id'] }}"
                                                                 aria-hidden="true">
                                                                 <div class="modal-dialog" role="document">
                                                                     <div class="modal-content">
-                                                                        <div class="modal-header">
-                                                                            <h5 class="modal-title"
-                                                                                id="viewModalLabel{{ $role['uType'] }}">
-                                                                                View/Edit
-                                                                                User</h5>
-                                                                            <button type="button" class="close"
-                                                                                data-dismiss="modal"
-                                                                                aria-label="Close">
-                                                                                <span aria-hidden="true">&times;</span>
-                                                                            </button>
-                                                                        </div>
-                                                                        <div class="modal-body">
-                                                                            <div class="row">
-                                                                                <form autocomplete="off"
-                                                                                    action="/users" method="POST"
-                                                                                    enctype="multipart/form-data">
-                                                                                    @csrf
+                                                                        <form
+                                                                            action="{{ route('delete.user', ['id' => $role['uType']]) }}"
+                                                                            method="POST"
+                                                                            enctype="multipart/form-data">
+                                                                            @method('delete')
+                                                                            @csrf
+                                                                            <div class="modal-body">
+                                                                                <h5 class="modal-title"
+                                                                                    id="deleteViewModalLabel{{ $role['uType'] }}">
+                                                                                    Do you want to
+                                                                                    proceed deleting user ?</h5>
+                                                                                <input type="hidden" name="roleid"
+                                                                                    value="{{ $role['id'] }}">
+                                                                            </div>
+                                                                            <div class="modal-footer">
+                                                                                <button type="submit"
+                                                                                    class="btn btn-primary">Yes,
+                                                                                    Proceed</button>
+                                                                                <button type="button"
+                                                                                    class="btn btn-secondary"
+                                                                                    data-dismiss="modal">Close</button>
+                                                                            </div>
+                                                                        </form>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                            <div class="modal fade" id="viewModal{{ $role['id'] }}"
+                                                                tabindex="-1" role="dialog"
+                                                                aria-labelledby="viewModalLabel{{ $role['id'] }}"
+                                                                aria-hidden="true">
+                                                                <div class="modal-dialog" role="document">
+                                                                    <div class="modal-content">
+                                                                        <form autocomplete="off" action="/user/update"
+                                                                            method="POST"
+                                                                            enctype="multipart/form-data">
+                                                                            @method('put')
+                                                                            @csrf
+                                                                            <div class="modal-header">
+                                                                                <h5 class="modal-title"
+                                                                                    id="viewModalLabel{{ $role['id'] }}">
+                                                                                    View/Edit
+                                                                                    User</h5>
+                                                                                <button type="button" class="close"
+                                                                                    data-dismiss="modal"
+                                                                                    aria-label="Close">
+                                                                                    <span
+                                                                                        aria-hidden="true">&times;</span>
+                                                                                </button>
+                                                                            </div>
+                                                                            <div class="modal-body">
+                                                                                <div class="row">
                                                                                     <div class="form-group">
                                                                                         <label for="username"
                                                                                             class="username">Username:</label>
@@ -782,20 +819,19 @@
                                                                                         </select>
 
                                                                                     </div>
-
-
-
+                                                                                </div>
                                                                             </div>
-                                                                        </div>
-                                                                        <div class="modal-footer">
-                                                                            <button type="button"
-                                                                                class="btn btn-secondary"
-                                                                                data-dismiss="modal">Close</button>
-                                                                            <button type="submit"
-                                                                                class="btn btn-primary">Update
-                                                                                Role</button>
-                                                                        </div>
+                                                                            <div class="modal-footer">
+                                                                                <button type="button"
+                                                                                    class="btn btn-secondary"
+                                                                                    data-dismiss="modal">Close</button>
+                                                                                <button type="submit"
+                                                                                    class="btn btn-primary">Update
+                                                                                    User</button>
+                                                                            </div>
                                                                         </form>
+
+
                                                                     </div>
                                                                 </div>
                                                             </div>
@@ -961,30 +997,30 @@
         {{ session()->forget('successSaveUser') }}
     @endif
 
-    @if (session()->pull('successDelete'))
+    @if (session()->pull('successDeleteUser'))
         <script>
             Swal.fire({
                 position: 'center',
                 icon: 'success',
-                title: 'Successfully Deleted Member',
+                title: 'Successfully Deleted User',
                 showConfirmButton: false,
                 timer: 800
             });
         </script>;
-        {{ session()->forget('successDelete') }}
+        {{ session()->forget('successDeleteUser') }}
     @endif
 
-    @if (session()->pull('errorDelete'))
+    @if (session()->pull('errorDeleteUser'))
         <script>
             Swal.fire({
                 position: 'center',
                 icon: 'warning',
-                title: 'Failed To Delete Member',
+                title: 'Failed To Delete User',
                 showConfirmButton: false,
                 timer: 800
             });
         </script>;
-        {{ session()->forget('errorDelete') }}
+        {{ session()->forget('errorDeleteUser') }}
     @endif
 
     @if (session()->pull('userExist'))
