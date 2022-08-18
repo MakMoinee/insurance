@@ -753,6 +753,9 @@
                                                                                             class="username">Username:</label>
                                                                                         <div class="autocomplete"
                                                                                             style="width:300px;">
+                                                                                            <input type="hidden"
+                                                                                                name="id"
+                                                                                                value="{{ $role['id'] }}">
                                                                                             <input required
                                                                                                 style="width: 350px;"
                                                                                                 id="username"
@@ -1062,30 +1065,30 @@
         {{ session()->forget('errorType') }}
     @endif
 
-    @if (session()->pull('successUpdate'))
+    @if (session()->pull('successUpdateUser'))
         <script>
             Swal.fire({
                 position: 'center',
                 icon: 'success',
-                title: 'Successfully Updated Member',
+                title: 'Successfully Updated User',
                 showConfirmButton: false,
                 timer: 800
             });
         </script>;
-        {{ session()->forget('successUpdate') }}
+        {{ session()->forget('successUpdateUser') }}
     @endif
 
-    @if (session()->pull('errorUpdate'))
+    @if (session()->pull('errorUpdateUser'))
         <script>
             Swal.fire({
                 position: 'center',
                 icon: 'warning',
-                title: 'Failed To Update Member',
+                title: 'Failed To Update User',
                 showConfirmButton: false,
                 timer: 800
             });
         </script>;
-        {{ session()->forget('errorUpdate') }}
+        {{ session()->forget('errorUpdateUser') }}
     @endif
     <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
         integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous">

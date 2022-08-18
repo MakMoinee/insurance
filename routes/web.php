@@ -26,7 +26,7 @@ use SebastianBergmann\CodeCoverage\Report\Html\Dashboard;
 |
 */
 Route::resource('/users', UsersFormController::class);
-Route::put('/user/update', [UserController::class, 'update']);
+Route::put('/user/update', [UserController::class, 'updateme']);
 Route::get('/', [HomeController::class, 'index']);
 Route::get('/gettoken', [HomeController::class, 'getToken']);
 Route::get('/dashboard', [DashboardController::class, 'index']);
