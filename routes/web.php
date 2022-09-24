@@ -25,6 +25,7 @@ use SebastianBergmann\CodeCoverage\Report\Html\Dashboard;
 | contains the "web" middleware group. Now create something great!
 |
 */
+
 Route::resource('/users', UsersFormController::class);
 Route::put('/user/update', [UserController::class, 'updateme']);
 Route::get('/', [HomeController::class, 'index']);
@@ -36,6 +37,7 @@ Route::resource('/plans', PlansController::class);
 Route::resource('/user_roles', RolesController::class);
 Route::resource('/sales_report', SalesReportController::class);
 Route::resource('/report', ReportsController::class);
+Route::get('/report3', [ReportsController::class, 'showMe']);
 
 Route::put('/update/user_roles', [RolesController::class, 'update']);
 Route::delete('/delete/members/{id}', [MembersController::class, 'destroy'])->name('delete.member');

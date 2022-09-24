@@ -18,7 +18,7 @@ class ReportsController extends Controller
         //
         if (session()->exists('users')) {
             // return redirect('/sales_report');
-            return view('reports');
+            return redirect('/sales_report');
         } else {
             return redirect('/');
         }
@@ -56,13 +56,22 @@ class ReportsController extends Controller
                 $totalC = 0;
                 $address = "";
                 $today = date('Y-m-d', strtotime(now()));
+                $tReport = array();
                 foreach ($report as $r) {
                     $totalC += $r['amountpaid'];
                     $address = $r['addressbrgy'] . ' ' . $r['addresscity'] . ' ' . $r['addressprovince'];
+                    if (sizeof($tReport) > 0 && $tReport[$r['memberID']]) {
+                        $mData = $tReport[$r['memberID']];
+                        $tmpTotal = $mData['amountpaid'] + $r['amountpaid'];
+                        $r['amountpaid'] = $tmpTotal;
+                        $tReport[$r['memberID']] = $r;
+                    } else {
+                        $tReport[$r['memberID']] = $r;
+                    }
                 }
+
                 if ($count > 0) {
-                    // dd($request);
-                    return view('reports2', ['address' => $address, 'total' => $totalC, 'today' => $today]);
+                    return view('reports3', ['address' => $address, 'total' => $totalC, 'today' => $today, 'report' => $tReport]);
                 } else {
                     session()->put('errorEmptyBrgy', true);
                 }
@@ -100,13 +109,21 @@ class ReportsController extends Controller
                 $totalC = 0;
                 $address = "";
                 $today = date('Y-m-d', strtotime(now()));
+                $tReport = array();
                 foreach ($report as $r) {
                     $totalC += $r['amountpaid'];
                     $address = $r['addresscity'] . ' ' . $r['addressprovince'];
+                    if (sizeof($tReport) > 0 && $tReport[$r['memberID']]) {
+                        $mData = $tReport[$r['memberID']];
+                        $tmpTotal = $mData['amountpaid'] + $r['amountpaid'];
+                        $r['amountpaid'] = $tmpTotal;
+                        $tReport[$r['memberID']] = $r;
+                    } else {
+                        $tReport[$r['memberID']] = $r;
+                    }
                 }
                 if ($count > 0) {
-                    // dd($request);
-                    return view('reports2', ['address' => $address, 'total' => $totalC, 'today' => $today]);
+                    return view('reports3', ['address' => $address, 'total' => $totalC, 'today' => $today, 'report' => $tReport]);
                 } else {
                     session()->put('errorEmptyCity', true);
                 }
@@ -162,5 +179,14 @@ class ReportsController extends Controller
     public function destroy($id)
     {
         //
+    }
+
+    public function showMe()
+    {
+        if (session()->exists('users')) {
+            return view('reports3');
+        } else {
+            return redirect('/');
+        }
     }
 }

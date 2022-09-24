@@ -796,7 +796,7 @@
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-dismiss="modal"
-                        id="btnClose">Close</button>
+                        id="btnCloseD">Close</button>
                     <button type="submit" class="btn btn-primary" onclick="closeMe()">Open Report</button>
                 </div>
                 </form>
@@ -1069,6 +1069,8 @@
         function closeMe() {
             let close = document.getElementById('btnClose');
             close.click();
+            let closeD = document.getElementById('btnCloseD');
+            closeD.click();
 
             let closeP = document.getElementById("btnCloseP");
             closeP.click();
