@@ -50,7 +50,8 @@ class ReportsController extends Controller
                         'addressprovince' => $request['province'],
                         'addresscity' => $request['city'],
                         'addressbrgy' => $request['brgy']
-                    ])->get();
+                    ])
+                    ->get();
                 $report = json_decode($queryResult, true);
                 $count = count($report);
                 $totalC = 0;
@@ -58,6 +59,11 @@ class ReportsController extends Controller
                 $today = date('Y-m-d', strtotime(now()));
                 $tReport = array();
                 foreach ($report as $r) {
+                    $det =  date('m', strtotime($r['ordate']));
+                    $yer = date('Y', strtotime($r['ordate']));
+                    if ($det != $request['cmonth'] || $yer != $request['cyear']) {
+                        continue;
+                    }
                     $totalC += $r['amountpaid'];
                     $address = $r['addressbrgy'] . ' ' . $r['addresscity'] . ' ' . $r['addressprovince'];
                     if (sizeof($tReport) > 0 && $tReport[$r['memberID']]) {
@@ -70,7 +76,7 @@ class ReportsController extends Controller
                     }
                 }
 
-                if ($count > 0) {
+                if ($count > 0 && sizeof($tReport) > 0) {
                     return view('reports3', ['address' => $address, 'total' => $totalC, 'today' => $today, 'report' => $tReport]);
                 } else {
                     session()->put('errorEmptyBrgy', true);
@@ -111,8 +117,14 @@ class ReportsController extends Controller
                 $today = date('Y-m-d', strtotime(now()));
                 $tReport = array();
                 foreach ($report as $r) {
+                    $det =  date('m', strtotime($r['ordate']));
+                    $yer = date('Y', strtotime($r['ordate']));
+                    if ($det != $request['cmonth'] || $yer != $request['cyear']) {
+                        continue;
+                    }
                     $totalC += $r['amountpaid'];
                     $address = $r['addresscity'] . ' ' . $r['addressprovince'];
+                    
                     if (sizeof($tReport) > 0 && $tReport[$r['memberID']]) {
                         $mData = $tReport[$r['memberID']];
                         $tmpTotal = $mData['amountpaid'] + $r['amountpaid'];
@@ -122,7 +134,7 @@ class ReportsController extends Controller
                         $tReport[$r['memberID']] = $r;
                     }
                 }
-                if ($count > 0) {
+                if ($count > 0 && sizeof($tReport) > 0) {
                     return view('reports3', ['address' => $address, 'total' => $totalC, 'today' => $today, 'report' => $tReport]);
                 } else {
                     session()->put('errorEmptyCity', true);
