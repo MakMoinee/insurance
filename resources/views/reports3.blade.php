@@ -36,7 +36,9 @@
 <div class="container">
     <div class="row">
         <div class="col-md-12 text-right">
-            <b>Print Date: </b> {{ date('m/d/Y', strtotime("now")) }}
+            <b>Month: </b> {{ $month }}, 
+            <b>Year: </b> {{ $year}}, 
+            <b>Print Date: </b> {{ date('m/d/Y', strtotime('now')) }}
         </div>
         <table class="table table-striped table-bordered">
             <thead>

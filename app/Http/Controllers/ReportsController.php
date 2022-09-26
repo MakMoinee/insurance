@@ -44,6 +44,7 @@ class ReportsController extends Controller
     {
         //
         if (session()->exists('users')) {
+            // dd($request);
             if ($request['brgy'] != "" || $request['brgy'] != null) {
                 $queryResult = DB::table('vwcollectionreport')
                     ->where([
@@ -54,6 +55,7 @@ class ReportsController extends Controller
                     ->get();
                 $report = json_decode($queryResult, true);
                 $count = count($report);
+                $cMonth = $request['cmonth'];
                 $totalC = 0;
                 $address = "";
                 $today = date('Y-m-d', strtotime(now()));
@@ -89,7 +91,7 @@ class ReportsController extends Controller
                 }
 
                 if ($count > 0 && sizeof($tReport) > 0) {
-                    return view('reports3', ['address' => $address, 'total' => $totalC, 'today' => $today, 'report' => $tReport]);
+                    return view('reports3', ['address' => $address, 'total' => $totalC, 'today' => $today, 'report' => $tReport, 'month' => $cMonth, 'year' => $request['cyear']]);
                 } else {
                     session()->put('errorEmptyBrgy', true);
                 }
@@ -159,7 +161,7 @@ class ReportsController extends Controller
                     }
                 }
                 if ($count > 0 && sizeof($tReport) > 0) {
-                    return view('reports3', ['address' => $address, 'total' => $totalC, 'today' => $today, 'report' => $tReport]);
+                    return view('reports3', ['address' => $address, 'total' => $totalC, 'today' => $today, 'report' => $tReport, 'month' => $request['cmonth'], 'year' => $request['cyear']]);
                 } else {
                     session()->put('errorEmptyCity', true);
                 }
