@@ -3,15 +3,15 @@
 
  Source Server         : Local
  Source Server Type    : MySQL
- Source Server Version : 80029
+ Source Server Version : 80030 (8.0.30)
  Source Host           : localhost:3306
  Source Schema         : insurancedb
 
  Target Server Type    : MySQL
- Target Server Version : 80029
+ Target Server Version : 80030 (8.0.30)
  File Encoding         : 65001
 
- Date: 16/08/2022 22:22:52
+ Date: 26/09/2022 11:35:59
 */
 
 SET NAMES utf8mb4;
@@ -31,7 +31,7 @@ CREATE TABLE `collections`  (
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
   PRIMARY KEY (`collectionID`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 3 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 4 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Records of collections
@@ -54,7 +54,7 @@ CREATE TABLE `failed_jobs`  (
   `failed_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`) USING BTREE,
   UNIQUE INDEX `failed_jobs_uuid_unique`(`uuid` ASC) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Records of failed_jobs
@@ -72,7 +72,7 @@ CREATE TABLE `iusers`  (
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 2 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 3 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Records of iusers
@@ -117,7 +117,7 @@ CREATE TABLE `members`  (
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
   PRIMARY KEY (`memberID`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 3 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 3 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Records of members
@@ -134,7 +134,7 @@ CREATE TABLE `migrations`  (
   `migration` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
   `batch` int NOT NULL,
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 11 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 11 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Records of migrations
@@ -159,7 +159,7 @@ CREATE TABLE `password_resets`  (
   `token` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   INDEX `password_resets_email_index`(`email` ASC) USING BTREE
-) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Records of password_resets
@@ -182,7 +182,7 @@ CREATE TABLE `personal_access_tokens`  (
   PRIMARY KEY (`id`) USING BTREE,
   UNIQUE INDEX `personal_access_tokens_token_unique`(`token` ASC) USING BTREE,
   INDEX `personal_access_tokens_tokenable_type_tokenable_id_index`(`tokenable_type` ASC, `tokenable_id` ASC) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Records of personal_access_tokens
@@ -231,7 +231,7 @@ CREATE TABLE `staffs`  (
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
   PRIMARY KEY (`staffID`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Records of staffs
@@ -250,7 +250,7 @@ CREATE TABLE `user_types`  (
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
   PRIMARY KEY (`uType`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 4 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Records of user_types
@@ -273,7 +273,7 @@ CREATE TABLE `users`  (
   `updated_at` timestamp NULL DEFAULT NULL,
   PRIMARY KEY (`id`) USING BTREE,
   UNIQUE INDEX `users_email_unique`(`email` ASC) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Records of users
@@ -295,13 +295,19 @@ CREATE ALGORITHM = UNDEFINED SQL SECURITY DEFINER VIEW `vwaddress` AS select `me
 -- View structure for vwcollectionreport
 -- ----------------------------
 DROP VIEW IF EXISTS `vwcollectionreport`;
-CREATE ALGORITHM = UNDEFINED SQL SECURITY DEFINER VIEW `vwcollectionreport` AS select `collections`.`collectionID` AS `collectionID`,`members`.`memberID` AS `memberID`,`members`.`firstName` AS `firstName`,`members`.`middleName` AS `middleName`,`members`.`lastName` AS `lastName`,`members`.`addresspurok` AS `addresspurok`,`members`.`addressbrgy` AS `addressbrgy`,`members`.`addresscity` AS `addresscity`,`members`.`addressprovince` AS `addressprovince`,`collections`.`or` AS `or`,`collections`.`ordate` AS `ordate`,`collections`.`amountpaid` AS `amountpaid` from (`collections` join `members` on((`collections`.`memberID` = `members`.`memberID`)));
+CREATE ALGORITHM = UNDEFINED SQL SECURITY DEFINER VIEW `vwcollectionreport` AS select `collections`.`collectionID` AS `collectionID`,`members`.`memberID` AS `memberID`,`members`.`firstName` AS `firstName`,`members`.`middleName` AS `middleName`,`members`.`lastName` AS `lastName`,`members`.`addresspurok` AS `addresspurok`,`members`.`addressbrgy` AS `addressbrgy`,`members`.`addresscity` AS `addresscity`,`members`.`addressprovince` AS `addressprovince`,`collections`.`or` AS `or`,`collections`.`ordate` AS `ordate`,`collections`.`amountpaid` AS `amountpaid`,`members`.`gender` AS `gender`,`members`.`birthDate` AS `birthDate`,`members`.`contactNum` AS `contactNum`,`members`.`mop` AS `mop` from (`collections` join `members` on((`collections`.`memberID` = `members`.`memberID`)));
 
 -- ----------------------------
 -- View structure for vwcollections
 -- ----------------------------
 DROP VIEW IF EXISTS `vwcollections`;
 CREATE ALGORITHM = UNDEFINED SQL SECURITY DEFINER VIEW `vwcollections` AS select `collections`.`collectionID` AS `collectionID`,concat(`members`.`firstName`,' ',`members`.`middleName`,' ',`members`.`lastName`) AS `FullName`,`collections`.`or` AS `or`,`collections`.`ordate` AS `ordate`,`collections`.`amountpaid` AS `amountpaid`,`members`.`memberID` AS `memberID`,`collections`.`created_at` AS `created_at`,`collections`.`collector` AS `collector` from (`collections` join `members` on((`collections`.`memberID` = `members`.`memberID`)));
+
+-- ----------------------------
+-- View structure for vwdistinctcollection
+-- ----------------------------
+DROP VIEW IF EXISTS `vwdistinctcollection`;
+CREATE ALGORITHM = UNDEFINED SQL SECURITY DEFINER VIEW `vwdistinctcollection` AS select `vwcollectionreport`.`collectionID` AS `collectionID`,`vwcollectionreport`.`memberID` AS `memberID`,`vwcollectionreport`.`firstName` AS `firstName`,`vwcollectionreport`.`middleName` AS `middleName`,`vwcollectionreport`.`lastName` AS `lastName`,`vwcollectionreport`.`addresspurok` AS `addresspurok`,`vwcollectionreport`.`addressbrgy` AS `addressbrgy`,`vwcollectionreport`.`addresscity` AS `addresscity`,`vwcollectionreport`.`addressprovince` AS `addressprovince`,sum(`vwcollectionreport`.`amountpaid`) AS `amountpaid`,`vwcollectionreport`.`birthDate` AS `birthDate`,`vwcollectionreport`.`gender` AS `gender`,`vwcollectionreport`.`contactNum` AS `contactNum` from `vwcollectionreport` group by `vwcollectionreport`.`memberID`;
 
 -- ----------------------------
 -- View structure for vwfullnames
