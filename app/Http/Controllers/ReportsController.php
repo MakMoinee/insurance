@@ -66,11 +66,23 @@ class ReportsController extends Controller
                     }
                     $totalC += $r['amountpaid'];
                     $address = $r['addressbrgy'] . ' ' . $r['addresscity'] . ' ' . $r['addressprovince'];
-                    if (sizeof($tReport) > 0 && $tReport[$r['memberID']]) {
-                        $mData = $tReport[$r['memberID']];
-                        $tmpTotal = $mData['amountpaid'] + $r['amountpaid'];
-                        $r['amountpaid'] = $tmpTotal;
-                        $tReport[$r['memberID']] = $r;
+                    $tCount = sizeof($tReport);
+                    if ($tCount > 0) {
+                        $exist = false;
+                        foreach ($tReport as $t) {
+                            if ($r['memberID'] == $t['memberID']) {
+                                $exist = true;
+                                break;
+                            }
+                        }
+                        if ($exist) {
+                            $mData = $tReport[$r['memberID']];
+                            $tmpTotal = $mData['amountpaid'] + $r['amountpaid'];
+                            $r['amountpaid'] = $tmpTotal;
+                            $tReport[$r['memberID']] = $r;
+                        } else {
+                            $tReport[$r['memberID']] = $r;
+                        }
                     } else {
                         $tReport[$r['memberID']] = $r;
                     }
@@ -124,12 +136,24 @@ class ReportsController extends Controller
                     }
                     $totalC += $r['amountpaid'];
                     $address = $r['addresscity'] . ' ' . $r['addressprovince'];
-                    
-                    if (sizeof($tReport) > 0 && $tReport[$r['memberID']]) {
-                        $mData = $tReport[$r['memberID']];
-                        $tmpTotal = $mData['amountpaid'] + $r['amountpaid'];
-                        $r['amountpaid'] = $tmpTotal;
-                        $tReport[$r['memberID']] = $r;
+
+                    $tCount = sizeof($tReport);
+                    if ($tCount > 0) {
+                        $exist = false;
+                        foreach ($tReport as $t) {
+                            if ($r['memberID'] == $t['memberID']) {
+                                $exist = true;
+                                break;
+                            }
+                        }
+                        if ($exist) {
+                            $mData = $tReport[$r['memberID']];
+                            $tmpTotal = $mData['amountpaid'] + $r['amountpaid'];
+                            $r['amountpaid'] = $tmpTotal;
+                            $tReport[$r['memberID']] = $r;
+                        } else {
+                            $tReport[$r['memberID']] = $r;
+                        }
                     } else {
                         $tReport[$r['memberID']] = $r;
                     }
