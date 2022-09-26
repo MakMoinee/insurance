@@ -36,7 +36,7 @@
 <div class="container">
     <div class="row">
         <div class="col-md-12 text-right">
-            <b>Print Date: </b> {{ date('m/d/Y', strtotime("+1 day")) }}
+            <b>Print Date: </b> {{ date('m/d/Y', strtotime("now")) }}
         </div>
         <table class="table table-striped table-bordered">
             <thead>
