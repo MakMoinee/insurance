@@ -28,6 +28,11 @@ class MembersController extends Controller
             $userType = session('users')[0]->uType;
             $queryResult = DB::table('vwactiveplan')->get();
             $plans = json_decode($queryResult, true);
+            $startAmount = 0;
+            foreach ($plans as $p) {
+                $startAmount = $p['amount'];
+                break;
+            }
             $countPlan = count($plans);
             if ($countPlan == 0) {
                 session()->put('errorPlanEmpty', true);
@@ -70,7 +75,8 @@ class MembersController extends Controller
                 'hasAccessMember' => $hasAccessMember,
                 'hasAccessPlans' => $hasAccessPlans,
                 'hasAccessCollections' => $hasAccessCollection,
-                'loginAs' => $userRoleDesc
+                'loginAs' => $userRoleDesc,
+                'startAmount' => $startAmount
             ]);
         } else {
             return redirect('/');

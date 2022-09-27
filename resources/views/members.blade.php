@@ -52,7 +52,7 @@
                 <img src="/storage/image/favicon.ico" class="navbar-brand-img h-100" alt="main_logo">
                 <span class="ms-1 font-weight-bold">Dashboard</span>
                 <br>
-                
+
                 <p>Login as: <b>{{ $loginAs }}</b></p>
             </a>
         </div>
@@ -1404,16 +1404,16 @@
                                     title="Date of Birth">
                             </div>
                             <div class="form-group">
-                                <input required type="text" style="width: 460px;" name="bplace"
-                                    id="bplace" placeholder="Place of Birth">
+                                <input required type="text" style="width: 460px;" name="bplace" id="bplace"
+                                    placeholder="Place of Birth">
                             </div>
                             <div class="form-group">
                                 <label for="height" class="for">Height:</label>
-                                <input required type="number" style="width: 150px;margin-right: 5px;"
-                                    name="height" id="height" placeholder="Height (cm)">
+                                <input required type="number" style="width: 150px;margin-right: 5px;" name="height"
+                                    id="height" placeholder="Height (cm)">
                                 <label for="weight" class="for">Weight:</label>
-                                <input required type="number" style="width: 150px;" name="weight"
-                                    id="weight" placeholder="Weight (kg)">
+                                <input required type="number" style="width: 150px;" name="weight" id="weight"
+                                    placeholder="Weight (kg)">
                             </div>
                             <div class="form-group">
                                 <label for="mop" class="for">Mode of Payment:</label>
@@ -1625,6 +1625,7 @@
 
     <script>
         var win = navigator.platform.indexOf('Win') > -1;
+
         if (win && document.querySelector('#sidenav-scrollbar')) {
             var options = {
                 damping: '0.5'
@@ -1635,6 +1636,8 @@
         function doOnAddingMember() {
             let amount = document.getElementById('newMemberAmount');
             amount.removeAttribute('value');
+            var startAmount = {!! $startAmount !!};
+            amount.setAttribute('value', startAmount);
             let newMemberPlan = document.getElementById('newMemberPlan');
             newMemberPlan.selectedIndex = 0;
             let fn = document.getElementById('newfn');
