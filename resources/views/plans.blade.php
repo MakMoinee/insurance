@@ -600,7 +600,7 @@
                             @endif
 
                             <div class="input-group">
-                                <input type="text" class="form-control" placeholder="Type here...">
+                                
                             </div>
                             <br>
 
