@@ -606,6 +606,11 @@
                                                 onclick="clearFields()">Collection
                                                 Report By <b style="color:yellow"> Barangay </b></button></a>
                                         <a href="javascript;" data-toggle="modal"
+                                            data-target="#collectionByBrgyWholeYearModal">
+                                            <button style="text-transform: none" class="btn btn-primary"
+                                                onclick="clearFields()">Collection
+                                                Report By <b style="color:yellow"> Barangay Whole Year </b></button></a>
+                                        <a href="javascript;" data-toggle="modal"
                                             data-target="#collectionByCityModal">
                                             <button style="text-transform: none" class="btn btn-primary"
                                                 onclick="clearFields()">Collection
@@ -623,9 +628,60 @@
                 <div class="col-lg-5">
                 </div>
             </div>
-            
+
         </div>
     </main>
+
+    <div class="modal fade" id="collectionByBrgyWholeYearModal" tabindex="-1" role="dialog"
+        aria-labelledby="collectionByBrgyWholeYearModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="collectionByBrgyWholeYearModalLabel">Collection Report By Barangay By Whole Year
+                    </h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div class="row">
+                        <form autocomplete="off" action="/report" method="POST" enctype="multipart/form-data"
+                            target="_blank">
+                            @csrf
+                            <div class="form-group">
+                                <label for="province" for="province">Province:</label>
+                                <div class="autocomplete" style="width:300px;">
+                                    <input style="width: 380px;" id="myProvinceWhole" type="text" name="province"
+                                        placeholder="Province">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="city" for="city">City:</label>
+                                <div class="autocomplete" style="width:300px;">
+                                    <input style="width: 408px;" id="myCityWhole" type="text" name="city"
+                                        placeholder="City">
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="brgy" for="brgy">Barangay:</label>
+                                <div class="autocomplete" style="width:300px;">
+                                    <input style="width: 380px;" id="myBrgyWhole" type="text" name="brgy"
+                                        placeholder="Barangay">
+                                </div>
+                            </div>
+
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal"
+                        id="btnCloseWhole">Close</button>
+                    <button type="submit" class="btn btn-primary" onclick="closeMe()" name="btnWhole" value="true">Open Report</button>
+                </div>
+                </form>
+            </div>
+        </div>
+    </div>
 
     <div class="modal fade" id="collectionByBrgyModal" tabindex="-1" role="dialog"
         aria-labelledby="collectionByBrgyModalLabel" aria-hidden="true">
@@ -844,7 +900,7 @@
         </script>;
         {{ session()->forget('errorBrgyField') }}
     @endif
-    
+
     @if (session()->pull('errorEmptyCity'))
         <script>
             Swal.fire({
@@ -1019,13 +1075,16 @@
         var provinces = {!! json_encode($provinces, JSON_HEX_TAG) !!};
         autocomplete(document.getElementById("myProvince"), provinces);
         autocomplete(document.getElementById("myProvince2"), provinces);
+        autocomplete(document.getElementById("myProvinceWhole"), provinces);
 
         var cities = {!! json_encode($cities, JSON_HEX_TAG) !!};
         autocomplete(document.getElementById("myCity"), cities);
         autocomplete(document.getElementById("myCity2"), cities);
+        autocomplete(document.getElementById("myCityWhole"), cities);
 
         var brgy = {!! json_encode($brgy, JSON_HEX_TAG) !!};
         autocomplete(document.getElementById("myBrgy"), brgy);
+        autocomplete(document.getElementById("myBrgyWhole"), brgy);
 
 
 
@@ -1037,6 +1096,9 @@
 
             let closeP = document.getElementById("btnCloseP");
             closeP.click();
+
+            let closeW = document.getElementById("btnCloseWhole");
+            closeW.click();
         }
 
         function clearFields() {
@@ -1046,14 +1108,23 @@
             let p2 = document.getElementById("myProvince2");
             p2.value = '';
 
+            let p3 = document.getElementById("myProvinceWhole");
+            p3.value = '';
+
             let c = document.getElementById("myCity");
             c.value = '';
 
             let c2 = document.getElementById("myCity2");
             c2.value = '';
 
+            let c3 = document.getElementById("myCityWhole");
+            c3.value = '';
+
             let b = document.getElementById("myBrgy");
             b.value = '';
+
+            let b2 = document.getElementById("myBrgyWhole");
+            b2.value = '';
 
             let mname = document.getElementById("myName");
             mname.value = '';
