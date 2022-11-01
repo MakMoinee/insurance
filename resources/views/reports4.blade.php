@@ -105,7 +105,8 @@
                     @foreach ($report as $r)
                         <tr>
                             <td> {{ $r['firstName'] . ' ' . $r['middleName'] . ' ' . $r['lastName'] }}</td>
-                            <td> {{ $r['addressbrgy'] . ' ' . $r['addresscity'] . ' ' . $r['addressprovince'] }}</td>
+                            <td> {{ $r['addresspurok'] . ' ' . $r['addressbrgy'] . ' ' . $r['addresscity'] . ' ' . $r['addressprovince'] }}
+                            </td>
                             <td>
                                 {{ $r['birthDate'] }}
                             </td>
@@ -331,7 +332,7 @@
                 <div class="row">
                     <a id="dlink" style="display:none;"></a>
                     {{-- onclick="exportTableToExcel('tbl','report_{{ strtotime(now()) }}')">Export to --}}
-                    {{-- <button class="btn btn-primary" type="submit"
+            {{-- <button class="btn btn-primary" type="submit"
                         onclick="tableToExcel('tbl','report_{{ strtotime(now()) }}.xls')">Export to
                         excel sheet</button>
                 </div> --}}

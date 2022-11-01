@@ -11,7 +11,7 @@
  Target Server Version : 80030 (8.0.30)
  File Encoding         : 65001
 
- Date: 26/09/2022 11:35:59
+ Date: 02/11/2022 02:32:14
 */
 
 SET NAMES utf8mb4;
@@ -31,14 +31,15 @@ CREATE TABLE `collections`  (
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
   PRIMARY KEY (`collectionID`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 4 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci ROW_FORMAT = DYNAMIC;
+) ENGINE = InnoDB AUTO_INCREMENT = 9 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Records of collections
 -- ----------------------------
-INSERT INTO `collections` VALUES (1, 11000, '2022-08-13', 1500.00, 1, 'Simon', '2022-08-13 09:39:37', '2022-08-13 09:39:37');
-INSERT INTO `collections` VALUES (2, 1232323, '2022-07-08', 1000.00, 1, 'Simon', '2022-08-13 16:10:59', '2022-08-13 16:10:59');
-INSERT INTO `collections` VALUES (3, 1032255, '2022-08-16', 10000.00, 2, 'Simon', '2022-08-16 09:16:23', '2022-08-16 09:16:23');
+INSERT INTO `collections` VALUES (4, 100123, '2022-09-26', 1000.00, 1, 'Simon', '2022-09-26 03:45:01', '2022-09-26 03:45:01');
+INSERT INTO `collections` VALUES (6, 100002, '2022-09-26', 2000.00, 3, 'Simon', '2022-09-26 04:04:25', '2022-09-26 04:04:25');
+INSERT INTO `collections` VALUES (7, 0, '2022-10-10', 1000.00, 1, 'Simon', '2022-10-10 00:46:49', '2022-10-10 00:46:49');
+INSERT INTO `collections` VALUES (8, 0, '2021-10-11', 5000.00, 1, 'Simon', '2022-10-10 00:58:07', '2022-10-10 00:58:07');
 
 -- ----------------------------
 -- Table structure for failed_jobs
@@ -54,7 +55,7 @@ CREATE TABLE `failed_jobs`  (
   `failed_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`) USING BTREE,
   UNIQUE INDEX `failed_jobs_uuid_unique`(`uuid` ASC) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci ROW_FORMAT = DYNAMIC;
+) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Records of failed_jobs
@@ -72,13 +73,14 @@ CREATE TABLE `iusers`  (
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 3 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci ROW_FORMAT = DYNAMIC;
+) ENGINE = InnoDB AUTO_INCREMENT = 4 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Records of iusers
 -- ----------------------------
-INSERT INTO `iusers` VALUES (1, 'mak', 'mak', 1, '2022-08-13 17:34:49', '2022-08-13 17:34:52');
+INSERT INTO `iusers` VALUES (1, 'admin', 'admin123', 1, '2022-08-13 17:34:49', '2022-08-13 17:34:52');
 INSERT INTO `iusers` VALUES (2, 'ken', 'ken', 3, '2022-08-16 12:24:51', '2022-08-16 12:24:51');
+INSERT INTO `iusers` VALUES (3, 'encode', 'encoder123', 4, '2022-09-27 06:22:54', '2022-09-27 06:22:54');
 
 -- ----------------------------
 -- Table structure for members
@@ -117,13 +119,13 @@ CREATE TABLE `members`  (
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
   PRIMARY KEY (`memberID`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 3 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci ROW_FORMAT = DYNAMIC;
+) ENGINE = InnoDB AUTO_INCREMENT = 4 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Records of members
 -- ----------------------------
 INSERT INTO `members` VALUES (1, 'Judelyn', 'Pueblo', 'Salvador', 'Purok 8', 'Sinayawan', 'Valencia City', 'Bukidnon', '09090464345', 'Married', 'Female', 'BPH Malaybalay', 'Iglesia Ni Cristo', '171', '45', 2, '1998-06-06', 2, 'Xander Ford', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 40000.00, '2022-08-13 09:39:04', '2022-08-13 09:39:04');
-INSERT INTO `members` VALUES (2, 'Sheenie', 'Ucab', 'Borbon', 'Door 10 Rahmann Extension', 'Kamputhaw', 'Cebu City', 'Cebu', '09090464399', 'Married', 'Female', 'Purok 10 Poblacion Valencia City Bukidnon', 'Roman Catholic', '171', '44', 2, '1998-12-22', 3, 'Kennen C. Borbon', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 50000.00, '2022-08-16 09:02:01', '2022-08-16 09:02:01');
+INSERT INTO `members` VALUES (3, 'Xander', 'X', 'Ford', 'Purok 8', 'Sinayawan', 'Valencia City', 'Bukidnon', '09090464399', 'Single', 'Male', 'Maramag Bukidnon', 'Roman Catholic', '171', '75', 1, '1998-10-13', 2, 'Xander Ford', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 40000.00, '2022-09-26 04:04:04', '2022-09-26 04:04:04');
 
 -- ----------------------------
 -- Table structure for migrations
@@ -182,7 +184,7 @@ CREATE TABLE `personal_access_tokens`  (
   PRIMARY KEY (`id`) USING BTREE,
   UNIQUE INDEX `personal_access_tokens_token_unique`(`token` ASC) USING BTREE,
   INDEX `personal_access_tokens_tokenable_type_tokenable_id_index`(`tokenable_type` ASC, `tokenable_id` ASC) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci ROW_FORMAT = DYNAMIC;
+) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Records of personal_access_tokens
@@ -231,7 +233,7 @@ CREATE TABLE `staffs`  (
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
   PRIMARY KEY (`staffID`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci ROW_FORMAT = DYNAMIC;
+) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Records of staffs
@@ -250,13 +252,14 @@ CREATE TABLE `user_types`  (
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
   PRIMARY KEY (`uType`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 4 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci ROW_FORMAT = DYNAMIC;
+) ENGINE = InnoDB AUTO_INCREMENT = 5 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Records of user_types
 -- ----------------------------
 INSERT INTO `user_types` VALUES (1, 'Administrator', 1, 1, 1, '2022-08-16 18:26:27', '2022-08-16 18:26:33');
 INSERT INTO `user_types` VALUES (3, 'Collector', 0, 1, 0, '2022-08-16 10:46:16', '2022-08-16 10:46:16');
+INSERT INTO `user_types` VALUES (4, 'Encoder', 1, 1, 0, '2022-09-27 06:22:35', '2022-09-27 06:22:35');
 
 -- ----------------------------
 -- Table structure for users
@@ -273,7 +276,7 @@ CREATE TABLE `users`  (
   `updated_at` timestamp NULL DEFAULT NULL,
   PRIMARY KEY (`id`) USING BTREE,
   UNIQUE INDEX `users_email_unique`(`email` ASC) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci ROW_FORMAT = DYNAMIC;
+) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Records of users
