@@ -22,13 +22,13 @@ class SalesReportController extends Controller
             $year =  date('Y', strtotime(now()));
             $mon =  date('m', strtotime(now()));
             $addresses = json_decode($queryResult, true);
-            $provinces = [];
+            $provinces = array();
             $cities = [];
             $brgy = [];
             foreach ($addresses as $addr) {
-                array_push($provinces, $addr['addressprovince']);
-                array_push($cities, $addr['addresscity']);
-                array_push($brgy, $addr['addressbrgy']);
+                $provinces[$addr['addressprovince']] = $addr['addressprovince'];
+                $provinces[$addr['addresscity']] = $addr['addresscity'];
+                $provinces[$addr['addressbrgy']] = $addr['addressbrgy'];
             }
             $queryResult = DB::table('vwfullnames')->get();
             $ccollect = json_decode($queryResult, true);
