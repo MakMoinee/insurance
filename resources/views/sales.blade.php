@@ -1073,16 +1073,19 @@
         autocomplete(document.getElementById("myName"), mname);
 
         var provinces = {!! json_encode($provinces, JSON_HEX_TAG) !!};
+        provinces = [...new Set(provinces)];
         autocomplete(document.getElementById("myProvince"), provinces);
         autocomplete(document.getElementById("myProvince2"), provinces);
         autocomplete(document.getElementById("myProvinceWhole"), provinces);
 
         var cities = {!! json_encode($cities, JSON_HEX_TAG) !!};
+        cities = [...new Set(cities)];
         autocomplete(document.getElementById("myCity"), cities);
         autocomplete(document.getElementById("myCity2"), cities);
         autocomplete(document.getElementById("myCityWhole"), cities);
 
         var brgy = {!! json_encode($brgy, JSON_HEX_TAG) !!};
+        brgy = [...new Set(brgy)];
         autocomplete(document.getElementById("myBrgy"), brgy);
         autocomplete(document.getElementById("myBrgyWhole"), brgy);
 
