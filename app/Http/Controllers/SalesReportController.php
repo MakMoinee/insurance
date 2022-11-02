@@ -26,9 +26,23 @@ class SalesReportController extends Controller
             $cities = [];
             $brgy = [];
             foreach ($addresses as $addr) {
-                $provinces[$addr['addressprovince']] = $addr['addressprovince'];
-                $provinces[$addr['addresscity']] = $addr['addresscity'];
-                $provinces[$addr['addressbrgy']] = $addr['addressbrgy'];
+
+                if (array_key_exists($addr['addressprovince'], $provinces)) {
+                    continue;
+                } else {
+
+                    array_push($provinces, $addr['addressprovince']);
+                }
+                if (array_key_exists($addr['addresscity'], $cities)) {
+                    continue;
+                } else {
+                    array_push($cities, $addr['addresscity']);
+                }
+                if (array_key_exists($addr['addressbrgy'], $brgy)) {
+                    continue;
+                } else {
+                    array_push($brgy, $addr['addressbrgy']);
+                }
             }
             $queryResult = DB::table('vwfullnames')->get();
             $ccollect = json_decode($queryResult, true);
