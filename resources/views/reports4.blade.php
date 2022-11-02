@@ -114,7 +114,12 @@
                                 {{ $r['contactNum'] }}
                             </td>
                             <td>
-                                {{ $r['gender'] }}
+
+                                @if ($r['gender'] == 'Female')
+                                    F
+                                @else
+                                    M
+                                @endif
                             </td>
                             <td>
                                 @if ($r['mop'] == 1)
