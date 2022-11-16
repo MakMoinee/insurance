@@ -137,6 +137,7 @@ class MembersController extends Controller
                 $newMembers->dep8 = $request['dep8'];
                 $newMembers->dep9 = $request['dep9'];
                 $newMembers->dep10 = $request['dep10'];
+                $newMembers->facebookAccount = $request['facebook'];
                 $mop = strtolower($request['mop']) == "regular" ? 1 : 2;
                 $newMembers->mop = $mop;
                 $isSave = $newMembers->save();
@@ -217,6 +218,7 @@ class MembersController extends Controller
             $newMembers->dep8 = $request['dep8'];
             $newMembers->dep9 = $request['dep9'];
             $newMembers->dep10 = $request['dep10'];
+            $newMembers->facebookAccount = $request['facebook'];
             $mop = strtolower($request['mop']) == "regular" ? 1 : 2;
             $newMembers->mop = $mop;
 
@@ -249,7 +251,8 @@ class MembersController extends Controller
                     'dep7' => $newMembers->dep7,
                     'dep8' => $newMembers->dep8,
                     'dep9' => $newMembers->dep9,
-                    'dep10' => $newMembers->dep10
+                    'dep10' => $newMembers->dep10,
+                    'facebookAccount' => $newMembers->facebookAccount
                 ]);
 
             if ($affectedRow > 0) {

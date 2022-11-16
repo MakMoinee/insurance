@@ -26,9 +26,10 @@ class CreateMembersTable extends Migration
             $table->string('civilStat');
             $table->string('gender', 6);
             $table->string('birthPlace');
-            $table->string('religion');
-            $table->string('height');
-            $table->string('weight');
+            $table->string('facebookAccount')->nullable(true);
+            $table->string('religion')->nullable(true);
+            $table->string('height')->nullable(true);
+            $table->string('weight')->nullable(true);
             $table->integer('mop');
             $table->date('birthDate')->nullable(true);
             $table->integer('plan');
