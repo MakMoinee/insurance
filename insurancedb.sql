@@ -11,7 +11,7 @@
  Target Server Version : 80030 (8.0.30)
  File Encoding         : 65001
 
- Date: 23/11/2022 17:18:43
+ Date: 23/11/2022 17:24:32
 */
 
 SET NAMES utf8mb4;
@@ -403,7 +403,7 @@ CREATE ALGORITHM = UNDEFINED SQL SECURITY DEFINER VIEW `vwcollectionreport` AS s
 -- View structure for vwcollections
 -- ----------------------------
 DROP VIEW IF EXISTS `vwcollections`;
-CREATE ALGORITHM = UNDEFINED SQL SECURITY DEFINER VIEW `vwcollections` AS select `collections`.`collectionID` AS `collectionID`,concat(`members`.`firstName`,' ',`members`.`middleName`,' ',`members`.`lastName`) AS `FullName`,`collections`.`or` AS `or`,`collections`.`ordate` AS `ordate`,`collections`.`amountpaid` AS `amountpaid`,`members`.`memberID` AS `memberID`,`collections`.`created_at` AS `created_at`,`collections`.`collector` AS `collector` from (`collections` join `members` on((`collections`.`memberID` = `members`.`memberID`)));
+CREATE ALGORITHM = UNDEFINED SQL SECURITY DEFINER VIEW `vwcollections` AS select `collections`.`collectionID` AS `collectionID`,concat(`members`.`lastName`,', ',`members`.`firstName`,' ',`members`.`middleName`) AS `FullName`,`collections`.`or` AS `or`,`collections`.`ordate` AS `ordate`,`collections`.`amountpaid` AS `amountpaid`,`members`.`memberID` AS `memberID`,`collections`.`created_at` AS `created_at`,`collections`.`collector` AS `collector` from (`collections` join `members` on((`collections`.`memberID` = `members`.`memberID`)));
 
 -- ----------------------------
 -- View structure for vwdistinctcollection
