@@ -24,6 +24,7 @@ class Members extends Model
         'birthDate',
         'birthPlace',
         'gender',
+        'facebookAccount',
         'civilStat',
         'height',
         'weight',

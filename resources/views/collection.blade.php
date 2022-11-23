@@ -634,9 +634,9 @@ C438.612,466.212,439.19,476.403,439.218,477.059z M466.163,436.524H309.905v-26.91
                                     Member</button>
                             @endif
 
-                            <div class="input-group">
+                            {{-- <div class="input-group">
                                 <input type="text" class="form-control" placeholder="Type here...">
-                            </div>
+                            </div> --}}
                             <br>
 
                         </div>

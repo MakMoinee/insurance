@@ -617,7 +617,7 @@
                                                     <div class="d-flex px-2 py-1">
                                                         <div class="d-flex flex-column justify-content-center">
                                                             <h6 class="mb-0 text-sm">
-                                                                {{ $member['firstName'] . ' ' . $member['middleName'] . ' ' . $member['lastName'] }}
+                                                                {{ $member['lastName'] . ', ' . $member['firstName'] . ' ' . $member['middleName'] }}
                                                             </h6>
                                                         </div>
                                                     </div>
@@ -668,6 +668,11 @@
                                                                                     value="{{ $member['memberID'] }}">
                                                                                 <input disabled required type="text"
                                                                                     style="width:150px;"
+                                                                                    name="lastname" id="ln"
+                                                                                    placeholder="Last Name"
+                                                                                    value="{{ $member['lastName'] }}">
+                                                                                <input disabled required type="text"
+                                                                                    style="width:150px;"
                                                                                     name="firstname" id="fn"
                                                                                     placeholder="First Name"
                                                                                     value="{{ $member['firstName'] }}">
@@ -676,11 +681,7 @@
                                                                                     name="middlename" id="mn"
                                                                                     placeholder="Middle Name"
                                                                                     value="{{ $member['middleName'] }}">
-                                                                                <input disabled required type="text"
-                                                                                    style="width:150px;"
-                                                                                    name="lastname" id="ln"
-                                                                                    placeholder="Last Name"
-                                                                                    value="{{ $member['lastName'] }}">
+
                                                                             </div>
 
                                                                             <div class="form-group">
@@ -763,7 +764,7 @@
                                                                                 </select>
                                                                                 <label for="religion"
                                                                                     class="for">Religion:</label>
-                                                                                <input disabled required type="text"
+                                                                                <input disabled type="text"
                                                                                     style="width: 265px;margin-left: 5px;"
                                                                                     name="religion" id="religion"
                                                                                     placeholder="Religion"
@@ -792,14 +793,14 @@
                                                                             <div class="form-group">
                                                                                 <label for="height"
                                                                                     class="for">Height:</label>
-                                                                                <input disabled required type="number"
+                                                                                <input disabled type="number"
                                                                                     style="width: 150px;margin-right: 5px;"
                                                                                     name="height" id="height"
                                                                                     placeholder="Height (cm)"
                                                                                     value="{{ $member['height'] }}">
                                                                                 <label for="weight"
                                                                                     class="for">Weight:</label>
-                                                                                <input disabled required type="number"
+                                                                                <input disabled type="number"
                                                                                     style="width: 150px;"
                                                                                     name="weight" id="weight"
                                                                                     placeholder="Weight (kg)"
@@ -903,6 +904,12 @@
                                                                                 name="dep10" id="dep10"
                                                                                 value="{{ $member['dep10'] }}">
                                                                         </div>
+                                                                        <div class="form-group">
+                                                                            <input disabled type="text"
+                                                                                name="facebook" id=""
+                                                                                placeholder="Facebook Account"
+                                                                                value="{{ $member['facebookAccount'] }}">
+                                                                        </div>
                                                                     </div>
                                                                     <div class="modal-footer">
                                                                         <button type="button"
@@ -953,6 +960,11 @@
                                                                                         value="{{ $member['memberID'] }}">
                                                                                     <input required type="text"
                                                                                         style="width:150px;"
+                                                                                        name="lastname" id="ln"
+                                                                                        placeholder="Last Name"
+                                                                                        value="{{ $member['lastName'] }}">
+                                                                                    <input required type="text"
+                                                                                        style="width:150px;"
                                                                                         name="firstname"
                                                                                         id="fn"
                                                                                         placeholder="First Name"
@@ -963,11 +975,7 @@
                                                                                         id="mn"
                                                                                         placeholder="Middle Name"
                                                                                         value="{{ $member['middleName'] }}">
-                                                                                    <input required type="text"
-                                                                                        style="width:150px;"
-                                                                                        name="lastname" id="ln"
-                                                                                        placeholder="Last Name"
-                                                                                        value="{{ $member['lastName'] }}">
+
                                                                                 </div>
                                                                                 <div class="form-group">
 
@@ -1052,7 +1060,7 @@
                                                                                     </select>
                                                                                     <label for="religion"
                                                                                         class="for">Religion:</label>
-                                                                                    <input required type="text"
+                                                                                    <input type="text"
                                                                                         style="width: 265px;margin-left: 5px;"
                                                                                         name="religion" id="religion"
                                                                                         placeholder="Religion"
@@ -1073,7 +1081,7 @@
                                                                                 </div>
 
                                                                                 <div class="form-group">
-                                                                                    <input required type="text"
+                                                                                    <input type="text"
                                                                                         style="width: 460px;"
                                                                                         name="bplace" id="bplace"
                                                                                         placeholder="Place of Birth"
@@ -1082,14 +1090,14 @@
                                                                                 <div class="form-group">
                                                                                     <label for="height"
                                                                                         class="for">Height:</label>
-                                                                                    <input required type="number"
+                                                                                    <input type="number"
                                                                                         style="width: 150px;margin-right: 5px;"
                                                                                         name="height" id="height"
                                                                                         placeholder="Height (cm)"
                                                                                         value="{{ $member['height'] }}">
                                                                                     <label for="weight"
                                                                                         class="for">Weight:</label>
-                                                                                    <input required type="number"
+                                                                                    <input type="number"
                                                                                         style="width: 150px;"
                                                                                         name="weight" id="weight"
                                                                                         placeholder="Weight (kg)"
@@ -1197,6 +1205,12 @@
                                                                                         name="dep10" id="dep10"
                                                                                         value="{{ $member['dep10'] }}">
                                                                                 </div>
+                                                                                <div class="form-group">
+                                                                                    <input type="text"
+                                                                                        name="facebook" id=""
+                                                                                        placeholder="Facebook Account"
+                                                                                        value="{{ $member['facebookAccount'] }}">
+                                                                                </div>
                                                                             </div>
                                                                         </div>
                                                                         <div class="modal-footer">
@@ -1301,12 +1315,13 @@
                         <form action="/members" method="POST" enctype="multipart/form-data">
                             @csrf
                             <div class="form-group">
+                                <input required type="text" style="width:150px;" name="lastname" id="newln"
+                                    placeholder="Last Name">
                                 <input required type="text" style="width:150px;" name="firstname" id="newfn"
                                     placeholder="First Name">
                                 <input required type="text" style="width:150px;" name="middlename" id="newmn"
                                     placeholder="Middle Name">
-                                <input required type="text" style="width:150px;" name="lastname" id="newln"
-                                    placeholder="Last Name">
+
                             </div>
                             <div class="form-group">
                                 <label for="Address" for="Address">Address:</label>
@@ -1339,7 +1354,7 @@
                                     <option value="Female">Female</option>
                                 </select>
                                 <label for="religion" class="for">Religion:</label>
-                                <input required type="text" style="width: 265px;margin-left: 5px;" name="religion"
+                                <input type="text" style="width: 265px;margin-left: 5px;" name="religion"
                                     id="religion" placeholder="Religion">
 
                             </div>
@@ -1355,10 +1370,10 @@
                             </div>
                             <div class="form-group">
                                 <label for="height" class="for">Height:</label>
-                                <input required type="number" style="width: 150px;margin-right: 5px;" name="height"
+                                <input type="number" style="width: 150px;margin-right: 5px;" name="height"
                                     id="height" placeholder="Height (cm)">
                                 <label for="weight" class="for">Weight:</label>
-                                <input required type="number" style="width: 150px;" name="weight" id="weight"
+                                <input type="number" style="width: 150px;" name="weight" id="weight"
                                     placeholder="Weight (kg)">
                             </div>
                             <div class="form-group">
@@ -1404,6 +1419,10 @@
                             <div class="form-group">
                                 <input type="text" name="dep9" id="dep9">
                                 <input type="text" name="dep10" id="dep10">
+                            </div>
+                            <div class="form-group">
+                                <input type="text" name="facebook" id=""
+                                    placeholder="Facebook Account">
                             </div>
 
                     </div>
