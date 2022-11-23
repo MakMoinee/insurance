@@ -11,7 +11,7 @@
  Target Server Version : 80030 (8.0.30)
  File Encoding         : 65001
 
- Date: 23/11/2022 17:24:32
+ Date: 23/11/2022 17:38:45
 */
 
 SET NAMES utf8mb4;
@@ -415,7 +415,7 @@ CREATE ALGORITHM = UNDEFINED SQL SECURITY DEFINER VIEW `vwdistinctcollection` AS
 -- View structure for vwfullnames
 -- ----------------------------
 DROP VIEW IF EXISTS `vwfullnames`;
-CREATE ALGORITHM = UNDEFINED SQL SECURITY DEFINER VIEW `vwfullnames` AS select distinct concat(`members`.`lastName`,', ',`members`.`middleName`,' ',`members`.`firstName`) AS `FullName` from `members`;
+CREATE ALGORITHM = UNDEFINED SQL SECURITY DEFINER VIEW `vwfullnames` AS select distinct concat(`members`.`lastName`,', ',`members`.`firstName`,' ',`members`.`middleName`) AS `FullName` from `members`;
 
 -- ----------------------------
 -- View structure for vwmemberswithplan
